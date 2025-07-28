@@ -3,15 +3,19 @@ import LOGO from '../assets/SHOP.CO.png';
 import cart from '../assets/Frame.png';
 import profile from '../assets/Profile.png';
 import searchIcon from '../assets/search.png';
+import { NavLink } from 'react-router-dom';
+import { FaChevronUp } from 'react-icons/fa';
+
 const DesktopHeader = () => {
-    const options = [
-        { layout: 'Shop' },
-        { layout: 'On Sale' },
-        { layout: 'New Arrival' },
-        { layout: 'Brands' },
-      ];
+  const options = [
+    { layout: 'Shop' ,path: '/'},
+    { layout: 'On Sale',path:'sales' },
+    { layout: 'New Arrival',path:'arrival' },
+    { layout: 'Brands',path:'brands' },
+  ];
+
   return (
-    <div className="hidden md:flex w-full h-[60px] items-center justify-between my-5 md:gap-5 lg:gap-5 md:px-5 align-bottom lg:px-20">
+    <div className="hidden w-full h-[60px] items-center justify-between my-5 gap-5 px-5 lg:gap-5 lg:px-20 md:flex">
       {/* Logo */}
       <img
         src={LOGO}
@@ -21,20 +25,37 @@ const DesktopHeader = () => {
 
       {/* Navigation */}
       <nav>
-        <ul className="flex gap-6 shrink-0 justify-aroun3 md:mr-10">
-          {options.map((item, index) => (
-            <li
-              key={index}
-              className="font-satoshi font-normal text-sm cursor-pointer hover:underline shrink-0 "
-            >
-              {item.layout}
-            </li>
-          ))}
-        </ul>
-      </nav>
+  <ul className="flex gap-6 justify-around mr-10 md:mr-10">
+    {options.map((item, index) => (
+      <li key={index} className="whitespace-nowrap">
+      <NavLink 
+        to={item.path}
+        className={({ isActive }) =>
+          `font-satoshi font-normal text-sm cursor-pointer hover:font-semibold flex items-center ${
+            isActive ? 'font-semibold' : 'text-gray-600'
+          }`
+        }
+      >
+        {({ isActive }) => (
+          <>
+            {item.layout}
+            {isActive && <FaChevronUp className="ml-1" />}
+          </>
+        )}
+      </NavLink>
+    </li>
+    
+    ))}
+  </ul>
+</nav>
+
+
+
+
+      {/*  */}
 
       {/* Search Input */}
-      <div className="relative w-[40%] shrink-1 ">
+      <div className="relative w-[40%] shrink-1">
         <img
           src={searchIcon}
           alt="Search Icon"
@@ -43,7 +64,7 @@ const DesktopHeader = () => {
         <input
           type="text"
           placeholder="Search For Products..."
-          className="bg-gray-100 w-full h-9 rounded-3xl pl-10 pr-4 py-[6px] outline-none text-sm placeholder-gray-500"
+          className="w-full h-9 rounded-3xl bg-gray-100 pl-10 pr-4 py-[6px] text-sm placeholder-gray-500 outline-none"
         />
       </div>
 
