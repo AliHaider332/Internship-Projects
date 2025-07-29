@@ -1,6 +1,9 @@
-/* index.css or App.css */
+/* index.css */
 body {
-    margin: 0;
-    overflow-x: hidden;
-  }
-  
+  overflow-x: hidden;
+}
+
+/* Optional - Hide scrollbars while allowing scroll */
+::-webkit-scrollbar {
+  display: none;
+}

@@ -13,6 +13,7 @@
     "@reduxjs/toolkit": "^2.8.2",
     "@tailwindcss/vite": "^4.1.11",
     "icons": "^1.0.0",
+    "lucide-react": "^0.533.0",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",
     "react-icon": "^1.0.0",

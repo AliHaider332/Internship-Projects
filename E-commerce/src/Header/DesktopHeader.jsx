@@ -1,56 +1,50 @@
 import React from 'react';
 import LOGO from '../assets/SHOP.CO.png';
-import cart from '../assets/Frame.png';
-import profile from '../assets/Profile.png';
 import searchIcon from '../assets/search.png';
 import { NavLink } from 'react-router-dom';
 import { FaChevronUp } from 'react-icons/fa';
-
+import { useSelector } from 'react-redux';
+import { FaRegCircleUser } from "react-icons/fa6";
+import { LuShoppingCart } from "react-icons/lu";
+import { Link } from 'react-router-dom';
 const DesktopHeader = () => {
-  const options = [
-    { layout: 'Shop' ,path: '/'},
-    { layout: 'On Sale',path:'sales' },
-    { layout: 'New Arrival',path:'arrival' },
-    { layout: 'Brands',path:'brands' },
-  ];
+  const options = useSelector(store=> store.pages);
 
   return (
     <div className="hidden w-full h-[60px] items-center justify-between my-5 gap-5 px-5 lg:gap-5 lg:px-20 md:flex">
       {/* Logo */}
+      <Link to='/'>
       <img
         src={LOGO}
         alt="SHOP.CO Logo"
         className="w-[160px] h-[22px] shrink-1 cursor-pointer"
       />
+      </Link>
 
       {/* Navigation */}
       <nav>
-  <ul className="flex gap-6 justify-around mr-10 md:mr-10">
-    {options.map((item, index) => (
-      <li key={index} className="whitespace-nowrap">
-      <NavLink 
-        to={item.path}
-        className={({ isActive }) =>
-          `font-satoshi font-normal text-sm cursor-pointer hover:font-semibold flex items-center ${
-            isActive ? 'font-semibold' : 'text-gray-600'
-          }`
-        }
-      >
-        {({ isActive }) => (
-          <>
-            {item.layout}
-            {isActive && <FaChevronUp className="ml-1" />}
-          </>
-        )}
-      </NavLink>
-    </li>
-    
-    ))}
-  </ul>
-</nav>
-
-
-
+        <ul className="flex gap-6 justify-around mr-10 md:mr-10">
+          {options.map((item, index) => (
+            <li key={index} className="whitespace-nowrap">
+              <NavLink
+                to={item.path}
+                className={({ isActive }) =>
+                  `font-satoshi font-normal text-sm cursor-pointer hover:font-semibold flex items-center ${
+                    isActive ? 'font-semibold' : 'text-gray-600'
+                  }`
+                }
+              >
+                {({ isActive }) => (
+                  <>
+                    {item.layout}
+                    {isActive && <FaChevronUp className="ml-1" />}
+                  </>
+                )}
+              </NavLink>
+            </li>
+          ))}
+        </ul>
+      </nav>
 
       {/*  */}
 
@@ -69,9 +63,10 @@ const DesktopHeader = () => {
       </div>
 
       {/* Icons */}
-      <div className="flex items-center gap-4 shrink-0">
-        <img src={cart} alt="Cart" className="w-5 h-5 cursor-pointer" />
-        <img src={profile} alt="Profile" className="w-5 h-5 cursor-pointer" />
+      <div className="flex items-center gap-4 shrink-0 h-5">
+      <LuShoppingCart />
+
+        <FaRegCircleUser />
       </div>
     </div>
   );

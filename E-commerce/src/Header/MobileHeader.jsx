@@ -1,23 +1,22 @@
-import React, { useState } from 'react';
 import LOGO from '../assets/SHOP.CO.png';
-import manu from '../assets/1.png';
-import search from '../assets/2.png';
-import CART from '../assets/3.png';
-import Profile from '../assets/4.png';
 import searchIcon from '../assets/search.png';
-import cross from '../assets/Vector.png';
 import { RxCross2 } from 'react-icons/rx';
+import { useDispatch, useSelector } from 'react-redux';
+import { NavLink } from 'react-router-dom';
+import { FaChevronUp } from 'react-icons/fa';
+import { LuShoppingCart } from 'react-icons/lu';
+import { FaRegCircleUser } from 'react-icons/fa6';
+import { CiSearch } from 'react-icons/ci';
+import { HiMiniBars3 } from 'react-icons/hi2';
+import { setOption } from '../Store/optionShow';
+import { setBarShow } from '../Store/barShow';
 
 const MobileHeader = () => {
-  const [barShow, setBarShow] = useState(false);
-  const [optionsShow, setOption] = useState(false);
-
-  const options = [
-    { layout: 'Shop' },
-    { layout: 'On Sale' },
-    { layout: 'New Arrival' },
-    { layout: 'Brands' },
-  ];
+ 
+  const barShow=useSelector(store=>store.barShow);
+  const optionsShow=useSelector(store=>store.optionShow);
+  const options = useSelector((store) => store.pages);
+  const dispatch=useDispatch();
 
   return (
     <>
@@ -25,11 +24,11 @@ const MobileHeader = () => {
         {/* Left Section: Menu & Logo */}
         <div className="flex gap-4 relative">
           <div
-            onClick={() => setOption(!optionsShow)}
+            onClick={() => {dispatch(setOption())}}
             className="cursor-pointer"
           >
             {!optionsShow ? (
-              <img src={manu} alt="menu" className="w-[24px] h-[24px]" />
+              <HiMiniBars3 />
             ) : (
               <RxCross2 className="w-[24px] h-[24px]" />
             )}
@@ -39,12 +38,21 @@ const MobileHeader = () => {
           {optionsShow && (
             <ul className="absolute top-8 left-0 z-50 w-[150px] p-4 rounded-2xl shadow-md shadow-gray-300 bg-white text-gray-800 space-y-2">
               {options.map((item, index) => (
-                <li
-                  key={index}
-                  className="hover:bg-gray-100 px-3 py-2 rounded-md cursor-pointer transition-colors duration-200 text-sm text-center"
+                <NavLink
+                  to={item.path}
+                  className={({ isActive }) =>
+                    `block px-2 py-2 rounded-md cursor-pointer transition-colors duration-200 text-sm text-center hover:bg-gray-100 ${
+                      isActive ? 'font-semibold text-black' : ''
+                    }`
+                  }
                 >
-                  {item.layout}
-                </li>
+                  {({ isActive }) => (
+                    <li className="list-none flex justify-center items-center gap-1" id={index}>
+                      {item.layout}
+                      {isActive && <FaChevronUp className="ml-1" />}
+                    </li>
+                  )}
+                </NavLink>
               ))}
             </ul>
           )}
@@ -53,29 +61,17 @@ const MobileHeader = () => {
         </div>
 
         {/* Right Section: Icons */}
-        <div className="flex gap-4">
-          <img
-            src={search}
-            alt="Search"
-            className="w-[24px] h-[24px] cursor-pointer"
-            onClick={() => setBarShow(!barShow)}
-          />
-          <img
-            src={CART}
-            alt="Cart"
-            className="w-[24px] h-[24px] cursor-pointer"
-          />
-          <img
-            src={Profile}
-            alt="Profile"
-            className="w-[24px] h-[24px] cursor-pointer"
-          />
+        <div className="flex gap-4 h-1.5">
+          <CiSearch  onClick={()=>{dispatch(setBarShow())}}/>
+
+          <LuShoppingCart />
+          <FaRegCircleUser />
         </div>
       </div>
 
       {/* Search Bar */}
       {barShow && (
-        <div className="relative w-[80%] mx-auto mt-3 md:hidden">
+        <div className="relative w-[80%] mx-auto mt-3 md:hidden mb-3">
           <img
             src={searchIcon}
             alt="Search Icon"
