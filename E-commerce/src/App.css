@@ -1,9 +1,7 @@
-/* index.css */
-body {
-  overflow-x: hidden;
-}
 
-/* Optional - Hide scrollbars while allowing scroll */
-::-webkit-scrollbar {
-  display: none;
+
+
+.slick-prev:before,
+.slick-next:before {
+  color: gray !important;
 }

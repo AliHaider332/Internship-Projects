@@ -1,6 +1,9 @@
 import React, { useContext } from 'react';
 import Hero from '../Shop/Hero';
 import NewArrival from '../Shop/NewArrival.jsx';
+import TopSelling from '../Shop/TopSelling.jsx';
+import DressingStyle from '../Shop/DressingStyle.jsx';
+import Review from '../Shop/Review.jsx';
 const Shop = () => {
   
   // console.log(products);
@@ -8,10 +11,12 @@ const Shop = () => {
   return (
     <>
       <Hero />
-      <h1 className="font-sans font-extrabold text-3xl  text-center align-middle  my-5">
-      NEW ARRIVALS
-      </h1>
+      
       <NewArrival></NewArrival>
+      <TopSelling></TopSelling>
+      <DressingStyle></DressingStyle>
+      <Review></Review>
+      
       
     </>
   );
