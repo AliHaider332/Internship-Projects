@@ -9,5 +9,5 @@ const Detail = createSlice({
   });
   
   export const { updateDetail } = Detail.actions;
-  export default Detail; // ✅ Export only reducer
+  export default Detail; 
   

@@ -6,7 +6,7 @@ import DressingStyle from '../Shop/DressingStyle.jsx';
 import Review from '../Shop/Review.jsx';
 const Shop = () => {
   
-  // console.log(products);
+  
   
   return (
     <>

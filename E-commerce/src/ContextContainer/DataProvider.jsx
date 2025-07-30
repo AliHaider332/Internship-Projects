@@ -1,22 +1,22 @@
-// DataProvider.jsx
+
 import React, { useEffect, useState } from 'react';
-import { DATA } from './data.js'; // path to your createContext([])
+import { DATA } from './data.js'; 
 
 const DataProvider = ({ children }) => {
-  const [products, setProducts] = useState([]); // start with empty array
+  const [products, setProducts] = useState([]); 
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const res = await fetch('https://dummyjson.com/products/search?q=phone');
         const data = await res.json();
-        setProducts(data.products); // update state with fetched products
+        setProducts(data.products); 
       } catch (error) {
         console.error("Error fetching data:", error);
       }
     };
 
-    fetchData(); // call async function
+    fetchData(); 
   }, []);
   
   const reviews = [

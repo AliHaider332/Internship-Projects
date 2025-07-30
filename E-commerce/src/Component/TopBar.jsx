@@ -1,5 +1,5 @@
 import React from 'react';
-import vectorIcon from '../assets/Vector.png'; // adjust path accordingly
+import vectorIcon from '../assets/Vector.png'; 
 import { useSelector } from 'react-redux';
 import { useDispatch } from 'react-redux';
 import { updateTopBar } from '../Store/Topbar';

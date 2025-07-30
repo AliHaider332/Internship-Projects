@@ -21,7 +21,7 @@ const MobileHeader = () => {
   return (
     <>
       <div className="flex h-7 m-3 items-center justify-between md:hidden relative">
-        {/* Left Section: Menu & Logo */}
+        
         <div className="flex gap-4 relative">
           <div
             onClick={() => {dispatch(setOption())}}
@@ -34,7 +34,7 @@ const MobileHeader = () => {
             )}
           </div>
 
-          {/* Dropdown under menu */}
+        
           {optionsShow && (
             <ul className="absolute top-8 left-0 z-50 w-[150px] p-4 rounded-2xl shadow-md shadow-gray-300 bg-white text-gray-800 space-y-2">
               {options.map((item, index) => (
@@ -60,7 +60,7 @@ const MobileHeader = () => {
           <img src={LOGO} alt="Logo" className="w-[120px] cursor-pointer" />
         </div>
 
-        {/* Right Section: Icons */}
+       
         <div className="flex gap-4 h-1.5">
           <CiSearch  onClick={()=>{dispatch(setBarShow())}}/>
 
@@ -69,7 +69,11 @@ const MobileHeader = () => {
         </div>
       </div>
 
-      {/* Search Bar */}
+      
+
+
+
+      
       {barShow && (
         <div className="relative w-[80%] mx-auto mt-3 md:hidden mb-3">
           <img

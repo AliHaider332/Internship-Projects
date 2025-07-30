@@ -21,9 +21,9 @@ const StatBox = ({ number, label }) => (
 const HeroSection = () => {
   return (
     <div className="min-h-screen flex flex-col bg-[#F2F0F1] relative overflow-x-hidden">
-      {/* Main Content */}
+
       <div className="flex flex-col md:flex-row px-6 sm:px-10 md:px-14 lg:px-20 justify-between items-center gap-6 md:gap-4 pt-5 md:pt-10">
-        {/* Left Section */}
+
         <div className="w-full md:w-1/2 flex flex-col justify-center items-center md:items-start text-center md:text-left py-4">
           <h1 className="font-integral font-extrabold text-3xl sm:text-4xl md:text-[32px] lg:text-5xl leading-snug tracking-normal max-w-[600px]">
             FIND CLOTHES
@@ -43,7 +43,7 @@ const HeroSection = () => {
             Shop Now
           </button>
 
-          {/* Stats */}
+          
           <div className="flex flex-wrap justify-between items-center gap-6 mt-10 mb-7">
             <StatBox number="200+" label="International Brands" />
             <StatBox number="2,000+" label="High-Quality Products" />
@@ -51,7 +51,8 @@ const HeroSection = () => {
           </div>
         </div>
 
-        {/* Right Section */}
+        
+        
         <div className="relative w-full md:w-1/2 flex justify-center items-center mt-10 md:mt-0">
           <img
             src={HeroImage}
@@ -59,7 +60,10 @@ const HeroSection = () => {
             className="w-full max-w-[280px] sm:max-w-[350px] md:max-w-[400px] lg:max-w-[500px] object-contain"
           />
 
-          {/* Decorative Vectors */}
+        
+
+
+
           <div className="absolute w-full h-full top-0 left-0 pointer-events-none">
             <img
               src={vector}
@@ -77,7 +81,9 @@ const HeroSection = () => {
         </div>
       </div>
 
-      {/* Bottom Brand Strip */}
+      
+      
+      
       <div className="relative mt-10 w-full px-6 sm:px-10 md:px-14 lg:px-20 py-5 bg-black flex flex-wrap items-center justify-center sm:justify-between gap-8">
         {[B1, B2, B3, B4, B5].map((brand, index) => (
           <img

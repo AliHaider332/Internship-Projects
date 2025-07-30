@@ -18,7 +18,10 @@ import Arivals from './Component/Arivals.jsx';
 import Sales from './Component/Sales.jsx';
 import Brands from './Component/Brands.jsx';
 import ProductDetail from './Component/ProductDetail.jsx';
-// Define routes
+
+
+
+
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
@@ -31,7 +34,9 @@ const router = createBrowserRouter(
   )
 );
 
-// Render app
+
+
+
 createRoot(document.getElementById('root')).render(
   <StrictMode>
     <Provider store={store}>

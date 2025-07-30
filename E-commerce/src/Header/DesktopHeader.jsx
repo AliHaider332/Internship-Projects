@@ -46,7 +46,7 @@ const DesktopHeader = () => {
         </ul>
       </nav>
 
-      {/*  */}
+
 
       {/* Search Input */}
       <div className="relative w-[40%] shrink-1">

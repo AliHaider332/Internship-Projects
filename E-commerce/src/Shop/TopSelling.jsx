@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import { DATA } from '../ContextContainer/data';
 import Rating from './Rating';
 import { NavLink } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { updateDetail } from '../Store/productDetail';
 const TopSelling = () => {
   const {products} = useContext(DATA);

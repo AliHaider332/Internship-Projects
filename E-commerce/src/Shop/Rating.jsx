@@ -1,5 +1,6 @@
 import React from 'react';
-import { Star, StarHalf, StarOff } from 'lucide-react'; // Lucide icons
+import { Star, StarHalf, StarOff } from 'lucide-react'; 
+
 
 const Rating = ({ rating, outOf = 5 }) => {
   const stars = [];
