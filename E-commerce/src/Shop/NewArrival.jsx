@@ -3,8 +3,11 @@ import { DATA } from '../ContextContainer/data';
 import Rating from './Rating';
 import { NavLink } from 'react-router-dom';
 import { FaSpinner } from "react-icons/fa";
+import { useDispatch} from 'react-redux';
+import { updateDetail } from '../Store/productDetail';
 const NewArrival = () => {
   const {products} = useContext(DATA);
+  const dispath=useDispatch();
 
   if (!products || products.length === 0) {
     return <div className='text-center flex justify-around my-10'><FaSpinner className="animate-spin text-2xl text-gray-800" /></div>;
@@ -15,11 +18,13 @@ const NewArrival = () => {
       <h1 className="font-sans font-extrabold text-5xl  text-center align-middle  my-10">
         NEW ARRIVALS
       </h1>
+      <NavLink to='/Detail'>
       <div className="flex flex-wrap justify-center gap-6 my-5 cursor-pointer">
         {products.slice(0, 4).map((product) => (
           <div
             key={product.id}
             className="w-[150px] md:w-[220px] flex  flex-col gap-[4px] my-5"
+            onClick={()=>{dispath(updateDetail(product.id))}}
           >
             <img
               src={product.thumbnail}
@@ -56,6 +61,7 @@ const NewArrival = () => {
           </div>
         ))}
       </div>
+      </NavLink>
 
       <div className=" text-center align-middle  my-20 mx-[5%]">
         <NavLink to='/arrival'>

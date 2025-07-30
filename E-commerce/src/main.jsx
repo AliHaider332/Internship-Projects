@@ -17,7 +17,7 @@ import Shop from './Component/Shop.jsx';
 import Arivals from './Component/Arivals.jsx';
 import Sales from './Component/Sales.jsx';
 import Brands from './Component/Brands.jsx';
-
+import ProductDetail from './Component/ProductDetail.jsx';
 // Define routes
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -26,6 +26,7 @@ const router = createBrowserRouter(
       <Route path='arrival' element={<Arivals />} />
       <Route path='sales' element={<Sales />} />
       <Route path='brands' element={<Brands />} />
+      <Route path='/Detail' element={<ProductDetail/>}></Route>
     </Route>
   )
 );

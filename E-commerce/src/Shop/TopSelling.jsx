@@ -2,23 +2,31 @@ import React, { useContext } from 'react';
 import { DATA } from '../ContextContainer/data';
 import Rating from './Rating';
 import { NavLink } from 'react-router-dom';
-
+import { useDispatch, useSelector } from 'react-redux';
+import { updateDetail } from '../Store/productDetail';
 const TopSelling = () => {
   const {products} = useContext(DATA);
+
+
+  const dispath=useDispatch();
 
   if (!products || products.length === 0) {
     return <div></div>;
   }
+
   return (
     <div className="mx-[5%]">
       <h1 className="font-sans font-extrabold text-5xl  text-center align-middle  my-10">
         TOP SELLING
       </h1>
+      
+      <NavLink to='/Detail'>
       <div className="flex flex-wrap justify-center gap-6 my-5 cursor-pointer">
         {products.slice(4, 8).map((product) => (
           <div
             key={product.id}
             className="w-[150px] md:w-[220px] flex  flex-col gap-[4px] my-5"
+            onClick={()=>{dispath(updateDetail(product.id))}}
           >
             <img
               src={product.thumbnail}
@@ -55,6 +63,7 @@ const TopSelling = () => {
           </div>
         ))}
       </div>
+      </NavLink>
 
       <div className=" text-center align-middle  my-20 mx-[5%]">
         <NavLink to="/sales">
