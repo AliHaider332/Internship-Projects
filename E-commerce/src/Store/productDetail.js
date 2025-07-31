@@ -2,9 +2,16 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const Detail = createSlice({
     name: 'ABC',
-    initialState: -1,
+    initialState: {
+      id: null,
+      
+    },
+    
     reducers: {
-      updateDetail: (state, action) => action.payload
+      updateDetail: (state, action) => {
+        state.id = action.payload.id;
+       
+      }
     }
   });
   

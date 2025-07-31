@@ -14,11 +14,9 @@ import {
 } from 'react-router-dom';
 
 import Shop from './Component/Shop.jsx';
-import Arivals from './Component/Arivals.jsx';
-import Sales from './Component/Sales.jsx';
-import Brands from './Component/Brands.jsx';
 import ProductDetail from './Component/ProductDetail.jsx';
-
+import WholeData from './Component/WholeData.jsx';
+import Cart from './Component/Cart.jsx';
 
 
 
@@ -26,10 +24,11 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path='/' element={<App />}>
       <Route index element={<Shop />} />
-      <Route path='arrival' element={<Arivals />} />
-      <Route path='sales' element={<Sales />} />
-      <Route path='brands' element={<Brands />} />
+      <Route path='arrival' element={<WholeData/>} />
+      <Route path='sales' element={<WholeData/>} />
+      <Route path='brands' element={<WholeData/>} />
       <Route path='/Detail' element={<ProductDetail/>}></Route>
+      <Route path='/cart' element={<Cart/>}></Route>
     </Route>
   )
 );

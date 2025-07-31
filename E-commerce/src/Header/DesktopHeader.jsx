@@ -7,8 +7,17 @@ import { useSelector } from 'react-redux';
 import { FaRegCircleUser } from "react-icons/fa6";
 import { LuShoppingCart } from "react-icons/lu";
 import { Link } from 'react-router-dom';
+
 const DesktopHeader = () => {
   const options = useSelector(store=> store.pages);
+
+  const AllProduct=useSelector(store=>store.CART);
+
+  let countProduct=0;
+  for(let i=0;i<AllProduct.length;i++)
+  {
+    countProduct+=AllProduct[i].count;
+  }
 
   return (
     <div className="hidden w-full h-[60px] items-center justify-between my-5 gap-5 px-5 lg:gap-5 lg:px-20 md:flex">
@@ -64,7 +73,17 @@ const DesktopHeader = () => {
 
       {/* Icons */}
       <div className="flex items-center gap-4 shrink-0 h-5">
-      <LuShoppingCart />
+        
+      <div className="relative inline-block">
+      <NavLink to="/cart" className="text-gray-800">
+        <LuShoppingCart size={28} />
+        {countProduct > 0 && (
+          <span className="absolute -top-2 -right-2 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+            {countProduct}
+          </span>
+        )}
+      </NavLink>
+    </div>
 
         <FaRegCircleUser />
       </div>

@@ -1,35 +1,22 @@
-import React, { useContext } from 'react';
-import { DATA } from '../ContextContainer/data';
-import Rating from './Rating';
-import { NavLink } from 'react-router-dom';
-import { FaSpinner } from 'react-icons/fa';
-import { useDispatch } from 'react-redux';
+import React from 'react'
+import { useContext } from 'react'
+import { DATA } from '../ContextContainer/data'
+import { NavLink } from 'react-router-dom'
+import Rating from '../Shop/Rating'
+import { useDispatch } from 'react-redux'
 import { updateDetail } from '../Store/productDetail';
-const NewArrival = () => {
-  const { products } = useContext(DATA);
-  const dispath = useDispatch();
-
-  if (!products || products.length === 0) {
-    return (
-      <div className="text-center flex justify-around my-10">
-        <FaSpinner className="animate-spin text-2xl text-gray-800" />
-      </div>
-    );
-  }
-
+const WholeData = () => {
+  const dispath=useDispatch();
+  const {products}=useContext(DATA);
   return (
-    <div className="mx-[5%]">
-      <h1 className="font-sans font-extrabold text-5xl  text-center align-middle  my-10">
-        NEW ARRIVALS
-      </h1>
-      <NavLink to="/Detail">
+    <NavLink to="/Detail">
         <div className="flex flex-wrap justify-center gap-6 my-5 cursor-pointer">
-          {products.slice(0, 4).map((product) => (
+          {products.map((product) => (
             <div
               key={product.id}
               className="w-[150px] md:w-[220px] flex  flex-col gap-[4px] my-5"
               onClick={() => {
-                dispath(updateDetail({ id: product.id }));
+                dispath(updateDetail({ id: product.id}));
               }}
             >
               <img
@@ -68,18 +55,7 @@ const NewArrival = () => {
           ))}
         </div>
       </NavLink>
+  )
+}
 
-      <div className=" text-center align-middle  my-20 mx-[5%]">
-        <NavLink to="/arrival">
-          <span className="  border-[1px] border-gray-300 px-[60px] py-[10px] rounded-3xl cursor-pointer hover:bg-gray-100">
-            View All
-          </span>
-        </NavLink>
-      </div>
-
-      <hr className="text-gray-200" />
-    </div>
-  );
-};
-
-export default NewArrival;
+export default WholeData

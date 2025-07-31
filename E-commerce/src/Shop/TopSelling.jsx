@@ -26,7 +26,9 @@ const TopSelling = () => {
           <div
             key={product.id}
             className="w-[150px] md:w-[220px] flex  flex-col gap-[4px] my-5"
-            onClick={()=>{dispath(updateDetail(product.id))}}
+            onClick={() => {
+              dispath(updateDetail({ id: product.id}));
+            }}
           >
             <img
               src={product.thumbnail}
