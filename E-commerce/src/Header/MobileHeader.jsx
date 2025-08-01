@@ -17,7 +17,7 @@ const MobileHeader = () => {
   const options = useSelector((store) => store.pages);
   const dispatch = useDispatch();
 
-  const AllProduct = useSelector((store) => store.CART);
+  const AllProduct = useSelector((store) => store.CART.arr);
 
   let countProduct = 0;
   for (let i = 0; i < AllProduct.length; i++) {

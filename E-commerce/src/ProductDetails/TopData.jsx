@@ -8,7 +8,7 @@ import CART, { addToCart } from '../Store/cart.js';
 const TopData = () => {
   const Data = useSelector((store) => store.Detail);
   const ID = Data.id;
-  const Page = Data.from;
+  
   const { products } = useContext(DATA);
   const PRODUCT = products.filter((item) => item.id === ID);
 
@@ -20,16 +20,13 @@ const TopData = () => {
       <div className="mb-30 mt-10 mx-[5%] md:flex gap-10">
         <div className="flex flex-col-reverse md:flex-row gap-5 items-center w-full">
           <div className="flex md:flex-col flex-row gap-3 justify-center md:w-32 w-full overflow-x-auto md:overflow-visible shrink-0">
-
-            {[0, 1, 2].map(i => (
-  <img
-    key={i}
-    src={PRODUCT[0].images?.[i] || PRODUCT[0].thumbnail}
-    className="h-[100px] w-[100px] object-cover rounded-2xl border-2 hover:border-gray-400 transition"
-  />
-))}
-
-
+            {[0, 1, 2].map((i) => (
+              <img
+                key={i}
+                src={PRODUCT[0].images?.[i] || PRODUCT[0].thumbnail}
+                className="h-[100px] w-[100px] object-cover rounded-2xl border-2 hover:border-gray-400 transition"
+              />
+            ))}
           </div>
 
           <div className="w-[80%]   md:flex md:h-auto">
@@ -118,7 +115,9 @@ const TopData = () => {
             <div
               className="text-white w-full text-center bg-black px-6 py-2 rounded-full cursor-pointer hover:bg-gray-800 transition"
               onClick={() => {
-                dispatch(addToCart({ ID, count }));
+                dispatch(addToCart({ ID, count ,price:PRODUCT[0].price}));
+                updateCount(1);
+                
               }}
             >
               ADD
