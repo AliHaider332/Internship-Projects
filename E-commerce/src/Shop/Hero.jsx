@@ -84,7 +84,7 @@ const HeroSection = () => {
       
       
       
-      <div className="relative mt-10 w-full px-6 sm:px-10 md:px-14 lg:px-20 py-5 bg-black flex flex-wrap items-center justify-center sm:justify-between gap-8">
+      <div className="relative mt-10  px-6 sm:px-10 md:px-14 lg:px-20 py-5 bg-black flex flex-wrap items-center justify-center sm:justify-between gap-8">
         {[B1, B2, B3, B4, B5].map((brand, index) => (
           <img
             key={index}

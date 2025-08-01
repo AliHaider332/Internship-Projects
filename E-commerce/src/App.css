@@ -3,3 +3,9 @@
 .slick-next:before {
   color: gray !important;
 }
+/* index.css */
+html,
+body {
+  overflow-x: hidden;
+}
+
