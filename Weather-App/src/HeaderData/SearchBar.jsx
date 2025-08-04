@@ -9,7 +9,7 @@ const SearchBar = () => {
 
   return (
     <div
-      className="w-[70%] md:w-[80%] md:h-[40px] h-[30px] rounded-3xl relative 
+      className="w-[70%] md:w-[80%]  md:h-[40px] h-[30px] rounded-3xl relative 
       bg-gradient-to-l from-white via-gray-200 to-[#292929] 
       dark:from-[#3a3a3a] dark:via-[#2d2d2d] dark:to-[#1a1a1a] 
       border dark:border-none shadow-2xl shadow-black"

@@ -1,2 +1,18 @@
+@font-face {
+  font-family: 'Roboto Slab';
+  src: url('./assets/FONTS/RobotoSlab-SemiBold.ttf') format('truetype');
+  font-weight: 600;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Archivo Black';
+  src: url('./assets/FONTS/ArchivoBlack-Regular.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+@theme {
+  --font-Roboto: 'Roboto Slab';
+  --font-Archivo: 'Archivo Black';
+}
 @import 'tailwindcss';
 @custom-variant dark (&:where(.dark, .dark *));

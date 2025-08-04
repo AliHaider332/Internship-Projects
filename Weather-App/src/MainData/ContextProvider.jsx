@@ -1,12 +1,12 @@
 // ContextProvider.js
 import React, { useState, useEffect } from 'react';
 import { DATA } from './ContextContainer';
-import { useSelector } from 'react-redux';
-import { useDispatch } from 'react-redux';
-import { updateLocation } from './Store';
+import { useSelector, useDispatch } from 'react-redux';
+import { updateCity, updateLocation } from './Store';
+
 const ContextProvider = ({ children }) => {
   const dispatch = useDispatch();
-  const [Current_Day, updateData] = useState(true);
+  const [Current_Day, updateData] = useState(null);
 
   const Location = useSelector((store) => store.LOCATION_DATA);
   const City = useSelector((store) => store.CITY_NAME);
@@ -26,7 +26,10 @@ const ContextProvider = ({ children }) => {
           const data = await response.json();
           updateData(data);
           console.log('Weather from coordinates:', data);
-          dispatch(updateLocation({ x: null, y: null }));
+          dispatch(updateCity(null));
+
+          // Reset location after successful fetch
+          dispatch(updateLocation({ lat: null, long: null }));
         } else if (City) {
           const response = await fetch(URL2);
           const data = await response.json();
@@ -39,9 +42,9 @@ const ContextProvider = ({ children }) => {
     }
 
     fetchData();
-  }, [City, lat, long]); // re-fetch if location or city changes
+  }, [City, lat, long]);
 
-  return <DATA.Provider value={Current_Day}>{children}</DATA.Provider>;
+  return <DATA.Provider value={{ Current_Day }}>{children}</DATA.Provider>;
 };
 
 export default ContextProvider;
