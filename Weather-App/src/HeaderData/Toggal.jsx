@@ -4,7 +4,7 @@ import { TbBrightnessUp } from 'react-icons/tb';
 import { MdBrightness2 } from 'react-icons/md';
 
 const Toggal = () => {
-  const [theme, setTheme] = useState('bright');
+  const [theme, setTheme] = useState('dark');
 
   useEffect(() => {
     if (theme === 'dark') {

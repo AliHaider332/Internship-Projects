@@ -6,9 +6,8 @@ import Main from './MainUi/Main';
 function App() {
   return (
     <>
-      <ContextProvider>
-        <Header />
-        
+      <Header />
+      <ContextProvider>  
         <Main />
       </ContextProvider>
     </>

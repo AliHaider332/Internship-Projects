@@ -15,12 +15,14 @@ const Main = () => {
     //  && Current_Day.main
     <>
       {state && Current_Day ? (
-        <div className=" mt-15">
-          <div className="flex flex-col md:flex-row md:gap-3 justify-between gap-10 lg:justify-center ">
+        <div className=" mt-15  ">
+          <div className="flex flex-col md:flex-row md:gap-3 justify-between gap-10 lg:justify-center">
             <City_Date />
             <CurrentInfo />
           </div>
-          <Second></Second>
+          <div className='w-full flex justify-center mt-5'>
+            <Second></Second>
+          </div>
         </div>
       ) : (
         <div className="text-center p-4 text-gray-500 dark:text-gray-300">

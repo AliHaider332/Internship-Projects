@@ -18,7 +18,7 @@ const SearchBar = () => {
         ref={city_name}
         type="text"
         placeholder="Search your preferred city..."
-        className="h-full w-full pl-8 md:pl-10 rounded-3xl outline-none bg-transparent text-black dark:text-white placeholder-gray-900 dark:placeholder-gray-400 placeholder:capitalize"
+        className="h-full w-full pl-8 md:pl-10 rounded-3xl outline-none bg-transparent text-gray-300 dark:text-white placeholder-gray-900 dark:placeholder-gray-400 placeholder:capitalize"
         onKeyDown={(event) => {
           if (event.key === 'Enter') {
             const value = city_name.current.value.trim();
