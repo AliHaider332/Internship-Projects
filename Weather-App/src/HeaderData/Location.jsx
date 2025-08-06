@@ -2,19 +2,24 @@ import React from 'react';
 import { ImLocation2 } from 'react-icons/im';
 import { useDispatch } from 'react-redux';
 import { goToMain, updateLocation } from '../MainData/Store';
+
 const Location = () => {
   const dispatch = useDispatch();
 
   const handleClick = () => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      dispatch(
-        updateLocation({
-          lat: position.coords.latitude,
-          long: position.coords.longitude,
-        })
-      );
-    });
-    dispatch(goToMain());
+    navigator.geolocation.getCurrentPosition(
+      (position) => {
+        
+        dispatch(
+          updateLocation({
+            lat: position.coords.latitude,
+            long: position.coords.longitude,
+          })
+        );
+        dispatch(goToMain());
+      },
+      
+    );
   };
 
   return (
