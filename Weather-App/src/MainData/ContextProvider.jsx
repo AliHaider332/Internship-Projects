@@ -42,55 +42,67 @@ const ContextProvider = ({ children }) => {
   const URL1a = `https://api.openweathermap.org/data/2.5/forecast?lat=${lat}&lon=${long}&appid=${key}&units=metric`;
   const URL2 = `https://api.openweathermap.org/data/2.5/weather?q=${City}&appid=${key}&units=metric`;
   const URL2a = `https://api.openweathermap.org/data/2.5/forecast?q=${City}&appid=${key}&units=metric`;
-
   useEffect(() => {
     async function fetchData() {
+      // ✅ Don't proceed if neither location nor city is provided
+      if (!City && (lat == null || long == null)) {
+        return;
+      }
+  
       try {
-        setError(null); // Reset previous error
-
+        setError(null); // Reset error before fetch
+  
         if (lat != null && long != null) {
           const response = await fetch(URL1);
           const forcastResponse = await fetch(URL1a);
-
-          if (!response.ok || !forcastResponse.ok) throw new Error('Invalid location data');
-
+  
+          if (!response.ok || !forcastResponse.ok)
+            throw new Error('Invalid location data');
+  
           const data = await response.json();
           const forcastData = await forcastResponse.json();
-
+  
           updateData(data);
           const fullData = forcastData.list;
           updateHourly(fullData.slice(0, 8));
           getSevenDaysData(fullData);
-
+  
           dispatch(updateCity(null));
           dispatch(updateLocation({ lat: null, long: null }));
+          
         } else if (City) {
           const response = await fetch(URL2);
           const forcastResponse = await fetch(URL2a);
-
-          if (!response.ok || !forcastResponse.ok) throw new Error('Invalid city name');
-
+  
+          if (!response.ok || !forcastResponse.ok)
+            throw new Error('Invalid city name');
+  
           const data = await response.json();
           const forcastData = await forcastResponse.json();
-
+  
           updateData(data);
           const fullData = forcastData.list;
           updateHourly(fullData.slice(0, 8));
           getSevenDaysData(fullData);
+  
+          
         }
       } catch (err) {
         setError(err.message || 'Something went wrong');
       }
     }
-
+  
     fetchData();
   }, [City, lat, long]);
+  
+  
 
   // Conditional render for error
   if (error) {
     return (
-     <div className='flex justify-center items-center h-screen'>
+     <div className='flex justify-center items-center h-screen flex-col'>
        <img src={errorPic} alt="ERROR" />
+       <span className='font-Roboto font-light text-3xl text-red-500 gap-3'>{error}</span>
      </div>
     );
   }

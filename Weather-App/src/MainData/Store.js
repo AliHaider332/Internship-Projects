@@ -22,13 +22,30 @@ const CITY_NAME = createSlice({
   },
 });
 
+
+const pageSlice = createSlice({
+  name: 'PAGE',
+  initialState: 'welcome', // use string to represent pages
+  reducers: {
+    goToWelcome: () => 'welcome',
+    goToMain: () => 'main',
+  },
+});
+
+
+
+
+
+
 const STORE = configureStore({
   reducer: {
     LOCATION_DATA: LOCATION_DATA.reducer,
     CITY_NAME: CITY_NAME.reducer,
+    PAGE:pageSlice.reducer,
   },
 });
 
 export default STORE;
 export const { updateLocation } = LOCATION_DATA.actions;
 export const { updateCity } = CITY_NAME.actions;
+export const { goToWelcome, goToMain } = pageSlice.actions;

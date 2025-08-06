@@ -1,8 +1,7 @@
 import React from 'react';
 import { ImLocation2 } from 'react-icons/im';
 import { useDispatch } from 'react-redux';
-import { updateLocation } from '../MainData/Store';
-
+import { goToMain, updateLocation } from '../MainData/Store';
 const Location = () => {
   const dispatch = useDispatch();
 
@@ -15,6 +14,7 @@ const Location = () => {
         })
       );
     });
+    dispatch(goToMain());
   };
 
   return (

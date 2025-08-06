@@ -11,7 +11,7 @@ import thunderstorm from '../assets/Pics/thunderstorm.svg';
 import atmosphere from '../assets/Pics/atmosphere.svg';
 import night from '../assets/Pics/night.png';
 import moon from '../assets/Pics/moon.png';
-
+import '../App.css'
 const HourslyForcasting = () => {
   const { hourlyForcast, Current_Day } = useContext(DATA);
 
@@ -57,7 +57,7 @@ const HourslyForcasting = () => {
       </h1>
 
       {/* Scrollable container */}
-      <div className="w-full overflow-x-auto pb-1  temp ">
+      <div id="scroller" className="w-full overflow-x-auto pb-1">
         <div className="flex gap-4 min-w-fit">
           {hourlyForcast.slice(0, 9).map((item, index) => (
             <div

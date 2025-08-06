@@ -1,7 +1,7 @@
 import React, { useRef } from 'react';
 import { HiOutlineSearch } from 'react-icons/hi';
 import { useDispatch } from 'react-redux';
-import { updateCity } from '../MainData/Store';
+import { goToMain, updateCity } from '../MainData/Store';
 
 const SearchBar = () => {
   const dispatch = useDispatch();
@@ -25,6 +25,7 @@ const SearchBar = () => {
             if (value !== '') {
               dispatch(updateCity(value));
               city_name.current.value = '';
+              dispatch(goToMain())
             }
           }
         }}
