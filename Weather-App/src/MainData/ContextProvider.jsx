@@ -51,11 +51,8 @@ const ContextProvider = ({ children }) => {
 
       try {
         setError(null); // Reset error before fetch
-        if ((lat === null && long === null)&& City===null) {
-          throw new Error('Location is not Allowed');
-        }
+
         if (lat != null && long != null) {
-          
           const response = await fetch(URL1);
           const forcastResponse = await fetch(URL1a);
 
