@@ -1,4 +1,4 @@
-Welcome back! In [Chapter 2: Product Display & Detail Components](02_product_display___detail_components_.md), we learned how to set up our "shop windows" and "product catalogs" to show items. But where do all those product details – the images, prices, descriptions – actually come from? And how do different parts of our website, like the main shop page and individual product detail pages, access the _same_ information without constantly asking for it?
+Welcome back! In [Chapter 2: Product Display & Detail Components](Documentation/Chapter2.md), we learned how to set up our "shop windows" and "product catalogs" to show items. But where do all those product details – the images, prices, descriptions – actually come from? And how do different parts of our website, like the main shop page and individual product detail pages, access the _same_ information without constantly asking for it?
 
 This chapter introduces **"Global Data Context."** Imagine this as our application's central library or a shared bookshelf. Instead of passing books (data) from hand to hand (which we call "prop-drilling" in React, and it can get messy!), we put all the important books on one main shelf. Then, any component that needs a "book" (like product details or customer reviews) can simply walk to the shared shelf and pick it up.
 
@@ -160,7 +160,7 @@ ReactDOM.createRoot(document.getElementById('root')).render(
 ```
 
 **Explanation:**
-By placing `<DataProvider>` around `<RouterProvider>`, we ensure that every page and every component rendered by our router (like `Shop`, `ProductDetail`, `Cart`, etc.) will have access to the `products` and `reviews` data provided by `DataProvider`. We also see the `Provider` for Redux here, which will be explained in [Chapter 5: Central State Management (Redux Store)](05_central_state_management__redux_store__.md).
+By placing `<DataProvider>` around `<RouterProvider>`, we ensure that every page and every component rendered by our router (like `Shop`, `ProductDetail`, `Cart`, etc.) will have access to the `products` and `reviews` data provided by `DataProvider`. We also see the `Provider` for Redux here, which will be explained in [Chapter 5: Central State Management (Redux Store)](Documentation/Chapter5.md).
 
 #### 4. Reading from the Bookshelf (`useContext` in Components)
 
@@ -233,7 +233,7 @@ export default TopData;
 ```
 
 **Explanation:**
-Here, `TopData` also gets all `products` from the `DATA` context. Then, using the `selectedId` (which was saved when the user clicked a product, as we saw in [Chapter 2: Product Display & Detail Components](02_product_display___detail_components_.md), and will be discussed in more detail in [Chapter 5: Central State Management (Redux Store)](05_central_state_management__redux_store__.md)), it finds and displays the details for _that specific_ product.
+Here, `TopData` also gets all `products` from the `DATA` context. Then, using the `selectedId` (which was saved when the user clicked a product, as we saw in [Chapter 2: Product Display & Detail Components](Documentation/Chapter2.md), and will be discussed in more detail in [Chapter 5: Central State Management (Redux Store)](Documentation/Chapter5.md)), it finds and displays the details for _that specific_ product.
 
 **Example 3: Getting Reviews in `Review.jsx` (Customer Reviews)**
 
@@ -314,6 +314,6 @@ This system ensures that all necessary components have access to the same, up-to
 
 In this chapter, we've learned about **Global Data Context**, which acts like a central library for our application's data. We explored how React's Context API, specifically `createContext`, `Provider`, and `useContext`, allows us to create a shared `DATA` bookshelf where our `DataProvider` component places both dynamically fetched product information and static review data. By wrapping our entire application with `DataProvider`, we ensure that any component can easily access this data when needed.
 
-This concept is vital for managing data efficiently in larger applications, preventing "prop-drilling" and making our code more organized. In the next chapter, we'll focus specifically on **[User Feedback (Reviews & Ratings)](04_user_feedback__reviews___ratings__.md)**, diving into how reviews are displayed and how users interact with them, building upon our understanding of how review data is made globally available.
+This concept is vital for managing data efficiently in larger applications, preventing "prop-drilling" and making our code more organized. In the next chapter, we'll focus specifically on **[User Feedback (Reviews & Ratings)](Documentation/Chapter4.md)**, diving into how reviews are displayed and how users interact with them, building upon our understanding of how review data is made globally available.
 
 ---

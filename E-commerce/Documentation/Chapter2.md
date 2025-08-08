@@ -1,6 +1,6 @@
 # Chapter 2: Product Display & Detail Components
 
-Welcome back! In [Chapter 1: Application Routing](01_application_routing_.md), we learned how to build the GPS system for our website, allowing users to navigate between different "addresses" or pages. Now that our users can travel, it's time to build the "places" they visit!
+Welcome back! In [Chapter 1: Application Routing](Documentation/Chapter1.md), we learned how to build the GPS system for our website, allowing users to navigate between different "addresses" or pages. Now that our users can travel, it's time to build the "places" they visit!
 
 This chapter is all about **"Product Display & Detail Components."** Think of this as setting up your shop's window displays and creating detailed product catalogs.
 
@@ -91,14 +91,14 @@ import { updateDetail } from '../Store/productDetail';
 
 **Explanation:**
 
-- **`<NavLink to="/Detail">`**: This component (from `react-router-dom`) makes the entire product card clickable. When clicked, it tells our application's GPS (our router from [Chapter 1: Application Routing](01_application_routing_.md)) to go to the `/Detail` address.
-- **`onClick={() => { dispatch(updateDetail({ id: product.id })); }}`**: This is a special instruction that runs _before_ or _as_ you navigate. `dispatch` is a tool (from Redux, which we'll cover in [Central State Management (Redux Store)](05_central_state_management__redux_store__.md)) that sends a "message" to our application's central memory. The `updateDetail` message tells our app, "Hey, remember `this product's ID` because the user just clicked it!" This ID is crucial for the detail page.
+- **`<NavLink to="/Detail">`**: This component (from `react-router-dom`) makes the entire product card clickable. When clicked, it tells our application's GPS (our router from [Chapter 1: Application Routing](Documentation/Chapter1.md)) to go to the `/Detail` address.
+- **`onClick={() => { dispatch(updateDetail({ id: product.id })); }}`**: This is a special instruction that runs _before_ or _as_ you navigate. `dispatch` is a tool (from Redux, which we'll cover in [Central State Management (Redux Store)](Documentation/Chapter5.md)) that sends a "message" to our application's central memory. The `updateDetail` message tells our app, "Hey, remember `this product's ID` because the user just clicked it!" This ID is crucial for the detail page.
 
 Components like `TopSelling.jsx` and `WholeData.jsx` use very similar logic to display their products and handle clicks.
 
 #### 3. Preparing the Product Detail Page (`ProductDetail.jsx`)
 
-Once you click a product card, our routing system (from [Chapter 1: Application Routing](01_application_routing_.md)) takes you to the `/Detail` page. This page is handled by the `ProductDetail.jsx` component. Its job is quite simple: it just brings in the `TopData` component, which is responsible for showing all the fine print about a single product.
+Once you click a product card, our routing system (from [Chapter 1: Application Routing](Documentation/Chapter1.md)) takes you to the `/Detail` page. This page is handled by the `ProductDetail.jsx` component. Its job is quite simple: it just brings in the `TopData` component, which is responsible for showing all the fine print about a single product.
 
 ```jsx
 // E-commerce/src/Component/ProductDetail.jsx
@@ -143,7 +143,7 @@ const TopData = () => {
 **Explanation:**
 
 - `useSelector`: This "listens" to our application's global memory (the Redux store) and grabs the `id` that was saved earlier by `updateDetail`. This is how `TopData` knows which product to display!
-- `useContext(DATA)`: This is how we get access to the complete list of _all_ products available in our application. We'll learn more about `Context` in [Global Data Context](03_global_data_context_.md).
+- `useContext(DATA)`: This is how we get access to the complete list of _all_ products available in our application. We'll learn more about `Context` in [Global Data Context](Documentation/Chapter3.md).
 - `products.find(...)`: Once we have the `selectedId` and `all products`, we simply use the `find` method to locate the one product object that matches the `selectedId`.
 
 **Part 2: Showing All the Details**
@@ -211,6 +211,6 @@ In this chapter, we've explored how our `Internship-Projects` e-commerce applica
 
 We saw how clicking a product in a display component triggers an action to remember that product's ID and then navigates the user to the detail page. On the detail page, the `TopData` component uses this remembered ID to fetch and present all the extensive information.
 
-This setup is crucial for creating a user-friendly browsing and shopping experience. In the next chapter, we'll dive deeper into where our application gets all this product data from, by exploring the concept of **[Global Data Context](03_global_data_context_.md)**.
+This setup is crucial for creating a user-friendly browsing and shopping experience. In the next chapter, we'll dive deeper into where our application gets all this product data from, by exploring the concept of **[Global Data Context](Documentation/Chapter3.md)**.
 
 ---

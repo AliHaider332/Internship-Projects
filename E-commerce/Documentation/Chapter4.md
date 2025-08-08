@@ -1,6 +1,6 @@
 # Chapter 4: User Feedback (Reviews & Ratings)
 
-Welcome back! In [Chapter 3: Global Data Context](03_global_data_context_.md), we learned how to set up a central "shared bookshelf" for our application's data, making product information and customer reviews easily accessible throughout our website. Now that we have this valuable review data, it's time to put it to good use!
+Welcome back! In [Chapter 3: Global Data Context](Documentation/Chapter3.md), we learned how to set up a central "shared bookshelf" for our application's data, making product information and customer reviews easily accessible throughout our website. Now that we have this valuable review data, it's time to put it to good use!
 
 This chapter is all about **"User Feedback (Reviews & Ratings)."** Imagine you're shopping online, and you see a cool product. How do you know if it's actually good? You look at what other people say about it! Customer reviews and star ratings are like direct advice from other shoppers, helping you decide if a product is right for you.
 
@@ -25,7 +25,7 @@ To manage user feedback, we'll focus on two main concepts:
 
 ### Building Our Stars and Stories (How to Use It)
 
-Let's look at how our project implements these components. Remember, all review data (the names, descriptions, and ratings) comes from our [Global Data Context](03_global_data_context_.md).
+Let's look at how our project implements these components. Remember, all review data (the names, descriptions, and ratings) comes from our [Global Data Context](Documentation/Chapter3.md).
 
 #### 1. The Star Counter: `Rating.jsx`
 
@@ -64,7 +64,7 @@ export default Rating;
 
 #### 2. The Customer Storyteller (Product Detail Page): `Review.jsx` (in `src/ProductDetails`)
 
-When a user is on an individual product page (which uses `ProductDetail.jsx`, as we saw in [Chapter 2: Product Display & Detail Components](02_product_display___detail_components_.md)), they want to see all the reviews for _that_ product. Our `E-commerce/src/ProductDetails/Review.jsx` component handles this by showing a simple list of all customer feedback.
+When a user is on an individual product page (which uses `ProductDetail.jsx`, as we saw in [Chapter 2: Product Display & Detail Components](Documentation/Chapter2.md)), they want to see all the reviews for _that_ product. Our `E-commerce/src/ProductDetails/Review.jsx` component handles this by showing a simple list of all customer feedback.
 
 ```jsx
 // E-commerce/src/ProductDetails/Review.jsx
@@ -100,7 +100,7 @@ export default ProductDetailReview;
 
 **Explanation:**
 
-- `useContext(DATA)`: This line connects to our global data bookshelf (from [Chapter 3: Global Data Context](03_global_data_context_.md)) and picks up the `reviews` array.
+- `useContext(DATA)`: This line connects to our global data bookshelf (from [Chapter 3: Global Data Context](Documentation/Chapter3.md)) and picks up the `reviews` array.
 - `reviews.map(...)`: This powerful JavaScript function allows us to go through each `review` in the `reviews` array and create a separate display `div` for it.
 - `<Rating rating={review.rating} />`: For each review, we pass its specific `rating` to our `Rating` component. This makes sure each customer's star feedback is displayed correctly.
 
@@ -185,7 +185,7 @@ sequenceDiagram
 
 **Step-by-step Explanation:**
 
-1.  **Reviews on the Shelf:** As we learned in [Chapter 3: Global Data Context](03_global_data_context_.md), our `DataProvider` places the `reviews` array onto the `DATA` context when the application starts.
+1.  **Reviews on the Shelf:** As we learned in [Chapter 3: Global Data Context](Documentation/Chapter3.md), our `DataProvider` places the `reviews` array onto the `DATA` context when the application starts.
 2.  **User Visits Page:** A user navigates to either a product detail page or the main shop page.
 3.  **Review Component Renders:** The relevant `Review.jsx` component (either `ProductDetails/Review.jsx` or `Shop/Review.jsx`) is rendered on the page.
 4.  **Reads from Bookshelf:** Both `Review` components use `useContext(DATA)` to access the `reviews` array from our `DATA` context.
@@ -196,6 +196,6 @@ sequenceDiagram
 
 ### Conclusion
 
-In this chapter, we've explored how our `Internship-Projects` application effectively displays **User Feedback (Reviews & Ratings)**. We saw how the simple yet powerful `Rating.jsx` component is used to visually represent numerical ratings with stars, making it a reusable asset across the entire site. We then looked at the two `Review.jsx` components – one for listing reviews on individual product pages and another for presenting them in an engaging carousel on the main shop page. Both components efficiently retrieve customer review data from our [Global Data Context](03_global_data_context_.md) and use the `Rating` component to show the stars.
+In this chapter, we've explored how our `Internship-Projects` application effectively displays **User Feedback (Reviews & Ratings)**. We saw how the simple yet powerful `Rating.jsx` component is used to visually represent numerical ratings with stars, making it a reusable asset across the entire site. We then looked at the two `Review.jsx` components – one for listing reviews on individual product pages and another for presenting them in an engaging carousel on the main shop page. Both components efficiently retrieve customer review data from our [Global Data Context](Documentation/Chapter3.md) and use the `Rating` component to show the stars.
 
-## Understanding this system for user feedback is key to building trust and enhancing the shopping experience. In the next chapter, we'll dive into an even more powerful way to manage our application's state and data: **[Central State Management (Redux Store)](05_central_state_management__redux_store__.md)**.
+## Understanding this system for user feedback is key to building trust and enhancing the shopping experience. In the next chapter, we'll dive into an even more powerful way to manage our application's state and data: **[Central State Management (Redux Store)](Documentation/Chapter5.md)**.

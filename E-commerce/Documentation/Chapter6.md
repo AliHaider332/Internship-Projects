@@ -1,6 +1,6 @@
 # Chapter 6: Shopping Cart Functionality
 
-Welcome back! In [Chapter 5: Central State Management (Redux Store)](05_central_state_management__redux_store__.md), we learned how Redux acts as our application's "organized brain," a central place to store and update dynamic data. This powerful brain is absolutely essential for one of the most crucial features of any e-commerce website: the **Shopping Cart!**
+Welcome back! In [Chapter 5: Central State Management (Redux Store)](Documentation/Chapter5.md), we learned how Redux acts as our application's "organized brain," a central place to store and update dynamic data. This powerful brain is absolutely essential for one of the most crucial features of any e-commerce website: the **Shopping Cart!**
 
 ### Why Do We Need a Smart Shopping Cart? (Motivation)
 
@@ -33,7 +33,7 @@ Let's dive into how these pieces work together in our application.
 
 #### 1. The Cart's Brain Section: `CART` Slice (`cart.js`)
 
-As we learned in [Chapter 5: Central State Management (Redux Store)](05_central_state_management__redux_store__.md), Redux slices manage specific parts of our application's state. Our `CART` slice is the "brain section" dedicated to knowing everything about the shopping cart.
+As we learned in [Chapter 5: Central State Management (Redux Store)](Documentation/Chapter5.md), Redux slices manage specific parts of our application's state. Our `CART` slice is the "brain section" dedicated to knowing everything about the shopping cart.
 
 ```jsx
 // E-commerce/src/Store/cart.js
@@ -92,7 +92,7 @@ export default CART; // Export the reducer itself
 
 #### 2. Adding Items to the Cart (`TopData.jsx`)
 
-When a user is on a product's detail page ([Chapter 2: Product Display & Detail Components](02_product_display___detail_components_.md)) and clicks the "ADD TO CART" button, we need to send a message to our Redux brain to update the cart.
+When a user is on a product's detail page ([Chapter 2: Product Display & Detail Components](Documentation/Chapter2.md)) and clicks the "ADD TO CART" button, we need to send a message to our Redux brain to update the cart.
 
 ```jsx
 // E-commerce/src/ProductDetails/TopData.jsx (Simplified)
@@ -168,7 +168,7 @@ const DesktopHeader = () => {
 
 #### 4. Displaying the Shopping Cart Page (`Cart.jsx`)
 
-The `Cart.jsx` component ([Chapter 1: Application Routing](01_application_routing_.md) showed its route) is the dedicated "display area" for the cart. It shows all the products, allows removal, and calculates the final total.
+The `Cart.jsx` component ([Chapter 1: Application Routing](Documentation/Chapter1.md) showed its route) is the dedicated "display area" for the cart. It shows all the products, allows removal, and calculates the final total.
 
 **Part 1: Getting Cart Data and Calculating Total**
 
@@ -201,7 +201,7 @@ const Cart = () => {
 
 **Explanation:**
 
-- `useContext(DATA)`: We still need access to our global `products` list (from [Chapter 3: Global Data Context](03_global_data_context_.md)) so we can find the full details (like images, descriptions) for the products that are only stored by their `ID` in the `CART` Redux slice.
+- `useContext(DATA)`: We still need access to our global `products` list (from [Chapter 3: Global Data Context](Documentation/Chapter3.md)) so we can find the full details (like images, descriptions) for the products that are only stored by their `ID` in the `CART` Redux slice.
 - `useSelector`: We use `useSelector` to read the `arr` (our actual cart items) and `totalAmount` from the `CART` slice.
 - `useEffect` and `dispatch(totalAmount())`: This is crucial! Every time the `AllProducts` array (our cart items) changes (e.g., an item is added or removed), this `useEffect` hook automatically runs. It then dispatches the `totalAmount()` action to our Redux Store, which tells the `CART` slice to re-run its `totalAmount` reducer and update the `totalAmount` state in Redux. This ensures the total is always up-to-date.
 
