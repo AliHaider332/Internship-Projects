@@ -1,0 +1,22 @@
+/* App.css */
+@font-face {
+  font-family: 'Rubik';
+  src: url('./assets/Fonts/Rubik80sFade-Regular.ttf') format('truetype');
+  font-weight: 800;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Roboto';
+  src: url('./assets/Fonts/RobotoSlab-VariableFont_wght.ttf') format('truetype');
+  
+  font-style: normal;
+}
+.Roboto{
+  font-family: 'Roboto',sans-serif;
+}
+.font-rubik {
+  font-family: 'Rubik', sans-serif;
+}
+
+@custom-variant dark (&:where(.dark, .dark *));
+@import 'tailwindcss';
