@@ -364,24 +364,32 @@ Let's visualize the flow of data through our Redux Store when something changes,
 
 ```mermaid
 sequenceDiagram
-    participant User
-    participant ComponentA["Component A (e.g., TopData)"]
-    participant Dispatch["dispatch()"]
-    participant Action["Action (e.g., addToCart)"]
-    participant Reducer["Reducer (e.g., CART slice)"]
-    participant ReduxStore["Redux Store (The Brain)"]
-    participant ComponentB["Component B (e.g., DesktopHeader)"]
-    participant BrowserUI["Browser UI"]
+    participant AppLoad as "App Loads (main.jsx)"
+    participant DataProvider as "DataProvider (Librarian)"
+    participant ExternalAPI as "External API (DummyJSON)"
+    participant DATAContext as "DATA Context (Bookshelf)"
+    participant ProductDisplayComponent as "Product Display Component (e.g., NewArrival)"
+    participant ProductDetailComponent as "Product Detail Component (e.g., TopData)"
+    participant ReviewComponent as "Review Component (e.g., Review.jsx)"
 
-    User->>ComponentA: 1. Clicks "Add to Cart"
-    ComponentA->>Dispatch: 2. Calls dispatch(addToCart Action)
-    Dispatch->>Action: 3. Creates the Action object
-    Action->>ReduxStore: 4. Sends Action to Redux Store
-    ReduxStore->>Reducer: 5. Redux Store passes State and Action to the relevant Reducer
-    Reducer->>ReduxStore: 6. Reducer returns a NEW State
-    ReduxStore->>ComponentB: 7. Redux Store notifies Component B (and others) that its relevant data has changed
-    ComponentB->>BrowserUI: 8. Component B re-renders with new data (e.g., updated cart count)
-    BrowserUI->>User: 9. User sees updated UI
+    AppLoad->>DataProvider: 1. Renders DataProvider at app's root
+    DataProvider->>ExternalAPI: 2. Fetches product data (using useEffect)
+    ExternalAPI-->>DataProvider: 3. Returns product data
+    DataProvider->>DATAContext: 4. Puts fetched products and static reviews onto the DATA Context (via DATA.Provider)
+    Note over DATAContext: Context now holds { products[], reviews[] }
+    DataProvider->>AppLoad: 5. Renders its children (the rest of the app)
+
+    ProductDisplayComponent->>DATAContext: 6. Needs products (uses useContext(DATA))
+    DATAContext-->>ProductDisplayComponent: 7. Provides products
+    ProductDetailComponent->>DATAContext: 8. Needs products (uses useContext(DATA))
+    DATAContext-->>ProductDetailComponent: 9. Provides products
+    ReviewComponent->>DATAContext: 10. Needs reviews (uses useContext(DATA))
+    DATAContext-->>ReviewComponent: 11. Provides reviews
+
+    ProductDisplayComponent-->>User: Displays products on shop page
+    ProductDetailComponent-->>User: Displays product details on detail page
+    ReviewComponent-->>User: Displays reviews on relevant pages
+
 ```
 
 **Step-by-step Explanation:**

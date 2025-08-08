@@ -272,13 +272,13 @@ Let's visualize how the data flows from being fetched to being used by various c
 
 ```mermaid
 sequenceDiagram
-    participant AppLoad["App Loads (main.jsx)"]
-    participant DataProvider["DataProvider (Librarian)"]
-    participant ExternalAPI["External API (DummyJSON)"]
-    participant DATAContext["DATA Context (Bookshelf)"]
-    participant ProductDisplayComponent["Product Display Component (e.g., NewArrival)"]
-    participant ProductDetailComponent["Product Detail Component (e.g., TopData)"]
-    participant ReviewComponent["Review Component (e.g., Review.jsx)"]
+    participant AppLoad as "App Loads (main.jsx)"
+    participant DataProvider as "DataProvider (Librarian)"
+    participant ExternalAPI as "External API (DummyJSON)"
+    participant DATAContext as "DATA Context (Bookshelf)"
+    participant ProductDisplayComponent as "Product Display Component (e.g., NewArrival)"
+    participant ProductDetailComponent as "Product Detail Component (e.g., TopData)"
+    participant ReviewComponent as "Review Component (e.g., Review.jsx)"
 
     AppLoad->>DataProvider: 1. Renders DataProvider at app's root
     DataProvider->>ExternalAPI: 2. Fetches product data (using useEffect)
@@ -297,6 +297,7 @@ sequenceDiagram
     ProductDisplayComponent-->>User: Displays products on shop page
     ProductDetailComponent-->>User: Displays product details on detail page
     ReviewComponent-->>User: Displays reviews on relevant pages
+
 ```
 
 **Step-by-step Explanation:**
