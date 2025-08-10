@@ -9,7 +9,7 @@ const DesktopMenu = () => {
           to="/"
           className={({ isActive }) =>
             isActive
-              ? 'border-b-2 border-orange-400 text-orange-400 font-semibold px-1 '
+              ? 'border-b-2 border-orange-400 text-orange-400 dark:border-orange-600 dark:text-orange-600 font-semibold px-1 '
               : ''
           }
         >
@@ -20,7 +20,7 @@ const DesktopMenu = () => {
           to="/skills"
           className={({ isActive }) =>
             isActive
-              ? 'border-b-2 border-orange-400 px-1 text-orange-400 font-semibold'
+              ? 'border-b-2 border-orange-400 px-1 text-orange-400 dark:border-orange-600 dark:text-orange-600 font-semibold'
               : ''
           }
         >
@@ -31,7 +31,7 @@ const DesktopMenu = () => {
           to={'/projects'}
           className={({ isActive }) =>
             isActive
-              ? 'border-b-2 border-orange-400 px-1 text-orange-400 font-semibold'
+              ? 'border-b-2 border-orange-400 px-1 text-orange-400 dark:border-orange-600 dark:text-orange-600 font-semibold'
               : ''
           }
         >
@@ -42,7 +42,7 @@ const DesktopMenu = () => {
           to={'/about'}
           className={({ isActive }) =>
             isActive
-              ? 'border-b-2 border-orange-400 px-1 text-orange-400 font-semibold'
+              ? 'border-b-2 border-orange-400 px-1 text-orange-400 dark:border-orange-600 dark:text-orange-600 font-semibold'
               : ''
           }
         >
@@ -53,7 +53,7 @@ const DesktopMenu = () => {
           to={'/contact'}
           className={({ isActive }) =>
             isActive
-              ? 'border-b-2 border-orange-400 px-1 text-orange-400 font-semibold'
+              ? 'border-b-2 border-orange-400 px-1 text-orange-400 dark:border-orange-600 dark:text-orange-600 font-semibold'
               : ''
           }
         >

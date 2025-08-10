@@ -11,6 +11,13 @@
   
   font-style: normal;
 }
+@font-face {
+  font-family: 'Caprasimo';
+  src: url('./assets/Fonts/Caprasimo-Regular.ttf');
+}
+.caprasimo{
+  font-family: 'Caprasimo';
+}
 .Roboto{
   font-family: 'Roboto',sans-serif;
 }

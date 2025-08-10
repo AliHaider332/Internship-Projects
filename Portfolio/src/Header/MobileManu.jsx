@@ -7,54 +7,54 @@ const MobileMenu = () => {
 
   function MobileOptions() {
     return (
-      <div className="absolute  mt-2 bg-orange-400 shadow-lg rounded-lg md:hidden">
-        <div className="absolute -top-2 left-3 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-orange-400"></div>
+      <div className="absolute  mt-2 bg-orange-400 dark:bg-orange-600 shadow-lg rounded-lg md:hidden">
+        <div className="absolute -top-2 left-3 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-orange-400 dark:border-b-orange-600"></div>
 
         {/* Menu Items */}
         <ul className="p-2 text-white font-serif space-y-1">
           <NavLink
             to="/"
             className={({ isActive }) =>
-              isActive ? 'block bg-amber-600 rounded' : 'block'
+              isActive ? 'block bg-orange-300 dark:bg-orange-500 rounded' : 'block'
             }
           >
-            <li className="p-1 cursor-pointer">Home</li>
+            <li className="p-1 cursor-pointer" onClick={()=>{setIsOpen(!isOpen)}}>Home</li>
           </NavLink>
 
           <NavLink
             to="/skills"
             className={({ isActive }) =>
-              isActive ? 'block bg-amber-600 rounded' : 'block'
+              isActive ? 'block bg-orange-300 dark:bg-orange-500 rounded' : 'block'
             }
           >
-            <li className="p-1 cursor-pointer">Skills</li>
+            <li className="p-1 cursor-pointer" onClick={()=>{setIsOpen(!isOpen)}} >Skills</li>
           </NavLink>
 
           <NavLink
             to="/projects"
             className={({ isActive }) =>
-              isActive ? 'block bg-amber-600 rounded' : 'block'
+              isActive ? 'block bg-orange-300 dark:bg-orange-500 rounded' : 'block'
             }
           >
-            <li className="p-1 cursor-pointer">Projects</li>
+            <li className="p-1 cursor-pointer" onClick={()=>{setIsOpen(!isOpen)}}>Projects</li>
           </NavLink>
 
           <NavLink
             to="/about"
             className={({ isActive }) =>
-              isActive ? 'block bg-amber-600 rounded' : 'block'
+              isActive ? 'block bg-orange-300 dark:bg-orange-500 rounded' : 'block'
             }
           >
-            <li className="p-1 cursor-pointer">About Me</li>
+            <li className="p-1 cursor-pointer" onClick={()=>{setIsOpen(!isOpen)}}>About Me</li>
           </NavLink>
 
           <NavLink
             to="/contact"
             className={({ isActive }) =>
-              isActive ? 'block bg-amber-600 rounded' : 'block'
+              isActive ? 'block bg-orange-300 dark:bg-orange-500 rounded' : 'block'
             }
           >
-            <li className="p-1 cursor-pointer">Contact Me</li>
+            <li className="p-1 cursor-pointer" onClick={()=>{setIsOpen(!isOpen)}}>Contact Me</li>
           </NavLink>
         </ul>
       </div>
