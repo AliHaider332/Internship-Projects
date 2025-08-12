@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom'; // ✅ Correct import
 const DesktopMenu = () => {
   return (
     <div>
-      <ul className="flex font-Nunito gap-x-10 text-[14px] lg:text-[18px] lg:gap-x-12 ">
+      <ul className="flex font-Nunito gap-x-10 text-[14px] lg:text-[15px] xl:text-[16px] lg:gap-x-12 ">
         <NavLink
           to="/"
           className={({ isActive }) =>

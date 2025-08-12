@@ -4,7 +4,7 @@ import { MdOutlineLibraryBooks } from 'react-icons/md';
 
 const Skills = () => {
   return (
-    <div className="flex flex-col justify-center items-center gap-5 md:pt-20 mb-5 lg:mt-0">
+    <div className="flex flex-col justify-center items-center gap-5 md:pt-20 mb-10 lg:mt-0">
       <h1 className="text-4xl font-bold dark:text-white py-5 caprasimo"> My Skills</h1>
 
       <div className="grid h-auto gap-8 place-items-center items-stretch md:grid-cols-2 lg:grid-cols-3 w-auto ">

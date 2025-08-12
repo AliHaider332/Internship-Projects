@@ -8,7 +8,7 @@ import {
   SiGithub,
   SiInstagram,
 } from 'react-icons/si';
-
+import { Link } from 'react-router';
 function LeftDiscription() {
   // Create reference to store the DOM element containing the animation
   const el = React.useRef(null);
@@ -30,10 +30,9 @@ function LeftDiscription() {
 
   return (
     <div className=" flex flex-col items-center justify-center md:items-baseline gap-7 lg:gap-9">
-      <span className='flex flex-col justify-between gap-3 md:w-full items-center md:items-baseline'>
-      <span className="Roboto text-[14px] lg:text-[16px]">Hi I am</span>
-      <span className="Roboto text-2xl lg:text-3xl">Ali Haider</span>
-      
+      <span className="flex flex-col justify-between gap-3 md:w-full items-center md:items-baseline">
+        <span className="Roboto text-[14px] lg:text-[16px]">Hi I am</span>
+        <span className="Roboto text-2xl lg:text-3xl">Ali Haider</span>
       </span>
       <span className="App Roboto font-extrabold text-3xl lg:text-4xl text-orange-400 dark:text-orange-600">
         <span ref={el} className="" />
@@ -45,7 +44,7 @@ function LeftDiscription() {
           target="_blank"
           className="p-2 rounded-full border  inline-block hover:bg-orange-400 dark:hover:bg-orange-600 hover:text-white hover:border-none shadow-md shadow-black hover:shadow-orange-400 dark:hover:shadow-orange-600 "
         >
-          <SiLinkedin size={24}/>
+          <SiLinkedin size={24} />
         </a>
         <a
           href="https://github.com/AliHaider332"
@@ -77,15 +76,14 @@ function LeftDiscription() {
         </a>
       </span>
 
-      <span className='flex gap-2 text-[12px] lg:text-[14px]'>
-      <button className="dark:bg-orange-600 font-sans text-white bg-orange-400  py-0.5  px-5 rounded-[5px] cursor-pointer">
-        Hire Me
-      </button>
+      <span className="flex gap-2 text-[12px] lg:text-[14px]">
+        <Link to={'/contact'} className="dark:bg-orange-600 font-sans text-white bg-orange-400  py-0.5  px-5 rounded-[5px] cursor-pointer hover:scale-105 transition-all duration-500 ease-in-out">
+          Hire Me
+        </Link>
 
-      <button className='border px-6 rounded-[5px]   py-0.5'>
-        Download Resuma
-      </button>
-
+        <button className="border px-6 rounded-[5px]   py-0.5">
+          Download Resuma
+        </button>
       </span>
     </div>
   );
