@@ -1,0 +1,55 @@
+# ----------------------
+# Node.js (Backend)
+# ----------------------
+Back End/node_modules/
+Back End/npm-debug.log*
+Back End/yarn-debug.log*
+Back End/yarn-error.log*
+
+# Environment variables (backend)
+Back End/.env
+Back End/.env.local
+Back End/.env.*.local
+
+# ----------------------
+# React/Vite (Frontend)
+# ----------------------
+Front End/node_modules/
+Front End/dist/
+Front End/build/
+
+# Environment variables (frontend)
+Front End/.env
+Front End/.env.local
+Front End/.env.*.local
+
+# ----------------------
+# Logs
+# ----------------------
+logs
+*.log
+logs/*
+*.pid
+*.seed
+*.pid.lock
+
+# ----------------------
+# OS / Editor junk
+# ----------------------
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.swp
+
+# ----------------------
+# Deployment (Vercel/Netlify/etc.)
+# ----------------------
+.vercel/
+.netlify/
+
+# ----------------------
+# Temporary
+# ----------------------
+tmp/
+temp/

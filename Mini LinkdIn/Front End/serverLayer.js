@@ -1,4 +1,4 @@
-const server = 'http://localhost:3000';
+const server = import.meta.env.VITE_API_BASE_URL;
 export const signInHandling = async (
   name,
   email,

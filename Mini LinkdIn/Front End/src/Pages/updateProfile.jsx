@@ -57,7 +57,7 @@ const ProfileUpdate = () => {
 
       if (detail.pic) {
         setPreviewPic(
-          `http://localhost:3000/${detail.pic.replace(/\\/g, '/')}`
+          `${import.meta.env.VITE_API_BASE_URL}/${detail.pic.replace(/\\/g, '/')}`
         );
       }
     }

@@ -108,7 +108,7 @@ const AllPostsPage = () => {
               <div className="w-12 h-12 rounded-full bg-cyan-500 flex items-center justify-center font-bold overflow-hidden">
                 {post.author?.pic ? (
                   <img
-                    src={`http://localhost:3000/${post.author.pic.replace(
+                    src={`${import.meta.env.VITE_API_BASE_URL}/${post.author.pic.replace(
                       /\\/g,
                       '/'
                     )}`}
@@ -143,7 +143,7 @@ const AllPostsPage = () => {
                   className="rounded-xl max-w-full max-h-[400px] object-contain mx-auto"
                 >
                   <source
-                    src={`http://localhost:3000/${post.video.replace(
+                    src={`${import.meta.env.VITE_API_BASE_URL}/${post.video.replace(
                       /\\/g,
                       '/'
                     )}`}
@@ -156,7 +156,7 @@ const AllPostsPage = () => {
               {/* Image */}
               {post.pic && (
                 <img
-                  src={`http://localhost:3000/${post.pic.replace(/\\/g, '/')}`}
+                  src={`${import.meta.env.VITE_API_BASE_URL}/${post.pic.replace(/\\/g, '/')}`}
                   alt="post"
                   className="rounded-xl max-w-full max-h-[400px] object-contain mx-auto"
                 />
@@ -264,7 +264,7 @@ const AllPostsPage = () => {
                         <div className="w-10 h-10 rounded-full overflow-hidden bg-cyan-500 flex-shrink-0">
                           {cmt.pic ? (
                             <img
-                              src={`http://localhost:3000/${cmt.pic.replace(
+                              src={`${import.meta.env.VITE_API_BASE_URL}/${cmt.pic.replace(
                                 /\\/g,
                                 '/'
                               )}`}

@@ -1,14 +1,19 @@
+require('dotenv').config(); // Load .env variables
+
 const express = require('express');
 const mongoose = require('mongoose');
 const cors = require('cors');
 const session = require('express-session');
-
-const path = require('path'); // <- add this
-const app = express();
-const Port = 3000;
+const path = require('path');
 const mongoConnect = require('connect-mongo');
-const DB_URL =
-  'mongodb+srv://root:root@root.fu0mz5q.mongodb.net/tasks?retryWrites=true&w=majority&appName=Root';
+
+const app = express();
+
+// Load from .env
+const Port = process.env.PORT || 3000;
+const DB_URL = process.env.MONGO_URI;
+const SESSION_SECRET = process.env.SESSION_SECRET;
+const CLIENT_URL = process.env.CLIENT_URL;
 
 // Routers
 const { userSignInRouter } = require('./routers/userSignIn');
@@ -29,6 +34,7 @@ const { deletePostRouter } = require('./routers/deletePost');
 const { getForEditPostRouter } = require('./routers/getForEditPost');
 const { updatePostRoute } = require('./routers/updatePost');
 
+// Mongo session store
 const store = mongoConnect.create({
   mongoUrl: DB_URL,
   collectionName: 'task-Session',
@@ -38,7 +44,7 @@ const store = mongoConnect.create({
 // Middleware
 app.use(
   cors({
-    origin: 'http://localhost:5173',
+    origin: CLIENT_URL,
     methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
     credentials: true,
   })
@@ -49,7 +55,7 @@ app.use(express.urlencoded({ extended: true }));
 
 app.use(
   session({
-    secret: 'Task Manager App',
+    secret: SESSION_SECRET,
     resave: false,
     saveUninitialized: false,
     store: store,
@@ -58,6 +64,7 @@ app.use(
 
 // Serve upload folder
 app.use('/upload', express.static(path.join(__dirname, 'upload')));
+
 // API routes
 app.use('/api', userSignInRouter);
 app.use('/api', userLogInRouter);
@@ -82,9 +89,9 @@ mongoose
   .connect(DB_URL)
   .then(() => {
     app.listen(Port, () => {
-      console.log(`Server is running on http://localhost:${Port}`);
+      console.log(`✅ Server is running on http://localhost:${Port}`);
     });
   })
   .catch((err) => {
-    console.log('Error:', err);
+    console.log('❌ Error:', err);
   });

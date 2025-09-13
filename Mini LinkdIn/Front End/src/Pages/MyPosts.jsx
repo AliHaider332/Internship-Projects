@@ -91,7 +91,7 @@ const MyPosts = () => {
               <div className="w-full max-w-3xl space-y-4 mb-4">
                 {post.pic && (
                   <img
-                    src={`http://localhost:3000/${post.pic.replace(
+                    src={`${import.meta.env.VITE_API_BASE_URL}/${post.pic.replace(
                       /\\/g,
                       '/'
                     )}`}
@@ -101,7 +101,7 @@ const MyPosts = () => {
                 )}
                 {post.video && (
                   <video
-                    src={`http://localhost:3000/${post.video.replace(
+                    src={`${import.meta.env.VITE_API_BASE_URL}/${post.video.replace(
                       /\\/g,
                       '/'
                     )}`}
@@ -170,7 +170,7 @@ const MyPosts = () => {
                       <img
                         src={
                           item.pic
-                            ? `http://localhost:3000/${item.pic.replace(
+                            ? `${import.meta.env.VITE_API_BASE_URL}/${item.pic.replace(
                                 /\\/g,
                                 '/'
                               )}`

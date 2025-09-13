@@ -93,7 +93,7 @@ const AccountDetail = () => {
           <img
             src={
               detail?.pic
-                ? `http://localhost:3000/${detail.pic.replace(/\\/g, '/')}`
+                ? `${import.meta.env.VITE_API_BASE_URL}/${detail.pic.replace(/\\/g, '/')}`
                 : 'default-profile.png'
             }
             alt={detail?.name || 'Profile'}

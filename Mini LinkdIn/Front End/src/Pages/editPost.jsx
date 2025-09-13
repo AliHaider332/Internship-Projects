@@ -26,10 +26,10 @@ const EditPost = () => {
       setTags(Array.isArray(editData.tags) ? editData.tags.join('#') : editData.tags || '');
 
       if (editData.pic) {
-        setPreviewPic(`http://localhost:3000/${editData.pic.replace(/\\/g, '/')}`);
+        setPreviewPic(`${import.meta.env.VITE_API_BASE_URL}/${editData.pic.replace(/\\/g, '/')}`);
       }
       if (editData.video) {
-        setPreviewVideo(`http://localhost:3000/${editData.video.replace(/\\/g, '/')}`);
+        setPreviewVideo(`${import.meta.env.VITE_API_BASE_URL}/${editData.video.replace(/\\/g, '/')}`);
       }
     }
   }, [editData]);
