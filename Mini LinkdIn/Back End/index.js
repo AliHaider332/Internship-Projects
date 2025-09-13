@@ -13,7 +13,7 @@ const app = express();
 const Port = process.env.PORT || 3000;
 const DB_URL = process.env.MONGO_URI;
 const SESSION_SECRET = process.env.SESSION_SECRET;
-const CLIENT_URL = process.env.CLIENT_URL;
+const CLIENT_URL = process.env.CLIENT_URL; // frontend URL from .env
 
 // Routers
 const { userSignInRouter } = require('./routers/userSignIn');
@@ -44,8 +44,8 @@ const store = mongoConnect.create({
 // Middleware
 app.use(
   cors({
-    origin: CLIENT_URL,
-    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE'],
+    origin: CLIENT_URL, // now controlled from .env
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
     credentials: true,
   })
 );
