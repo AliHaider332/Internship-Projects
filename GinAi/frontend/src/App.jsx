@@ -62,6 +62,9 @@ export default function AIGirlfriendUI() {
   };
 
   // Auto scroll to bottom when new messages arrive
+  function refresh() {
+    window.location.reload();
+  }
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
@@ -102,7 +105,7 @@ export default function AIGirlfriendUI() {
                 {msg.text}
                 {msg.type === 'error' && (
                   <button
-                    onClick={handleSend}
+                    onClick={refresh}
                     className="mt-2 px-3 py-1 bg-pink-500 text-white text-xs rounded-full hover:bg-pink-600"
                   >
                     🔄 Refresh

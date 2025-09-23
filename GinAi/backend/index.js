@@ -13,4 +13,4 @@ app.use('/', (req, res) => {
   res.send('404');
 });
 
-app.listen();
+app.listen(3000);
