@@ -10,9 +10,12 @@ export default function AIGirlfriendUI() {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
-  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
+  const [viewportHeight, setViewportHeight] = useState(
+    window.visualViewport ? window.visualViewport.height : window.innerHeight
+  );
   const chatEndRef = useRef(null);
 
+  // ✅ Send message
   const handleSend = async () => {
     if (!input.trim()) return;
 
@@ -59,31 +62,42 @@ export default function AIGirlfriendUI() {
     }
   };
 
-  function refresh() {
-    window.location.reload();
-  }
+  // ✅ Detect keyboard resize using visualViewport
+  useEffect(() => {
+    const updateHeight = () => {
+      setViewportHeight(
+        window.visualViewport ? window.visualViewport.height : window.innerHeight
+      );
+    };
 
-  // ✅ Scroll to bottom when messages change
+    if (window.visualViewport) {
+      window.visualViewport.addEventListener('resize', updateHeight);
+      window.visualViewport.addEventListener('scroll', updateHeight);
+    } else {
+      window.addEventListener('resize', updateHeight);
+    }
+
+    return () => {
+      if (window.visualViewport) {
+        window.visualViewport.removeEventListener('resize', updateHeight);
+        window.visualViewport.removeEventListener('scroll', updateHeight);
+      } else {
+        window.removeEventListener('resize', updateHeight);
+      }
+    };
+  }, []);
+
+  // ✅ Always scroll to bottom
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
-  // ✅ Detect mobile keyboard resize
-  useEffect(() => {
-    const handleResize = () => {
-      setViewportHeight(window.innerHeight);
-    };
-
-    window.addEventListener('resize', handleResize);
-    return () => window.removeEventListener('resize', handleResize);
-  }, []);
-
   return (
     <div
-      className="flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-pink-200 to-purple-200 poppins w-full"
-      style={{ height: viewportHeight }} // ✅ dynamic height
+      className="flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-pink-200 to-purple-200 poppins w-full poppins"
+      style={{ height: viewportHeight, minHeight: viewportHeight }}
     >
-      <div className="flex flex-col w-full max-w-md h-full bg-white shadow-2xl sm:rounded-3xl overflow-hidden custom-scroll">
+      <div className="flex flex-col w-full max-w-md h-full bg-white shadow-2xl sm:rounded-3xl overflow-hidden">
         {/* Header */}
         <div className="sticky top-0 flex items-center gap-3 p-4 bg-gradient-to-r from-pink-500 to-pink-400 text-white shadow-md z-10">
           <img
@@ -91,9 +105,7 @@ export default function AIGirlfriendUI() {
             alt="AI Girlfriend"
             className="w-12 h-12 rounded-full border-2 border-white shadow-lg"
           />
-          <h2 className="text-xl romantic font-semibold">
-            Artificial Girlfriend 💕
-          </h2>
+          <h2 className="text-xl font-semibold romantic">Artificial Girlfriend 💕</h2>
         </div>
 
         {/* Chat Window */}
@@ -101,34 +113,22 @@ export default function AIGirlfriendUI() {
           {messages.map((msg, i) => (
             <div
               key={i}
-              className={`flex mb-2 transition-all duration-200 ${
+              className={`flex mb-2 ${
                 msg.sender === 'user' ? 'justify-end' : 'justify-start'
               }`}
             >
               <div
-                className={`px-4 py-2 rounded-2xl max-w-xs shadow-md animate-fadeIn ${
+                className={`px-4 py-2 rounded-2xl max-w-xs shadow-md ${
                   msg.sender === 'user'
                     ? 'bg-gradient-to-r from-pink-500 to-pink-400 text-white rounded-br-none'
-                    : msg.type === 'error'
-                    ? 'bg-red-100 text-red-600 border border-red-300 flex items-center gap-2'
                     : 'bg-gradient-to-r from-purple-100 to-purple-200 text-gray-800 rounded-bl-none'
                 }`}
               >
-                {msg.type === 'error' && <span>❗</span>}
                 {msg.text}
-                {msg.type === 'error' && (
-                  <button
-                    onClick={refresh}
-                    className="ml-2 px-3 py-1 bg-pink-500 text-white text-xs rounded-full hover:bg-pink-600 transition"
-                  >
-                    🔄 Refresh
-                  </button>
-                )}
               </div>
             </div>
           ))}
 
-          {/* Loader bubble */}
           {loading && (
             <div className="flex justify-start mb-2">
               <div className="px-4 py-2 rounded-2xl bg-purple-100 text-gray-800 shadow-md rounded-bl-none">
@@ -140,8 +140,11 @@ export default function AIGirlfriendUI() {
           <div ref={chatEndRef}></div>
         </div>
 
-        {/* Input Area */}
-        <div className="sticky bottom-0 flex items-center border-t p-3 bg-white/70 backdrop-blur-md">
+        {/* Input Bar */}
+        <div
+          className="sticky bottom-0 flex items-center border-t p-3 bg-white/70 backdrop-blur-md"
+          style={{ paddingBottom: 'env(safe-area-inset-bottom)' }} // ✅ for iOS notch
+        >
           <input
             type="text"
             className="flex-1 px-4 py-2 rounded-full border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400"
@@ -151,7 +154,7 @@ export default function AIGirlfriendUI() {
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
           />
           <button
-            className="ml-2 p-3 bg-gradient-to-r from-pink-500 to-pink-400 text-white rounded-full hover:scale-105 shadow-lg transition disabled:opacity-50"
+            className="ml-2 p-3 bg-gradient-to-r from-pink-500 to-pink-400 text-white rounded-full hover:scale-105 shadow-lg transition"
             onClick={handleSend}
             disabled={loading}
           >
