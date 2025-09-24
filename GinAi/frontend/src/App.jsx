@@ -10,6 +10,7 @@ export default function AIGirlfriendUI() {
   ]);
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
+  const [viewportHeight, setViewportHeight] = useState(window.innerHeight);
   const chatEndRef = useRef(null);
 
   const handleSend = async () => {
@@ -62,14 +63,27 @@ export default function AIGirlfriendUI() {
     window.location.reload();
   }
 
+  // ✅ Scroll to bottom when messages change
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
+  // ✅ Detect mobile keyboard resize
+  useEffect(() => {
+    const handleResize = () => {
+      setViewportHeight(window.innerHeight);
+    };
+
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
-    <div className="flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-pink-200 to-purple-200 poppins min-h-screen w-full">
-      <div className="flex flex-col w-full h-screen sm:h-[90vh] sm:max-w-lg bg-white shadow-2xl sm:rounded-3xl overflow-hidden custom-scroll">
-        
+    <div
+      className="flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-pink-200 to-purple-200 poppins w-full"
+      style={{ height: viewportHeight }} // ✅ dynamic height
+    >
+      <div className="flex flex-col w-full max-w-md h-full bg-white shadow-2xl sm:rounded-3xl overflow-hidden custom-scroll">
         {/* Header */}
         <div className="sticky top-0 flex items-center gap-3 p-4 bg-gradient-to-r from-pink-500 to-pink-400 text-white shadow-md z-10">
           <img
