@@ -8,6 +8,7 @@ export default function AIGirlfriendUI() {
     { text: 'Hi love 💖 How’s your day going?', sender: 'ai' },
     { text: 'It’s going amazing! I missed you 😍', sender: 'user' },
   ]);
+  
   const [input, setInput] = useState('');
   const [loading, setLoading] = useState(false);
   const [viewportHeight, setViewportHeight] = useState(
