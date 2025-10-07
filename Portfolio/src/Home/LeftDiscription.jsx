@@ -15,16 +15,23 @@ function LeftDiscription() {
 
   useEffect(() => {
     const typed = new Typed(el.current, {
-      strings: ['Front End Developer', 'React Developer'],
-      typeSpeed: 150,
-      backSpeed: 150,
+      strings: [
+        'Web Application Developer',
+        'Mern Stack Developer',
+        'React Developer',
+        'UI/UX Developer',
+        'Front End Developer',
+        'Back End Developer',
+      ],
+      typeSpeed: 70, // typing speed (lower = faster)
+      backSpeed: 50, // backspace speed
+      backDelay: 1000, // pause before deleting
       loop: true,
       showCursor: true,
     });
 
     return () => {
-      // Destroy Typed instance during cleanup to stop animation
-      typed.destroy();
+      typed.destroy(); // cleanup on unmount
     };
   }, []);
 
@@ -77,12 +84,24 @@ function LeftDiscription() {
       </span>
 
       <span className="flex gap-2 text-[12px] lg:text-[14px]">
-        <Link to={'/contact'} className="dark:bg-orange-600 font-sans text-white bg-orange-400  py-0.5  px-5 rounded-[5px] cursor-pointer hover:scale-105 transition-all duration-500 ease-in-out">
+        <Link
+          to={'/contact'}
+          className="dark:bg-orange-600 font-sans text-white bg-orange-400  py-0.5  px-5 rounded-[5px] cursor-pointer hover:scale-105 transition-all duration-500 ease-in-out"
+        >
           Hire Me
         </Link>
-
-        <button className="border px-6 rounded-[5px]   py-0.5">
-          Download Resuma
+        <button
+          className="border px-6 rounded-[5px] py-0.5 active:bg-orange-600 hover:shadow-orange-600 active:text-white shadow-md cursor-pointer"
+          onClick={() => {
+            const link = document.createElement('a');
+            link.href = '/Ali-Haider.pdf'; // file in public folder
+            link.download = 'Ali_Haider_Resume.pdf';
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+          }}
+        >
+          Download Resume
         </button>
       </span>
     </div>

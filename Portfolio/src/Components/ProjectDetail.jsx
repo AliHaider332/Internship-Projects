@@ -1,10 +1,19 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { FaRegFileCode } from 'react-icons/fa';
 import { IoIosLink } from 'react-icons/io';
 import { Link } from 'react-router';
+
 const ProjectDetail = () => {
   const DATA = useSelector((store) => store.PDetail);
+  const [current, setCurrent] = useState(0);
+  function nextImage(params) {
+    setCurrent((prev) => (prev + 1) % DATA.image.length);
+  }
+
+  function prevImage() {
+    setCurrent((prev) => (prev === 0 ? DATA.image.length - 1 : prev - 1));
+  }
 
   return (
     <div className=" flex flex-col px-4 py-8 md:pt-20 lg:pt-25 gap-5">
@@ -16,11 +25,29 @@ const ProjectDetail = () => {
         <div className="flex flex-col lg:flex-row justify-center items-center gap-6 max-w-5xl w-full Roboto">
           {/* Project Image */}
 
-          <img
-            src={DATA.image}
-            alt={DATA.title}
-            className="w-full md:w-[70%] lg:w-1/2 rounded-2xl shadow-lg object-cover"
-          />
+          <div className="relative w-full md:w-[70%] lg:w-1/2 mx-auto">
+            <img
+              src={DATA.image[current]}
+              alt={DATA.title}
+              className="w-full rounded-2xl shadow-lg object-cover"
+            />
+            {DATA.image.length > 1 && (
+              <>
+                <button
+                  onClick={prevImage}
+                  className="absolute left-2 top-1/2 bg-white bg-opacity-50 rounded-full p-2 cursor-pointer"
+                >
+                  &#8592;
+                </button>
+                <button
+                  onClick={nextImage}
+                  className="absolute right-2 top-1/2 bg-white bg-opacity-50 rounded-full p-2 cursor-pointer"
+                >
+                  &#8594;
+                </button>
+              </>
+            )}
+          </div>
 
           {/* Project Info */}
           <div className="flex flex-col gap-4 w-full md:w-1/2">

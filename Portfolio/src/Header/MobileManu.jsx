@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HiMiniBars3CenterLeft } from 'react-icons/hi2';
 import { RxCross2 } from 'react-icons/rx';
 import { NavLink } from 'react-router-dom';
@@ -15,51 +15,110 @@ const MobileMenu = () => {
           <NavLink
             to="/"
             className={({ isActive }) =>
-              isActive ? 'block bg-orange-300 dark:bg-orange-500 rounded' : 'block'
+              isActive
+                ? 'block bg-orange-300 dark:bg-orange-500 rounded'
+                : 'block'
             }
           >
-            <li className="p-1 cursor-pointer" onClick={()=>{setIsOpen(!isOpen)}}>Home</li>
+            <li
+              className="p-1 cursor-pointer"
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            >
+              Home
+            </li>
           </NavLink>
 
           <NavLink
             to="/skills"
             className={({ isActive }) =>
-              isActive ? 'block bg-orange-300 dark:bg-orange-500 rounded' : 'block'
+              isActive
+                ? 'block bg-orange-300 dark:bg-orange-500 rounded'
+                : 'block'
             }
           >
-            <li className="p-1 cursor-pointer" onClick={()=>{setIsOpen(!isOpen)}} >Skills</li>
+            <li
+              className="p-1 cursor-pointer"
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            >
+              Skills
+            </li>
           </NavLink>
 
           <NavLink
             to="/projects"
             className={({ isActive }) =>
-              isActive ? 'block bg-orange-300 dark:bg-orange-500 rounded' : 'block'
+              isActive
+                ? 'block bg-orange-300 dark:bg-orange-500 rounded'
+                : 'block'
             }
           >
-            <li className="p-1 cursor-pointer" onClick={()=>{setIsOpen(!isOpen)}}>Projects</li>
+            <li
+              className="p-1 cursor-pointer"
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            >
+              Projects
+            </li>
           </NavLink>
 
           <NavLink
             to="/about"
             className={({ isActive }) =>
-              isActive ? 'block bg-orange-300 dark:bg-orange-500 rounded' : 'block'
+              isActive
+                ? 'block bg-orange-300 dark:bg-orange-500 rounded'
+                : 'block'
             }
           >
-            <li className="p-1 cursor-pointer" onClick={()=>{setIsOpen(!isOpen)}}>About Me</li>
+            <li
+              className="p-1 cursor-pointer"
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            >
+              About Me
+            </li>
           </NavLink>
 
           <NavLink
             to="/contact"
             className={({ isActive }) =>
-              isActive ? 'block bg-orange-300 dark:bg-orange-500 rounded' : 'block'
+              isActive
+                ? 'block bg-orange-300 dark:bg-orange-500 rounded'
+                : 'block'
             }
           >
-            <li className="p-1 cursor-pointer" onClick={()=>{setIsOpen(!isOpen)}}>Contact Me</li>
+            <li
+              className="p-1 cursor-pointer"
+              onClick={() => {
+                setIsOpen(!isOpen);
+              }}
+            >
+              Contact Me
+            </li>
           </NavLink>
         </ul>
       </div>
     );
   }
+
+  useEffect(() => {
+    function handleEvent() {
+      if (isOpen) {
+        setIsOpen(false);
+      }
+    }
+    window.addEventListener('mousedown', handleEvent);
+
+    // Cleanup when component unmounts
+    return () => {
+      window.removeEventListener('mousedown', handleEvent);
+    };
+  });
 
   return (
     <div>

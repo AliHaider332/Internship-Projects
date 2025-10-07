@@ -34,7 +34,7 @@ const Projects = () => {
                 {/* Image */}
                 <div className="lg:h-[250px] w-full">
                   <img
-                    src={project.image}
+                    src={project.image[0]}
                     alt={project.title}
                     className="w-full h-full object-cover transition-opacity duration-300 group-hover:opacity-50"
                   />
