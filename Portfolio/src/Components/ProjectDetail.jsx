@@ -29,19 +29,19 @@ const ProjectDetail = () => {
             <img
               src={DATA.image[current]}
               alt={DATA.title}
-              className="w-full rounded-2xl shadow-lg object-cover"
+              className="w-full h-64 md:h-80 lg:h-96 rounded-2xl shadow-lg object-cover object-center"
             />
             {DATA.image.length > 1 && (
               <>
                 <button
                   onClick={prevImage}
-                  className="absolute left-2 top-1/2 bg-white bg-opacity-50 rounded-full p-2 cursor-pointer"
+                  className="absolute left-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 cursor-pointer"
                 >
                   &#8592;
                 </button>
                 <button
                   onClick={nextImage}
-                  className="absolute right-2 top-1/2 bg-white bg-opacity-50 rounded-full p-2 cursor-pointer"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 bg-white bg-opacity-50 rounded-full p-2 cursor-pointer"
                 >
                   &#8594;
                 </button>

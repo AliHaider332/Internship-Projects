@@ -41,6 +41,8 @@ const MyPosts = () => {
 
   async function postDelete(id) {
     await deletePost(id);
+    window.location.reload(true);
+
     window.scrollTo(top);
     const data = await myPost(user.id); // API call
     getAllPost(data);

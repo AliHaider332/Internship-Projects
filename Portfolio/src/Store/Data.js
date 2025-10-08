@@ -11,10 +11,18 @@ import P18 from '../assets/Pictures/P18.png';
 import P19 from '../assets/Pictures/P19.png';
 import P20 from '../assets/Pictures/P20.png';
 
-
-
+import P31 from '../assets/Pictures/P31.png';
+import P32 from '../assets/Pictures/P32.png';
+import P33 from '../assets/Pictures/P33.png';
+import P34 from '../assets/Pictures/P34.png';
+import P35 from '../assets/Pictures/P35.png';
+import P36 from '../assets/Pictures/P36.png';
+import P37 from '../assets/Pictures/P37.png';
+import P38 from '../assets/Pictures/P38.png';
 
 import P22 from '../assets/Pictures/P22.png';
+
+import P23 from '../assets/Pictures/P23.png';
 // Deskto App pics
 import PD1 from '../assets/Pictures/PD1.png';
 //Console App Pics
@@ -22,30 +30,61 @@ import PC1 from '../assets/Pictures/PC1.png';
 
 export const Web = [
   {
-    id: 1,
-    title: 'E-Commerce Website',
-    image: [P11,P12,P13,P14,P15,P16,P17,P18,P19,P20],
+    id: 4,
+    title: 'MERN Social Media Application',
+    image: [P31, P32, P33, P34, P35, P36, P37, P38],
     summary:
-      'A professional-level, fully responsive e-commerce website built with React, Redux, Tailwind CSS, and React Router. It integrates DummyJSON API for product data fetching, features multi-page navigation, and allows users to add items to their cart. The design follows modern UI/UX standards for all devices.',
+      'A full-stack social media web application built using the MERN stack, featuring complete user authentication and authorization. Users can create an account, log in, and manage posts with full CRUD operations — including create, update, delete, and comment functionalities. The platform allows liking, disliking, editing comments, and managing user profiles. Backend authentication is powered by JWT, while the frontend provides a smooth and responsive user interface with React and Tailwind CSS.',
     techStack: [
-      'React',
-      'Redux',
+      'MongoDB',
+      'Express.js',
+      'React.js',
+      'Node.js',
+      'JWT Authentication',
       'Tailwind CSS',
-      'React Router',
-      'DummyJSON API',
+      'Mongoose',
+      'RESTful API',
     ],
     tags: [
-      'React',
-      'Redux',
-      'TailwindCSS',
-      'APIIntegration',
-      'ECommerce',
-      'ResponsiveDesign',
-      'PortfolioProject',
+      'MERNStack',
+      'FullStackDevelopment',
+      'Authentication',
+      'Authorization',
+      'CRUDOperations',
+      'JWT',
+      'MongoDB',
+      'ReactApp',
     ],
-    link: 'https://internship-projects-three.vercel.app/',
+
     github:
-      'https://github.com/AliHaider332/Internship-Projects/tree/main/E-commerce',
+      'https://github.com/AliHaider332/Internship-Projects/tree/main/Mini-linkdin',
+  },
+  {
+    id: 3,
+    title: 'AI Girlfriend Chatbot',
+    image: [P23],
+    summary:
+      'An interactive AI-powered chatbot designed to simulate romantic and emotional conversations. Built using Node.js, Express, and the Gemini LLM (via Google GenAI API), the chatbot role-plays as a virtual girlfriend, responding affectionately and naturally in Urdu-English (Roman Urdu). The backend handles real-time communication and maintains chat history to create a continuous, personalized experience. The app is fully deployed on Vercel with a secure serverless architecture.',
+    techStack: [
+      'Node.js',
+      'Express.js',
+      'Google Gemini API',
+      'CORS',
+      'dotenv',
+      'Vercel (Serverless Deployment)',
+    ],
+    tags: [
+      'AIChatbot',
+      'GeminiLLM',
+      'ExpressBackend',
+      'GoogleGenAI',
+      'APIDevelopment',
+      'Serverless',
+      'VercelDeployment',
+    ],
+    link: 'https://internship-projects-moc3.vercel.app/',
+    github:
+      'https://github.com/AliHaider332/Internship-Projects/tree/main/GinAi',
   },
   {
     id: 2,
@@ -73,6 +112,32 @@ export const Web = [
     link: 'https://internship-projects-doem.vercel.app/',
     github:
       'https://github.com/AliHaider332/Internship-Projects/tree/main/Weather-App',
+  },
+  {
+    id: 1,
+    title: 'E-Commerce Website',
+    image: [P11, P12, P13, P14, P15, P16, P17, P18, P19, P20],
+    summary:
+      'A professional-level, fully responsive e-commerce website built with React, Redux, Tailwind CSS, and React Router. It integrates DummyJSON API for product data fetching, features multi-page navigation, and allows users to add items to their cart. The design follows modern UI/UX standards for all devices.',
+    techStack: [
+      'React',
+      'Redux',
+      'Tailwind CSS',
+      'React Router',
+      'DummyJSON API',
+    ],
+    tags: [
+      'React',
+      'Redux',
+      'TailwindCSS',
+      'APIIntegration',
+      'ECommerce',
+      'ResponsiveDesign',
+      'PortfolioProject',
+    ],
+    link: 'https://internship-projects-three.vercel.app/',
+    github:
+      'https://github.com/AliHaider332/Internship-Projects/tree/main/E-commerce',
   },
 ];
 

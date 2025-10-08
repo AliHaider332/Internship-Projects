@@ -16,7 +16,7 @@ function LeftDiscription() {
   useEffect(() => {
     const typed = new Typed(el.current, {
       strings: [
-        'Web Application Developer',
+        'Full Stack Developer',
         'Mern Stack Developer',
         'React Developer',
         'UI/UX Developer',

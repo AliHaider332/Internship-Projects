@@ -6,8 +6,8 @@ import { setDetails } from '../Store/content';
 
 const Projects = () => {
   const projects = useSelector((store) => store.WebDevelopment);
-  const DesktopProject=useSelector(store=>store.DesktopDevelopment)
-  const ConsoleProject=useSelector(store=>store.ConsoleApp)
+  const DesktopProject = useSelector((store) => store.DesktopDevelopment);
+  const ConsoleProject = useSelector((store) => store.ConsoleApp);
   const dishpatcher = useDispatch();
 
   return (
@@ -28,11 +28,11 @@ const Projects = () => {
                 key={index}
                 className="group rounded-2xl shadow-md overflow-hidden dark:shadow-orange-600 duration-800 bg-transparent hover:bg-orange-400 dark:hover:bg-orange-600 hover:scale-105 hover:text-white relative transition-all"
                 onClick={() => {
-                  dishpatcher(setDetails({section:'WEB',ID:project.id}));
+                  dishpatcher(setDetails({ section: 'WEB', ID: project.id }));
                 }}
               >
                 {/* Image */}
-                <div className="lg:h-[250px] w-full">
+                <div className="h-[250px] w-full">
                   <img
                     src={project.image[0]}
                     alt={project.title}
@@ -60,10 +60,7 @@ const Projects = () => {
             </Link>
           ))}
         </div>
-
-
       </div>
-
 
       <div>
         <h2 className="text-3xl font-bold dark:text-white py-5 caprasimo text-left">
@@ -77,7 +74,9 @@ const Projects = () => {
                 key={index}
                 className="group rounded-2xl shadow-md overflow-hidden dark:shadow-orange-600 duration-800 bg-transparent hover:bg-orange-400 dark:hover:bg-orange-600 hover:scale-105 hover:text-white relative transition-all"
                 onClick={() => {
-                  dishpatcher(setDetails({section:'DESKTOP',ID:project.id}));
+                  dishpatcher(
+                    setDetails({ section: 'DESKTOP', ID: project.id })
+                  );
                 }}
               >
                 {/* Image */}
@@ -109,11 +108,7 @@ const Projects = () => {
             </Link>
           ))}
         </div>
-
-        
       </div>
-
-
 
       <div>
         <h2 className="text-3xl font-bold dark:text-white py-5 caprasimo text-left">
@@ -127,7 +122,9 @@ const Projects = () => {
                 key={index}
                 className="group rounded-2xl shadow-md overflow-hidden dark:shadow-orange-600 duration-800 bg-transparent hover:bg-orange-400 dark:hover:bg-orange-600 hover:scale-105 hover:text-white relative transition-all"
                 onClick={() => {
-                  dishpatcher(setDetails({section:'CONSOLE',ID:project.id}));
+                  dishpatcher(
+                    setDetails({ section: 'CONSOLE', ID: project.id })
+                  );
                 }}
               >
                 {/* Image */}
@@ -159,14 +156,7 @@ const Projects = () => {
             </Link>
           ))}
         </div>
-
-        
       </div>
-
-
-
-
-
     </div>
   );
 };
