@@ -1,31 +1,21 @@
 const express = require('express');
-const cors = require('cors');
-const dotenv = require('dotenv');
 const { chatRouter } = require('./router/aiChat');
-
-dotenv.config();
-
+const cors = require('cors');
 const app = express();
+require('dotenv').config();
 
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 app.use('/api', chatRouter);
-
-app.use('*', (req, res) => {
-  res.status(404).json({
-    success: false,
-    message: 'Route not found',
-  });
+app.use('/', (req, res) => {
+  res.send('404');
 });
 
-app.use((err, req, res, next) => {
-  console.error('Error:', err.message);
-  res.status(500).json({
-    success: false,
-    message: 'Internal Server Error',
-  });
+const PORT = process.env.PORT || 5000;
+
+app.listen(PORT, () => {
+  console.log(`🚀 Server running at http://localhost:${PORT}`);
 });
 
-module.exports = app; // ✅ export, don't listen
