@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 
 import { FiSun, FiMoon } from 'react-icons/fi';
 const Toggle = () => {
-  const [theme, updateTheme] = useState('dark');
+  const [theme, updateTheme] = useState('light');
 
   useEffect(() => {
     theme === 'dark'
