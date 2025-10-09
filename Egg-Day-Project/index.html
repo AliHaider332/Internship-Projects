@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EggCellent - Ultimate Egg Recipes & Nutrition Guide</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <nav class="nav">
+            <div class="logo">
+                <i class="fas fa-egg"></i>
+                EggCellent
+            </div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#recipes">Recipes</a></li>
+                <li><a href="#nutrition">Nutrition</a></li>
+                <li><a href="#benefits">Benefits</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Discover the Power of Eggs</h1>
+            <p>Explore delicious recipes, nutritional facts, and health benefits of nature's perfect protein</p>
+            <a href="#recipes" class="cta-button">Explore Recipes</a>
+        </div>
+    </section>
+
+    <!-- Recipes Section -->
+    <section id="recipes" class="recipes section">
+        <div class="container">
+            <h2>Popular Egg Recipes</h2>
+            <div class="recipes-grid" id="recipesGrid">
+                <!-- Recipes will be loaded by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Nutrition Section -->
+    <section id="nutrition" class="nutrition section">
+        <div class="container">
+            <h2>Egg Nutrition Facts</h2>
+            <div class="nutrition-content">
+                <div class="nutrition-card">
+                    <h3>Calories in Eggs</h3>
+                    <div class="calorie-info">
+                        <div class="calorie-item">
+                            <span class="calorie-type">Large Egg (50g)</span>
+                            <span class="calorie-value">72 calories</span>
+                        </div>
+                        <div class="calorie-item">
+                            <span class="calorie-type">Egg White</span>
+                            <span class="calorie-value">17 calories</span>
+                        </div>
+                        <div class="calorie-item">
+                            <span class="calorie-type">Egg Yolk</span>
+                            <span class="calorie-value">55 calories</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="nutrition-card">
+                    <h3>Nutritional Value per Large Egg</h3>
+                    <div class="nutrient-list">
+                        <div class="nutrient">
+                            <span>Protein</span>
+                            <span>6.3g</span>
+                        </div>
+                        <div class="nutrient">
+                            <span>Fat</span>
+                            <span>4.8g</span>
+                        </div>
+                        <div class="nutrient">
+                            <span>Carbs</span>
+                            <span>0.6g</span>
+                        </div>
+                        <div class="nutrient">
+                            <span>Cholesterol</span>
+                            <span>186mg</span>
+                        </div>
+                        <div class="nutrient">
+                            <span>Vitamin D</span>
+                            <span>41 IU</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Benefits Section -->
+    <section id="benefits" class="benefits section">
+        <div class="container">
+            <h2>Health Benefits of Eggs</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <i class="fas fa-dumbbell"></i>
+                    <h3>High-Quality Protein</h3>
+                    <p>Eggs contain all 9 essential amino acids, making them a complete protein source for muscle building and repair.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-brain"></i>
+                    <h3>Brain Health</h3>
+                    <p>Rich in choline, which is essential for brain development and function, memory, and nervous system health.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-eye"></i>
+                    <h3>Eye Protection</h3>
+                    <p>Contains lutein and zeaxanthin, antioxidants that reduce the risk of cataracts and macular degeneration.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-heart"></i>
+                    <h3>Heart Health</h3>
+                    <p>Moderate egg consumption can improve heart health by raising HDL (good) cholesterol levels.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-weight"></i>
+                    <h3>Weight Management</h3>
+                    <p>High protein content helps you feel full longer, reducing overall calorie intake throughout the day.</p>
+                </div>
+                <div class="benefit-card">
+                    <i class="fas fa-bone"></i>
+                    <h3>Bone Strength</h3>
+                    <p>Good source of Vitamin D and phosphorus, essential for strong bones and teeth.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Daily Usage Section -->
+    <section class="daily-usage section">
+        <div class="container">
+            <h2>Eggs in Daily Life</h2>
+            <div class="usage-content">
+                <div class="usage-text">
+                    <h3>Versatile Superfood</h3>
+                    <p>Eggs are one of the most versatile ingredients in cooking. Here's how to incorporate them into your daily routine:</p>
+                    <ul>
+                        <li><strong>Breakfast:</strong> Scrambled, boiled, or as omelets for sustained energy</li>
+                        <li><strong>Lunch:</strong> Added to salads, sandwiches, or fried rice</li>
+                        <li><strong>Dinner:</strong> In quiches, frittatas, or as protein topping</li>
+                        <li><strong>Baking:</strong> Essential for cakes, cookies, and pastries</li>
+                        <li><strong>Snacks:</strong> Hard-boiled eggs as portable, healthy snacks</li>
+                    </ul>
+                </div>
+                <div class="usage-tips">
+                    <h3>Storage Tips</h3>
+                    <div class="tips-grid">
+                        <div class="tip">
+                            <i class="fas fa-refrigerator"></i>
+                            <p>Store in refrigerator at 4°C or below</p>
+                        </div>
+                        <div class="tip">
+                            <i class="fas fa-box"></i>
+                            <p>Keep in original carton to prevent odor absorption</p>
+                        </div>
+                        <div class="tip">
+                            <i class="fas fa-clock"></i>
+                            <p>Use within 3-5 weeks of purchase</p>
+                        </div>
+                        <div class="tip">
+                            <i class="fas fa-temperature-low"></i>
+                            <p>Don't wash eggs - protective coating keeps them fresh</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="contact section">
+        <div class="container">
+            <h2>Contact Us</h2>
+            <div class="contact-content">
+                <div class="contact-info">
+                    <h3>Get in Touch</h3>
+                    <p>Have questions about eggs or recipes? We'd love to hear from you!</p>
+                    <div class="contact-details">
+                        <div class="contact-item">
+                            <i class="fas fa-envelope"></i>
+                            <span>info@eggexcellent.edu</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-phone"></i>
+                            <span>+1 (555) 123-EGGS</span>
+                        </div>
+                        <div class="contact-item">
+                            <i class="fas fa-map-marker-alt"></i>
+                            <span>University of Agriculture, Faisalabad, Sub-Campus Toba Tek Singh (UAF, TTS)</span>
+                        </div>
+                    </div>
+                </div>
+                <form class="contact-form" id="contactForm">
+                    <input type="text" placeholder="Your Name" required>
+                    <input type="email" placeholder="Your Email" required>
+                    <textarea placeholder="Your Message" rows="5" required></textarea>
+                    <button type="submit" class="cta-button">Send Message</button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <div class="container">
+          <div class="footer-content">
+              <div class="footer-section">
+                  <h3>EggCellent</h3>
+                  <p>Your ultimate guide to eggs - recipes, nutrition, and health benefits.</p>
+              </div>
+              <div class="footer-section">
+                  <h4>Quick Links</h4>
+                  <ul>
+                      <li><a href="#home">Go-Back</a></li>
+                  </ul>
+              </div>
+              <div class="footer-section">
+                  <h4>Connect With Us</h4>
+                  <div class="social-links">
+                      <a href="#"><i class="fab fa-facebook"></i></a>
+                      <a href="#"><i class="fab fa-twitter"></i></a>
+                      <a href="#"><i class="fab fa-instagram"></i></a>
+                  </div>
+              </div>
+          </div>
+          <div class="footer-bottom">
+              <p>&copy; 2025 EggCellent. Created for University World Egg Day Project.</p>
+          </div>
+      </div>
+  </footer>
+
+    <!-- Download Modal -->
+    <div class="modal" id="downloadModal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h3>Download Recipe</h3>
+            <p id="modalRecipeName"></p>
+            <div class="download-options">
+                <button class="download-btn" data-format="pdf">
+                    <i class="fas fa-file-pdf"></i>
+                    Download as PDF
+                </button>
+                <button class="download-btn" data-format="txt">
+                    <i class="fas fa-file-alt"></i>
+                    Download as Text
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
