@@ -6,5 +6,8 @@ const app = express();
 app.use(cors());
 
 app.use(portfolio);
+app.use('/', (req, res) => {
+  res.send(404);
+});
 
 app.listen(process.env.PORT, () => {});
