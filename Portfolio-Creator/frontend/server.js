@@ -5,7 +5,7 @@ export const DATA_FETCH = async (data) => {
     // Create FormData
     const formDataToSend = new FormData();
 
-    // Append non-file fields (convert objects/arrays to JSON)
+    // Append basic fields
     formDataToSend.append('name', data.name);
     formDataToSend.append('email', data.email);
     formDataToSend.append('phone', data.phone);
@@ -15,7 +15,13 @@ export const DATA_FETCH = async (data) => {
     formDataToSend.append('experience', JSON.stringify(data.experience));
     formDataToSend.append('projects', JSON.stringify(data.projects));
 
-    // Append file (if exists)
+    // Append social links (if any)
+    formDataToSend.append('links', JSON.stringify(data.links || {}));
+
+    // Append theme explanation (if any)
+    formDataToSend.append('theme', data.theme || '');
+
+    // Append profile image (if exists)
     if (data.profileImageFile) {
       formDataToSend.append('profileImage', data.profileImageFile);
     }
@@ -32,8 +38,6 @@ export const DATA_FETCH = async (data) => {
 
     const result = await res.json();
     console.log('Server Response:', result);
-
-    alert('Data submitted successfully!');
     return result;
   } catch (error) {
     console.error('Error submitting form:', error);
