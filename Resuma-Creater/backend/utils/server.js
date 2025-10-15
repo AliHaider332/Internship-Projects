@@ -1,8 +1,8 @@
-import { GoogleGenAI } from '@google/genai';
+const { GoogleGenAI } = require('@google/genai');
 
 const ai = new GoogleGenAI({ apiKey: process.env.GENAI_API_KEY });
 
-export const main = async (DATA) => {
+const main = async (DATA) => {
   try {
     const prompt = `
 You are an expert web developer AI.
@@ -63,3 +63,5 @@ JS:
     return { html: '', css: '', js: '', error: 'Error generating code.' };
   }
 };
+
+module.exports = { main };
