@@ -9,36 +9,36 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // Add this for JSON body parsing
+app.use(express.json()); // Add this for JSON parsing
 app.use(express.urlencoded({ extended: true })); // Add this for form data
 
 // Routes
 app.use('/api', portfolio);
 
-// Root route
+// Root route - FIXED: Use proper status sending
 app.get('/', (req, res) => {
   res.json({ 
     message: 'Portfolio Generator API',
-    status: 'Running'
+    status: 'Running',
+    timestamp: new Date().toISOString()
   });
 });
 
-// Health check route
-app.get('/health', (req, res) => {
-  res.status(200).json({ status: 'OK', timestamp: new Date().toISOString() });
-});
-
-// Handle 404
+// Handle 404 for all other routes - FIXED
 app.use('*', (req, res) => {
-  res.status(404).json({ error: 'Route not found' });
+  res.status(404).json({
+    error: 'Route not found',
+    path: req.originalUrl,
+    method: req.method
+  });
 });
 
 // Error handling middleware
 app.use((error, req, res, next) => {
-  console.error('Unhandled Error:', error);
-  res.status(500).json({ 
-    success: false, 
-    error: 'Internal server error' 
+  console.error('Server Error:', error);
+  res.status(500).json({
+    success: false,
+    error: 'Internal server error'
   });
 });
 
@@ -47,3 +47,6 @@ const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
+
+// Export for Vercel (if needed)
+module.exports = app;
