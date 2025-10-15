@@ -5,7 +5,11 @@ const { CloudinaryStorage } = require('multer-storage-cloudinary');
 const { main } = require('../utils/server');
 const cloudinary = require('cloudinary').v2;
 
-// Cloudinary Configuration
+// Cloudinary Configuration with error handling
+if (!process.env.CLOUD_NAME || !process.env.CLOUD_API_KEY || !process.env.CLOUD_API_SECRET) {
+  console.error('❌ Cloudinary environment variables are missing');
+}
+
 cloudinary.config({
   cloud_name: process.env.CLOUD_NAME,
   api_key: process.env.CLOUD_API_KEY,
@@ -26,17 +30,33 @@ const storage = new CloudinaryStorage({
 const upload = multer({ 
   storage,
   limits: {
-    fileSize: 5 * 1024 * 1024, // 5MB limit
+    fileSize: 5 * 1024 * 1024,
   }
 });
 
 const portfolio = express.Router();
+
+// Test route
+portfolio.get('/test', (req, res) => {
+  res.json({ 
+    message: 'Portfolio route is working!',
+    timestamp: new Date().toISOString()
+  });
+});
 
 // POST Route for Data Collector
 portfolio.post('/datacollector', upload.single('profileImage'), async (req, res) => {
   try {
     console.log('Request received:', req.body);
     
+    // Check if GENAI_API_KEY is available
+    if (!process.env.GENAI_API_KEY) {
+      return res.status(500).json({
+        success: false,
+        error: 'AI service configuration missing',
+      });
+    }
+
     const fileData = req.file;
 
     // Safe parsing with error handling
@@ -70,7 +90,15 @@ portfolio.post('/datacollector', upload.single('profileImage'), async (req, res)
       console.error('AI Generation Error:', error);
       return res.status(500).json({
         success: false,
-        error: 'AI failed to generate portfolio code.',
+        error: 'AI failed to generate portfolio code: ' + error,
+      });
+    }
+
+    // Check if we actually got content
+    if (!html && !css && !js) {
+      return res.status(500).json({
+        success: false,
+        error: 'AI returned empty response',
       });
     }
 
@@ -89,11 +117,6 @@ portfolio.post('/datacollector', upload.single('profileImage'), async (req, res)
       error: 'Server error while processing request: ' + error.message,
     });
   }
-});
-
-// Test route
-portfolio.get('/test', (req, res) => {
-  res.json({ message: 'Portfolio route is working!' });
 });
 
 module.exports = { portfolio };

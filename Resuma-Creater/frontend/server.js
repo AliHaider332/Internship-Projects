@@ -21,7 +21,7 @@ export const DATA_FETCH = async (data) => {
     }
 
     // Send to backend
-    const res = await fetch(`${server}/datacollector`, {
+    const res = await fetch(`${server}/api/datacollector`, {
       method: 'POST',
       body: formDataToSend, // no need to set headers for FormData
     });
