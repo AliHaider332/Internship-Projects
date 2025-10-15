@@ -9,13 +9,13 @@ const app = express();
 
 // Middleware
 app.use(cors());
-app.use(express.json()); // Add this for JSON parsing
-app.use(express.urlencoded({ extended: true })); // Add this for form data
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api', portfolio);
 
-// Root route - FIXED: Use proper status sending
+// Root route
 app.get('/', (req, res) => {
   res.json({ 
     message: 'Portfolio Generator API',
@@ -24,8 +24,16 @@ app.get('/', (req, res) => {
   });
 });
 
-// Handle 404 for all other routes - FIXED
-app.use('*', (req, res) => {
+// Health check route
+app.get('/health', (req, res) => {
+  res.status(200).json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString()
+  });
+});
+
+// Handle 404 - FIXED: Remove the '*' pattern
+app.use((req, res, next) => {
   res.status(404).json({
     error: 'Route not found',
     path: req.originalUrl,
@@ -38,7 +46,7 @@ app.use((error, req, res, next) => {
   console.error('Server Error:', error);
   res.status(500).json({
     success: false,
-    error: 'Internal server error'
+    error: 'Internal server error: ' + error.message
   });
 });
 
@@ -48,5 +56,4 @@ app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
 });
 
-// Export for Vercel (if needed)
 module.exports = app;
