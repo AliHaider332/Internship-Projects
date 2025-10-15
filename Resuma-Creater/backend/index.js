@@ -5,7 +5,7 @@ const { portfolio } = require('./routes/portfolio');
 const app = express();
 app.use(cors());
 
-app.use(portfolio);
+app.use('/api',portfolio);
 app.use('/', (req, res) => {
   res.send(404);
 });
