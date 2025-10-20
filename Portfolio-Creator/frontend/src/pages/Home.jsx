@@ -1,320 +1,311 @@
-import { useState, useRef, useEffect } from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-import { DATA_FETCH } from '../../server';
-import ResumeForm from '../components/ResumeForm';
+import { Link } from 'react-router-dom';
+import {
+  Sparkles,
+  Globe,
+  Rocket,
+  ArrowRight,
+  Zap,
+  Code2,
+  Star,
+} from 'lucide-react';
+import { motion } from 'framer-motion';
+import profilePic from '../assets/front.jpg';
 
-export default function Home() {
-  const [portfolio, setPortfolio] = useState({ html: '', css: '', js: '' });
-  const [activeTab, setActiveTab] = useState('html');
-  const [showPreview, setShowPreview] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [leftWidth, setLeftWidth] = useState(50);
-  const [copyStates, setCopyStates] = useState({ html: false, css: false, js: false });
-  const isResizing = useRef(false);
-  const [isMobile, setIsMobile] = useState(false);
+function Home() {
+  const tools = [
+    {
+      id: 1,
+      name: 'Portfolio Builder',
+      description:
+        'Craft stunning portfolio websites with AI-powered templates and smart suggestions that showcase your work professionally.',
+      link: '/portfolio-builder',
+      icon: <Globe className="w-6 h-6" />,
+      gradient: 'from-blue-500 to-cyan-500',
+      bgGradient: 'from-blue-50/80 to-cyan-50/80',
+      stats: '10+ Templates',
+      featured: true,
+    },
+    {
+      id: 2,
+      name: 'AI Code Assistant',
+      description:
+        'Intelligent code generation and debugging powered by advanced AI models for developers.',
+      link: '#',
+      icon: <Code2 className="w-6 h-6" />,
+      gradient: 'from-purple-500 to-pink-500',
+      bgGradient: 'from-purple-50/80 to-pink-50/80',
+      stats: 'Coming Soon',
+      featured: false,
+    },
+    {
+      id: 3,
+      name: 'Design Studio',
+      description:
+        'Create beautiful designs and prototypes with AI-driven layout suggestions and components.',
+      link: '#',
+      icon: <Sparkles className="w-6 h-6" />,
+      gradient: 'from-emerald-500 to-green-500',
+      bgGradient: 'from-emerald-50/80 to-green-50/80',
+      stats: 'In Development',
+      featured: false,
+    },
+  ];
 
-  // ✅ Responsive mode check
-  useEffect(() => {
-    const checkSize = () => setIsMobile(window.innerWidth <= 765);
-    checkSize();
-    window.addEventListener('resize', checkSize);
-    return () => window.removeEventListener('resize', checkSize);
-  }, []);
-
-  const handleMouseDown = () => (isResizing.current = true);
-  const handleMouseUp = () => (isResizing.current = false);
-
-  const handleMouseMove = (e) => {
-    if (!isResizing.current || isMobile) return;
-    const newWidth = (e.clientX / window.innerWidth) * 100;
-    if (newWidth > 20 && newWidth < 80) {
-      setLeftWidth(newWidth);
-    }
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.2,
+      },
+    },
   };
 
-  useEffect(() => {
-    window.addEventListener('mousemove', handleMouseMove);
-    window.addEventListener('mouseup', handleMouseUp);
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove);
-      window.removeEventListener('mouseup', handleMouseUp);
-    };
-  }, [isMobile]);
-
-  const handleFormSubmit = async (data) => {
-    setLoading(true);
-    setShowPreview(false);
-    try {
-      const result = await DATA_FETCH(data);
-      if (result?.html || result?.css || result?.js) {
-        setPortfolio(result);
-      }
-    } catch (error) {
-      console.error('Error generating portfolio:', error);
-    } finally {
-      setLoading(false);
-    }
+  const itemVariants = {
+    hidden: { opacity: 0, y: 30 },
+    visible: {
+      opacity: 1,
+      y: 0,
+      transition: {
+        duration: 0.6,
+        ease: 'easeOut',
+      },
+    },
   };
-
-  const copyToClipboard = async (code, tabName) => {
-    try {
-      await navigator.clipboard.writeText(code);
-      setCopyStates(prev => ({ ...prev, [tabName]: true }));
-      setTimeout(() => {
-        setCopyStates(prev => ({ ...prev, [tabName]: false }));
-      }, 2000);
-    } catch (err) {
-      console.error('Failed to copy text: ', err);
-      // Fallback for older browsers
-      const textArea = document.createElement('textarea');
-      textArea.value = code;
-      document.body.appendChild(textArea);
-      textArea.select();
-      document.execCommand('copy');
-      document.body.removeChild(textArea);
-      setCopyStates(prev => ({ ...prev, [tabName]: true }));
-      setTimeout(() => {
-        setCopyStates(prev => ({ ...prev, [tabName]: false }));
-      }, 2000);
-    }
-  };
-
-  const renderCode = () => {
-    let code = '';
-    if (activeTab === 'html') code = portfolio.html;
-    if (activeTab === 'css') code = portfolio.css;
-    if (activeTab === 'js') code = portfolio.js;
-
-    return (
-      <div className="relative h-full">
-        {/* Copy Button */}
-        {code && (
-          <button
-            onClick={() => copyToClipboard(code, activeTab)}
-            className={`absolute top-4 right-4 z-10 px-4 py-2 rounded-lg text-sm font-semibold transition-all duration-200 flex items-center gap-2 shadow-lg ${
-              copyStates[activeTab]
-                ? 'bg-green-600 text-white border-green-700'
-                : 'bg-indigo-600 text-white border-indigo-700 hover:bg-indigo-700'
-            } border`}
-          >
-            {copyStates[activeTab] ? (
-              <>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
-                </svg>
-                Copied!
-              </>
-            ) : (
-              <>
-                <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
-                </svg>
-                Copy Code
-              </>
-            )}
-          </button>
-        )}
-        
-        {/* Code Display */}
-        <pre className="h-full w-full bg-gray-900 text-green-300 p-6 overflow-auto text-sm whitespace-pre pt-16">
-          <code>{code || `// No ${activeTab.toUpperCase()} code generated yet.\n// Fill out the form and click "Generate Portfolio" to get started.`}</code>
-        </pre>
-      </div>
-    );
-  };
-
-  const createPreview = () => {
-    const { html, css, js } = portfolio;
-    return `
-      <!DOCTYPE html>
-      <html>
-        <head>
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <style>${css}</style>
-        </head>
-        <body>${html}<script>${js}</script></body>
-      </html>
-    `;
-  };
-
-  const hasPortfolio = portfolio.html || portfolio.css || portfolio.js;
 
   return (
-    <div
-      className={`min-h-screen bg-gradient-to-br from-indigo-50 to-purple-100 flex ${
-        isMobile ? 'flex-col' : 'flex-row'
-      } relative transition-all duration-300 overflow-hidden`}
-      onMouseUp={handleMouseUp}
-      onMouseMove={handleMouseMove}
-    >
-      {/* 🧾 Left Section – Form */}
-      <div
-        className="bg-white shadow-lg relative transition-all duration-200 flex flex-col"
-        style={{ width: isMobile ? '100%' : `${leftWidth}%` }}
-      >
-        <div className="p-6 border-b border-gray-200">
-          <h1 className="text-2xl font-bold text-indigo-600">
-            AI Portfolio Builder
-          </h1>
-          <p className="text-gray-600 text-sm mt-1">
-            Fill out your details and generate a beautiful portfolio
-          </p>
-        </div>
-        
-        <div className="flex-1 overflow-y-auto scrollbar-thin scrollbar-thumb-indigo-500 scrollbar-track-gray-200 hover:scrollbar-thumb-indigo-400">
-          <div className="p-6">
-            <ResumeForm onSubmit={handleFormSubmit} />
-          </div>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-100/30">
+      {/* Hero Section */}
+      <section className="relative overflow-hidden">
+        {/* Background Elements */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-100/40 via-transparent to-transparent"></div>
 
-        {/* 🔄 Loader Overlay */}
-        {loading && (
-          <div className="absolute inset-0 bg-white/90 flex flex-col items-center justify-center z-50 backdrop-blur-sm">
-            <div className="animate-spin rounded-full h-16 w-16 border-t-4 border-b-4 border-indigo-600 border-solid"></div>
-            <p className="text-indigo-600 mt-4 font-semibold text-lg">
-              Generating Your Portfolio...
-            </p>
-            <p className="text-gray-500 mt-2 text-sm">
-              This may take a few moments
-            </p>
-          </div>
-        )}
-      </div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-20 pb-16">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            {/* Text Content */}
+            <motion.div
+              initial={{ opacity: 0, x: -40 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8 }}
+              className="text-center lg:text-left"
+            >
+              <motion.div
+                initial={{ opacity: 0, scale: 0 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 0.2, duration: 0.5 }}
+                className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-blue-200 shadow-sm mb-8"
+              >
+                <Sparkles className="w-4 h-4 text-blue-600 animate-pulse" />
+                <span className="text-sm font-medium text-blue-700 tracking-wide">
+                  AI-POWERED TOOLS COLLECTION
+                </span>
+              </motion.div>
 
-      {/* 🪟 Draggable Divider (Desktop Only) */}
-      {!isMobile && (
-        <div
-          onMouseDown={handleMouseDown}
-          className="w-2 cursor-col-resize bg-gray-300 hover:bg-indigo-400 transition-all duration-200 hover:w-3 relative group"
-        >
-          <div className="absolute inset-y-0 left-1/2 transform -translate-x-1/2 w-1 bg-indigo-500 opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
-        </div>
-      )}
+              <h1 className="text-5xl lg:text-6xl font-bold text-gray-900 mb-6 leading-tight tracking-tight">
+                Build Amazing <br />
+                <span className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+                  Digital Experiences
+                </span>
+              </h1>
 
-      {/* 💻 Right Section – Code & Preview */}
-      <AnimatePresence>
-        {hasPortfolio && !loading && (
-          <motion.div
-            key="portfolio-section"
-            initial={{
-              opacity: 0,
-              y: isMobile ? 100 : 0,
-              x: isMobile ? 0 : 100,
-            }}
-            animate={{ opacity: 1, y: 0, x: 0 }}
-            exit={{ opacity: 0, y: isMobile ? 100 : 0, x: isMobile ? 0 : 100 }}
-            transition={{ duration: 0.6, ease: 'easeOut' }}
-            className={`${
-              isMobile ? 'w-full h-[70vh]' : 'flex-1'
-            } flex flex-col bg-gray-50 overflow-hidden`}
-          >
-            {/* 🧩 Tabs Header */}
-            <div className="flex justify-between items-center border-b border-gray-300 bg-white px-6 py-3 shadow-sm flex-wrap gap-2">
-              <div className="flex flex-wrap gap-2">
-                {['html', 'css', 'js'].map((tab) => (
-                  <button
-                    key={tab}
-                    onClick={() => {
-                      setActiveTab(tab);
-                      setShowPreview(false);
-                    }}
-                    className={`px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 border ${
-                      activeTab === tab && !showPreview
-                        ? 'bg-indigo-600 text-white shadow-md border-indigo-700'
-                        : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-300 hover:border-gray-400'
-                    }`}
-                  >
-                    {tab.toUpperCase()}
-                  </button>
-                ))}
-                <button
-                  onClick={() => setShowPreview(!showPreview)}
-                  className={`px-5 py-2.5 text-sm font-semibold rounded-lg transition-all duration-200 border ${
-                    showPreview
-                      ? 'bg-green-600 text-white shadow-md border-green-700'
-                      : 'bg-white hover:bg-gray-50 text-gray-700 border-gray-300 hover:border-gray-400'
-                  }`}
+              <p className="text-xl text-gray-600 mb-8 leading-relaxed max-w-2xl font-light tracking-wide">
+                Hi, I'm <span className="font-semibold text-blue-600">Ali</span>{' '}
+                — a passionate developer creating intelligent tools that
+                transform your creative workflow. Discover applications designed
+                to enhance your productivity and bring your ideas to life.
+              </p>
+
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+                className="flex flex-col sm:flex-row gap-4 justify-center lg:justify-start"
+              >
+                <a
+                  href="#tools"
+                  className="inline-flex items-center gap-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-8 py-4 rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 group"
                 >
-                  {showPreview ? 'Live Preview' : 'Show Preview'}
+                  Explore Tools
+                  <Rocket className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                </a>
+                <button className="inline-flex items-center gap-3 bg-white text-gray-700 px-8 py-4 rounded-2xl font-semibold border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 hover:border-gray-300">
+                  View GitHub
+                  <Code2 className="w-5 h-5" />
                 </button>
-              </div>
-              <div className="flex items-center gap-2 text-sm text-gray-500">
-                <div className="w-2 h-2 bg-green-500 rounded-full animate-pulse"></div>
-                AI Generated
-              </div>
-            </div>
+              </motion.div>
+            </motion.div>
 
-            {/* 💻 Main Content Area - Full Height */}
-            <div className="flex-1 flex flex-col min-h-0 p-6">
-              {!showPreview ? (
-                <div className="flex flex-col h-full bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-                  {/* Code Header */}
-                  <div className="px-4 py-3 bg-gray-800 border-b border-gray-700 flex justify-between items-center">
+            {/* Profile Image */}
+            <motion.div
+              initial={{ opacity: 0, scale: 0.8, rotate: -5 }}
+              animate={{ opacity: 1, scale: 1, rotate: 0 }}
+              transition={{ duration: 0.8, delay: 0.3 }}
+              className="relative flex justify-center"
+            >
+              <div className="relative">
+                {/* Background Glow */}
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-400 to-purple-400 rounded-3xl blur-3xl opacity-20 animate-pulse"></div>
+
+                {/* Image Container */}
+                <div className="relative bg-gradient-to-br from-white to-blue-50 p-8 rounded-3xl shadow-2xl border border-blue-100/50 backdrop-blur-sm">
+                  <img
+                    src={profilePic}
+                    alt="Ali Haider"
+                    className="w-80 h-80 object-cover rounded-2xl shadow-lg"
+                  />
+
+                  {/* Floating Badge */}
+                  <motion.div
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.8 }}
+                    className="absolute -bottom-4 -right-4 bg-gradient-to-r from-blue-600 to-purple-600 text-white px-6 py-3 rounded-2xl shadow-lg border border-white/20"
+                  >
                     <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      <span className="text-gray-300 text-sm font-medium ml-2">
-                        {activeTab.toUpperCase()}
+                      <Sparkles className="w-4 h-4" />
+                      <span className="font-semibold text-sm tracking-wide">
+                        AI DEVELOPER
                       </span>
                     </div>
-                    <div className="text-xs text-gray-400">
-                      Click the copy button to copy the code
-                    </div>
-                  </div>
-                  
-                  {/* Code Content - Full Height with Scrollbars Only Here */}
-                  <div className="flex-1 overflow-auto scrollbar-thin scrollbar-thumb-indigo-500 scrollbar-track-gray-800 hover:scrollbar-thumb-indigo-400">
-                    {renderCode()}
-                  </div>
+                  </motion.div>
                 </div>
-              ) : (
-                <div className="h-full bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden">
-                  {/* Preview Header */}
-                  <div className="px-4 py-3 bg-gray-800 border-b border-gray-700 flex justify-between items-center">
-                    <div className="flex items-center gap-2">
-                      <div className="w-3 h-3 bg-red-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-yellow-500 rounded-full"></div>
-                      <div className="w-3 h-3 bg-green-500 rounded-full"></div>
-                      <span className="text-gray-300 text-sm font-medium ml-2">
-                        Live Preview
-                      </span>
-                    </div>
-                    <div className="text-xs text-gray-400">
-                      Responsive View
-                    </div>
-                  </div>
-                  
-                  {/* Preview Content - Full Height */}
-                  <div className="h-full bg-white">
-                    <iframe
-                      srcDoc={createPreview()}
-                      title="Portfolio Preview"
-                      sandbox="allow-scripts allow-same-origin"
-                      className="w-full h-full rounded-b-xl bg-white"
-                    />
-                  </div>
-                </div>
-              )}
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* 🧑‍💻 Empty State */}
-      {!hasPortfolio && !loading && (
-        <div className={`${isMobile ? 'w-full h-64' : 'flex-1'} flex justify-center items-center p-8`}>
-          <div className="text-center max-w-md">
-            <div className="text-6xl mb-4">👨‍💻</div>
-            <h3 className="text-xl font-semibold text-gray-700 mb-2">
-              Your Portfolio Awaits
-            </h3>
-            <p className="text-gray-500 text-sm">
-              Fill out the form and click "Generate Portfolio" to see your AI-generated code and live preview here.
-            </p>
+              </div>
+            </motion.div>
           </div>
         </div>
-      )}
+      </section>
+
+      {/* Tools Section */}
+      <section id="tools" className="relative py-20 px-4 sm:px-6 lg:px-8">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 bg-[url('data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iNjAiIGhlaWdodD0iNjAiIHZpZXdCb3g9IjAgMCA2MCA2MCIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj48Y2lyY2xlIGN4PSIzMCIgY3k9IjMwIiByPSIyIiBmaWxsPSIjZThmMmZmIiBmaWxsLW9wYWNpdHk9IjAuMyIvPjwvc3ZnPg==')] opacity-30"></div>
+
+        <div className="relative max-w-7xl mx-auto">
+          {/* Section Header */}
+          <motion.div
+            initial={{ opacity: 0, y: 30 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-center mb-16"
+          >
+            <motion.div
+              initial={{ opacity: 0 }}
+              whileInView={{ opacity: 1 }}
+              transition={{ delay: 0.2 }}
+              className="inline-flex items-center gap-2 bg-white/80 backdrop-blur-sm px-4 py-2 rounded-full border border-purple-200 shadow-sm mb-4"
+            >
+              <Zap className="w-4 h-4 text-purple-600" />
+              <span className="text-sm font-medium text-purple-700 tracking-wide">
+                FEATURED CREATIONS
+              </span>
+            </motion.div>
+            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4 tracking-tight">
+              Discover My{' '}
+              <span className="bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
+                AI Tools
+              </span>
+            </h2>
+            <p className="text-xl text-gray-600 max-w-3xl mx-auto leading-relaxed font-light tracking-wide">
+              Each tool is meticulously crafted with cutting-edge AI technology
+              to deliver exceptional user experiences and streamline your
+              workflow.
+            </p>
+          </motion.div>
+
+          {/* Tools Grid */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            whileInView="visible"
+            viewport={{ once: true }}
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+          >
+            {tools.map((tool, index) => (
+              <motion.div
+                key={tool.id}
+                variants={itemVariants}
+                whileHover={{ y: -8, scale: 1.02 }}
+                className="group relative"
+              >
+                {/* Featured Badge */}
+                {tool.featured && (
+                  <div className="absolute -top-3 -right-3 z-20 bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-3 py-1 rounded-full text-xs font-bold shadow-lg flex items-center gap-1">
+                    <Star className="w-3 h-3 fill-current" />
+                    FEATURED
+                  </div>
+                )}
+
+                <div
+                  className={`relative h-full bg-gradient-to-br ${tool.bgGradient} backdrop-blur-sm border border-white/50 rounded-3xl shadow-lg hover:shadow-2xl transition-all duration-500 overflow-hidden`}
+                >
+                  {/* Header with Icon */}
+                  <div className="p-6 border-b border-white/50">
+                    <div className="flex items-center justify-between mb-4">
+                      <div
+                        className={`p-3 rounded-2xl bg-gradient-to-r ${tool.gradient} shadow-md`}
+                      >
+                        {tool.icon}
+                      </div>
+                      <span className="text-xs font-semibold bg-white/80 text-gray-700 px-3 py-1 rounded-full tracking-wide">
+                        {tool.stats}
+                      </span>
+                    </div>
+
+                    <h3 className="text-2xl font-bold text-gray-900 mb-2 tracking-tight group-hover:text-gray-800 transition-colors">
+                      {tool.name}
+                    </h3>
+
+                    <p className="text-gray-600 leading-relaxed font-light tracking-wide text-sm">
+                      {tool.description}
+                    </p>
+                  </div>
+
+                  {/* Action Button */}
+                  <div className="p-6">
+                    <Link
+                      to={tool.link}
+                      className={`inline-flex items-center justify-center gap-2 w-full bg-gradient-to-r ${
+                        tool.gradient
+                      } text-white py-3 px-6 rounded-xl font-semibold shadow-md hover:shadow-lg transition-all duration-300 group/btn ${
+                        !tool.featured
+                          ? 'opacity-50 cursor-not-allowed'
+                          : 'hover:scale-105'
+                      }`}
+                    >
+                      <span>
+                        {tool.featured ? 'Launch Tool' : 'Coming Soon'}
+                      </span>
+                      {tool.featured && (
+                        <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
+                      )}
+                    </Link>
+                  </div>
+
+                  {/* Hover Effect Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-br from-white/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-3xl pointer-events-none"></div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+
+          {/* Bottom CTA */}
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ delay: 0.6 }}
+            className="text-center mt-16"
+          >
+            <p className="text-gray-600 mb-6 font-light tracking-wide">
+              More innovative tools are in development. Stay tuned for updates!
+            </p>
+            <button className="inline-flex items-center gap-2 bg-white text-gray-700 px-6 py-3 rounded-xl font-semibold border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 hover:border-gray-300">
+              <Sparkles className="w-4 h-4" />
+              Add Your Feedback
+            </button>
+          </motion.div>
+        </div>
+      </section>
     </div>
   );
 }
+
+export default Home;
