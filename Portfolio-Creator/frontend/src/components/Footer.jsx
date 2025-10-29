@@ -1,114 +1,81 @@
-import { Github, Linkedin, Mail, Heart, Code, Rocket } from 'lucide-react';
+import { Github, Linkedin, Mail, Heart, ExternalLink } from 'lucide-react';
 
 function Footer() {
+  const currentYear = new Date().getFullYear();
+
+  const socialLinks = [
+    {
+      icon: Github,
+      href: 'https://github.com/AliHaider332',
+      label: 'GitHub',
+    },
+    {
+      icon: Linkedin,
+      href: 'https://linkedin.com/in/alihaider332',
+      label: 'LinkedIn',
+    },
+    {
+      icon: Mail,
+      href: 'mailto:bhaialihaider332@gmail.com',
+      label: 'Email',
+    },
+    {
+      icon: ExternalLink,
+      href: 'https://internship-projects-1gqx.vercel.app/',
+      label: 'Portfolio',
+    },
+  ];
+
   return (
-    <footer className="bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-700 py-12 mt-16 shadow-2xl relative overflow-hidden">
-      {/* Background Pattern */}
+    <footer className="bg-gradient-to-r from-indigo-700 via-purple-700 to-indigo-800 text-white py-16 mt-20 relative overflow-hidden">
+      {/* Background decoration */}
       <div className="absolute inset-0 opacity-10">
-        <div className="absolute inset-0" style={{
-          backgroundImage: `radial-gradient(circle at 25px 25px, rgba(255,255,255,0.3) 2%, transparent 40%)`,
-          backgroundSize: '50px 50px'
-        }}></div>
+        <div className="absolute -top-20 -right-20 w-40 h-40 bg-white rounded-full blur-3xl"></div>
+        <div className="absolute -bottom-20 -left-20 w-40 h-40 bg-purple-300 rounded-full blur-3xl"></div>
       </div>
-      
+
       <div className="max-w-6xl mx-auto px-6 relative z-10">
-        {/* Main Footer Content */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+        <div className="flex flex-col items-center space-y-10">
           {/* Brand Section */}
-          <div className="text-center md:text-left">
-            <div className="flex items-center justify-center md:justify-start gap-3 mb-4">
-              <div className="w-10 h-10 bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm">
-                <Rocket className="w-6 h-6 text-white" />
-              </div>
-              <h3 className="text-2xl font-bold text-white">Ali Tools</h3>
-            </div>
-            <p className="text-blue-100 leading-relaxed max-w-md">
-              Building intelligent AI-powered tools to simplify your workflow and boost productivity. 
-              Empowering developers and creators worldwide.
-            </p>
-          </div>
-
-          {/* Quick Links */}
           <div className="text-center">
-            <h4 className="text-lg font-semibold text-white mb-4 flex items-center justify-center gap-2">
-              <Code className="w-5 h-5" />
-              Quick Links
-            </h4>
-            <div className="space-y-2">
-              <a href="#tools" className="block text-blue-100 hover:text-white transition-colors duration-200 hover:translate-x-1 transform">
-                AI Tools
-              </a>
-              <a href="#portfolio" className="block text-blue-100 hover:text-white transition-colors duration-200 hover:translate-x-1 transform">
-                Portfolio Builder
-              </a>
-              <a href="#about" className="block text-blue-100 hover:text-white transition-colors duration-200 hover:translate-x-1 transform">
-                About
-              </a>
-            </div>
-          </div>
-
-          {/* Connect Section */}
-          <div className="text-center md:text-right">
-            <h4 className="text-lg font-semibold text-white mb-4">Let's Connect</h4>
-            <div className="flex justify-center md:justify-end gap-4 mb-4">
-              <a 
-                href="https://github.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-12 h-12 bg-white/10 hover:bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:shadow-lg group"
-              >
-                <Github className="w-6 h-6 text-white group-hover:text-blue-200 transition-colors" />
-              </a>
-              <a 
-                href="https://linkedin.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-12 h-12 bg-white/10 hover:bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:shadow-lg group"
-              >
-                <Linkedin className="w-6 h-6 text-white group-hover:text-blue-200 transition-colors" />
-              </a>
-              <a 
-                href="mailto:ali@example.com"
-                className="w-12 h-12 bg-white/10 hover:bg-white/20 rounded-xl flex items-center justify-center backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:shadow-lg group"
-              >
-                <Mail className="w-6 h-6 text-white group-hover:text-blue-200 transition-colors" />
-              </a>
-            </div>
-            <p className="text-blue-100 text-sm">
-              Got ideas? Let's build something amazing together!
+            <h2 className="text-4xl font-bold mb-3 bg-clip-text text-transparent bg-gradient-to-r from-yellow-300 to-orange-300 hover:from-orange-300 hover:to-yellow-300 transition-all duration-500">
+              Ali Haider
+            </h2>
+            <p className="text-white/80 text-lg font-light">
+              Full Stack Developer & UI/UX Enthusiast
             </p>
           </div>
-        </div>
 
-        {/* Divider */}
-        <div className="border-t border-white/20 my-6"></div>
-
-        {/* Bottom Section */}
-        <div className="flex flex-col md:flex-row justify-between items-center gap-4">
-          <div className="flex items-center gap-2 text-blue-100">
-            <span>© {new Date().getFullYear()} Ali Tools. Crafted with</span>
-            <Heart className="w-4 h-4 text-red-400 fill-current animate-pulse" />
-            <span>for the community</span>
+          {/* Social Links */}
+          <div className="flex flex-wrap justify-center gap-4 md:gap-6">
+            {socialLinks.map(({ icon: Icon, href, label }) => (
+              <a
+                key={label}
+                href={href}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-3 bg-white/10 backdrop-blur-sm px-5 py-3 rounded-xl hover:bg-white/20 transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-white/10 border border-white/10 hover:border-white/20 group"
+              >
+                <Icon className="w-5 h-5 group-hover:scale-110 transition-transform duration-300" />
+                <span className="font-medium">{label}</span>
+              </a>
+            ))}
           </div>
-          
-          <div className="flex items-center gap-6 text-sm text-blue-100">
-            <a href="#privacy" className="hover:text-white transition-colors duration-200">
-              Privacy Policy
+
+          {/* Call to Action */}
+          <div className="text-center max-w-2xl">
+            <p className="text-white/80 text-lg mb-4">
+              Let's build something amazing together!
+            </p>
+            <a
+              href="mailto:bhaialihaider332@gmail.com"
+              className="inline-flex items-center gap-2 bg-gradient-to-r from-orange-400 to-pink-500 hover:from-orange-500 hover:to-pink-600 text-white font-semibold px-8 py-3 rounded-full transition-all duration-300 hover:scale-105 hover:shadow-lg hover:shadow-orange-500/25"
+            >
+              <Mail className="w-5 h-5" />
+              Get In Touch
             </a>
-            <a href="#terms" className="hover:text-white transition-colors duration-200">
-              Terms of Service
-            </a>
-            <span className="flex items-center gap-1">
-              <Code className="w-4 h-4" />
-              Open Source
-            </span>
           </div>
         </div>
-
-        {/* Floating Elements */}
-        <div className="absolute -top-4 -left-4 w-8 h-8 bg-white/10 rounded-full blur-sm"></div>
-        <div className="absolute -bottom-4 -right-4 w-12 h-12 bg-purple-400/20 rounded-full blur-sm"></div>
-        <div className="absolute top-1/2 right-1/4 w-6 h-6 bg-blue-400/20 rounded-full blur-sm"></div>
       </div>
     </footer>
   );

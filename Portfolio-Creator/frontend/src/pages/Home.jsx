@@ -127,10 +127,13 @@ function Home() {
                   Explore Tools
                   <Rocket className="w-5 h-5 group-hover:translate-x-1 transition-transform" />
                 </a>
-                <button className="inline-flex items-center gap-3 bg-white text-gray-700 px-8 py-4 rounded-2xl font-semibold border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 hover:border-gray-300">
+                <a
+                  className="inline-flex items-center gap-3 bg-white text-gray-700 px-8 py-4 rounded-2xl font-semibold border border-gray-200 shadow-sm hover:shadow-md transition-all duration-300 hover:border-gray-300"
+                  href="https://github.com/AliHaider332/Internship-Projects/tree/main/Portfolio-Creator"
+                >
                   View GitHub
                   <Code2 className="w-5 h-5" />
-                </button>
+                </a>
               </motion.div>
             </motion.div>
 
