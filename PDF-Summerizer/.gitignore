@@ -1,15 +1,4 @@
-# Node modules
-node_modules/
 frontend/node_modules/
 backend/node_modules/
-
-# Environment files
 frontend/.env
 backend/.env
-
-# Optional
-.DS_Store
-Thumbs.db
-*.log
-dist/
-build/
