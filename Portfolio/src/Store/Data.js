@@ -70,7 +70,7 @@ export const Web = [
       'Pinecone',
       'PDFChat',
     ],
-    link: 'https://internship-projects-b72u-2jphum29l.vercel.app/', // you can add your live project link here
+    link: 'https://internship-projects-b72u.vercel.app/', // you can add your live project link here
     github:
       'https://github.com/AliHaider332/Internship-Projects/tree/main/PDF-Summerizer', // you can add your GitHub repo link here
   },
