@@ -7,15 +7,19 @@ import chatting from './routes/Chatting.js';
 dotenv.config();
 
 const app = express();
+
+// ✅ Simple CORS setup for your exact frontend
 app.use(cors({
   origin: process.env.FRONTEND_URL,
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
+
 app.use(express.json());
 
+// ✅ Routes
 app.use('/api', createVector);
-app.use('/api',chatting)
+app.use('/api', chatting);
 
 app.get('/', (req, res) => {
   res.send('🚀 Backend is running successfully!');
