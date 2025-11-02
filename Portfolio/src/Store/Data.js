@@ -74,7 +74,6 @@ export const Web = [
     github:
       'https://github.com/AliHaider332/Internship-Projects/tree/main/PDF-Summerizer', // you can add your GitHub repo link here
   },
-  ,
   {
     id: 5,
     title: 'AI-Powered Portfolio Builder',

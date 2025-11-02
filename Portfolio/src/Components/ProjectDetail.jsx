@@ -19,7 +19,7 @@ const ProjectDetail = () => {
   return (
     <div className="flex flex-col px-4 py-8 md:pt-20 lg:pt-28 xl:pt-32 gap-10">
       <div className="flex flex-col justify-center items-center gap-10 w-full">
-        <h1 className="text-4xl font-bold dark:text-white caprasimo text-center">
+      <h1 className="text-5xl md:text-6xl font-bold dark:text-white py-6 caprasimo bg-gradient-to-r from-gray-800 to-orange-600 dark:from-white dark:to-orange-400 bg-clip-text text-transparent">
           {DATA.title}
         </h1>
 

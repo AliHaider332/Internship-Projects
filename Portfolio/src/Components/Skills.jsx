@@ -7,225 +7,382 @@ import {
   FaDatabase,
   FaCloud,
   FaRobot,
+  FaReact,
+  FaNodeJs,
+  FaGitAlt,
+  FaPython,
+  FaBootstrap,
 } from 'react-icons/fa';
+import {
+  SiJavascript,
+  SiHtml5,
+  SiCss3,
+  SiExpress,
+  SiMongodb,
+  SiPostgresql,
+  SiTailwindcss,
+  SiCplusplus,
+  SiOpenai,
+  SiCloudinary,
+  SiSocketdotio,
+} from 'react-icons/si';
 import { MdOutlineLibraryBooks } from 'react-icons/md';
 
 const Skills = () => {
+  // Tool icons data for the running strip using React Icons
+  const toolIcons = [
+    { name: 'HTML5', icon: <SiHtml5 className="text-orange-500" /> },
+    { name: 'CSS3', icon: <SiCss3 className="text-blue-500" /> },
+    { name: 'JavaScript', icon: <SiJavascript className="text-yellow-400" /> },
+    { name: 'React', icon: <FaReact className="text-cyan-400" /> },
+    { name: 'Node.js', icon: <FaNodeJs className="text-green-600" /> },
+    {
+      name: 'Express',
+      icon: <SiExpress className="text-gray-800 dark:text-white" />,
+    },
+    { name: 'MongoDB', icon: <SiMongodb className="text-green-500" /> },
+    { name: 'PostgreSQL', icon: <SiPostgresql className="text-blue-600" /> },
+    { name: 'Tailwind', icon: <SiTailwindcss className="text-cyan-500" /> },
+    { name: 'Bootstrap', icon: <FaBootstrap className="text-purple-500" /> },
+    { name: 'Git', icon: <FaGitAlt className="text-orange-600" /> },
+    { name: 'Python', icon: <FaPython className="text-blue-400" /> },
+    { name: 'C++', icon: <SiCplusplus className="text-blue-600" /> },
+    { name: 'OpenAI', icon: <SiOpenai className="text-green-600" /> },
+    { name: 'Cloudinary', icon: <SiCloudinary className="text-blue-400" /> },
+    {
+      name: 'Socket.io',
+      icon: <SiSocketdotio className="text-black dark:text-white" />,
+    },
+  ];
+
   return (
-    <div className="flex flex-col justify-center items-center gap-5 md:pt-20 mb-10 lg:mt-0">
-      <h1 className="text-4xl font-bold dark:text-white py-5 caprasimo">
-        {' '}
+    <div className="flex flex-col justify-center items-center gap-8 md:pt-20 mb-10 pb-6 lg:mt-0 px-4 overflow-hidden ">
+      <h1 className="text-5xl md:text-6xl font-bold dark:text-white py-6 caprasimo bg-gradient-to-r from-gray-800 to-orange-600 dark:from-white dark:to-orange-400 bg-clip-text text-transparent text-center">
         My Skills
       </h1>
 
-      <div className="grid h-auto gap-8 place-items-center items-stretch md:grid-cols-2 lg:grid-cols-3 w-auto ">
+      {/* Running Tool Strip */}
+      <div className="w-full max-w-7xl mx-auto mb-12 overflow-hidden">
+        <div className="relative">
+          {/* Gradient overlays */}
+          <div className="absolute left-0 top-0 w-20 h-full bg-gradient-to-r from-white dark:from-[#1E1E1E] to-transparent z-10"></div>
+          <div className="absolute right-0 top-0 w-20 h-full bg-gradient-to-l from-white dark:from-[#1E1E1E] to-transparent z-10"></div>
+
+          <div className="flex space-x-6 md:space-x-8 animate-marquee">
+            {[...toolIcons, ...toolIcons].map((tool, index) => (
+              <div
+                key={index}
+                className="flex flex-col items-center justify-center min-w-[70px] md:min-w-[80px] group flex-shrink-0"
+              >
+                <div className="w-12 h-12 md:w-14 md:h-14 bg-white dark:bg-gray-800 rounded-xl shadow-lg flex items-center justify-center p-2 transition-all duration-300 group-hover:scale-110 group-hover:shadow-xl border border-gray-200 dark:border-gray-700">
+                  <div className="text-xl md:text-2xl">{tool.icon}</div>
+                </div>
+                <span className="text-xs font-medium mt-2 text-gray-600 dark:text-gray-300 text-center">
+                  {tool.name}
+                </span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Skills Grid */}
+      <div className="grid gap-6 md:gap-8 place-items-center items-stretch md:grid-cols-2 lg:grid-cols-3 w-full max-w-7xl mx-auto">
         {/* Web Development */}
-        <div className="Roboto flex flex-col justify-between gap-5 border py-5 px-3 rounded-2xl shadow-lg h-full dark:border-white dark:shadow-orange-600 w-full cursor-pointer transition-transform duration-1000 hover:scale-105 hover:shadow-2xl">
-          <FaLaptopCode className="text-4xl text-purple-500 mb-4 dark:text-white" />
-          <span className="text-3xl font-extrabold dark:text-orange-600">
-            Web Development
-          </span>
-          <ul className="space-y-1 text-gray-700 dark:text-gray-300">
-            <li>
-              <strong>HTML5, CSS3, JavaScript (ES6+)</strong> <br /> Build
-              responsive, semantic, and clean web pages.
+        <div className="Roboto flex flex-col justify-between gap-4 md:gap-5 border-2 py-5 md:py-6 px-4 rounded-3xl shadow-lg h-full dark:border-gray-600 dark:shadow-orange-600/20 w-full cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-white dark:bg-gray-800 group">
+          <div className="flex items-center gap-3 md:gap-4">
+            <FaLaptopCode className="text-3xl md:text-4xl text-purple-500 dark:text-purple-400 group-hover:scale-110 transition-transform duration-300" />
+            <span className="text-xl md:text-2xl font-extrabold dark:text-orange-400">
+              Web Development
+            </span>
+          </div>
+          <ul className="space-y-2 md:space-y-3 text-gray-700 dark:text-gray-300">
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  HTML5, CSS3, JavaScript (ES6+)
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Build responsive, semantic, and clean web pages.
+                </p>
+              </div>
             </li>
-            <li>
-              <strong>Bootstrap, Tailwind CSS</strong> <br /> Create modern,
-              interactive UIs with reusable components.
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  Bootstrap, Tailwind CSS
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Create modern, interactive UIs with reusable components.
+                </p>
+              </div>
             </li>
-            <li>
-              <strong>Responsive Design</strong> <br /> Cross-device and
-              mobile-first development.
-            </li>
-            <li>
-              <strong>Performance Optimization</strong> <br /> Optimize loading
-              times and user experience.
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  Responsive Design
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Cross-device and mobile-first development.
+                </p>
+              </div>
             </li>
           </ul>
         </div>
 
-        {/* Frontend Libraries */}
-        <div className="Roboto flex flex-col justify-between gap-5 border py-5 px-3 rounded-2xl shadow-lg h-full dark:border-white dark:shadow-orange-600 w-full cursor-pointer transition-transform duration-1000 hover:scale-105 hover:shadow-2xl">
-          <MdOutlineLibraryBooks className="text-yellow-500 text-4xl mb-4 dark:text-white" />
-          <span className="text-3xl font-extrabold dark:text-orange-600">
-            Frontend Development
-          </span>
-          <ul className="space-y-1 text-gray-700 dark:text-gray-300">
-            <li>
-              <strong>React</strong> <br /> Build dynamic, component-based
-              single-page applications (SPAs).
+        {/* Frontend Development */}
+        <div className="Roboto flex flex-col justify-between gap-4 md:gap-5 border-2 py-5 md:py-6 px-4 rounded-3xl shadow-lg h-full dark:border-gray-600 dark:shadow-orange-600/20 w-full cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-white dark:bg-gray-800 group">
+          <div className="flex items-center gap-3 md:gap-4">
+            <MdOutlineLibraryBooks className="text-yellow-500 text-3xl md:text-4xl dark:text-yellow-400 group-hover:scale-110 transition-transform duration-300" />
+            <span className="text-xl md:text-2xl font-extrabold dark:text-orange-400">
+              Frontend Development
+            </span>
+          </div>
+          <ul className="space-y-2 md:space-y-3 text-gray-700 dark:text-gray-300">
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  React
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Build dynamic, component-based single-page applications.
+                </p>
+              </div>
             </li>
-            <li>
-              <strong>React Router</strong> <br /> Implement seamless
-              client-side navigation in SPAs.
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  Redux & State Management
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Manage state efficiently with predictable patterns.
+                </p>
+              </div>
             </li>
-            <li>
-              <strong>Redux & Redux Toolkit</strong> <br /> Manage state
-              efficiently with predictable patterns.
-            </li>
-            <li>
-              <strong>State Management</strong> <br /> Advanced state handling
-              with Context API and hooks.
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  React Router
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Implement seamless client-side navigation in SPAs.
+                </p>
+              </div>
             </li>
           </ul>
         </div>
 
         {/* Backend Development */}
-        <div className="Roboto flex flex-col justify-between gap-5 border py-5 px-3 rounded-2xl shadow-lg h-full dark:border-white dark:shadow-orange-600 w-full cursor-pointer transition-transform duration-1000 hover:scale-105 hover:shadow-2xl">
-          <FaServer className="text-4xl text-green-700 mb-4 dark:text-white" />
-          <span className="text-3xl font-extrabold dark:text-orange-600">
-            Backend Development
-          </span>
-          <ul className="space-y-1 text-gray-700 dark:text-gray-300">
-            <li>
-              <strong>Node.js & Express.js</strong> <br /> Build fast, scalable,
-              and secure REST APIs.
+        <div className="Roboto flex flex-col justify-between gap-4 md:gap-5 border-2 py-5 md:py-6 px-4 rounded-3xl shadow-lg h-full dark:border-gray-600 dark:shadow-orange-600/20 w-full cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-white dark:bg-gray-800 group">
+          <div className="flex items-center gap-3 md:gap-4">
+            <FaServer className="text-3xl md:text-4xl text-green-600 dark:text-green-400 group-hover:scale-110 transition-transform duration-300" />
+            <span className="text-xl md:text-2xl font-extrabold dark:text-orange-400">
+              Backend Development
+            </span>
+          </div>
+          <ul className="space-y-2 md:space-y-3 text-gray-700 dark:text-gray-300">
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  Node.js & Express.js
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Build fast, scalable, and secure REST APIs.
+                </p>
+              </div>
             </li>
-            <li>
-              <strong>Authentication</strong> <br /> Implement secure login
-              systems with JWT & bcrypt.
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  Authentication
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Implement secure login with JWT & bcrypt.
+                </p>
+              </div>
             </li>
-            <li>
-              <strong>Middleware</strong> <br /> Manage routes, errors, and
-              requests efficiently.
-            </li>
-            <li>
-              <strong>API Security</strong> <br /> Implement security best
-              practices and protection.
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  API Security
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Implement security best practices and protection.
+                </p>
+              </div>
             </li>
           </ul>
         </div>
 
-        <div className="Roboto flex flex-col justify-between gap-5 border py-5 px-3 rounded-2xl shadow-lg h-full dark:border-white dark:shadow-orange-600 w-full cursor-pointer transition-transform duration-1000 hover:scale-105 hover:shadow-2xl">
-          <FaRobot className="text-4xl text-red-500 mb-4 dark:text-white" />
-          <span className="text-3xl font-extrabold dark:text-orange-600">
-            Generative AI
-          </span>
-          <ul className="space-y-1 text-gray-700 dark:text-gray-300">
-            <li>
-              <strong>LLM Integration</strong> <br /> Integrate with OpenAI GPT,
-              Claude, and other large language models
+        {/* Generative AI */}
+        <div className="Roboto flex flex-col justify-between gap-4 md:gap-5 border-2 py-5 md:py-6 px-4 rounded-3xl shadow-lg h-full dark:border-gray-600 dark:shadow-orange-600/20 w-full cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-white dark:bg-gray-800 group">
+          <div className="flex items-center gap-3 md:gap-4">
+            <FaRobot className="text-3xl md:text-4xl text-red-500 dark:text-red-400 group-hover:scale-110 transition-transform duration-300" />
+            <span className="text-xl md:text-2xl font-extrabold dark:text-orange-400">
+              Generative AI
+            </span>
+          </div>
+          <ul className="space-y-2 md:space-y-3 text-gray-700 dark:text-gray-300">
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  LLM Integration
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Integrate with OpenAI GPT, Claude, and other models.
+                </p>
+              </div>
             </li>
-            <li>
-              <strong>AI Agent Development</strong> <br /> Create intelligent
-              agents with reasoning capabilities
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  AI Agent Development
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Create intelligent agents with reasoning capabilities.
+                </p>
+              </div>
             </li>
-            <li>
-              <strong>Vector Databases</strong> <br /> Work with Pinecone for
-              efficient similarity search
-            </li>
-            <li>
-              <strong>RAG (Retrieval-Augmented Generation)</strong> <br /> Build
-              AI systems with contextual knowledge retrieval
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  RAG Systems
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Build AI systems with contextual knowledge retrieval.
+                </p>
+              </div>
             </li>
           </ul>
         </div>
 
         {/* Database Management */}
-        <div className="Roboto flex flex-col justify-between gap-5 border py-5 px-3 rounded-2xl shadow-lg h-full dark:border-white dark:shadow-orange-600 w-full cursor-pointer transition-transform duration-1000 hover:scale-105 hover:shadow-2xl">
-          <FaDatabase className="text-4xl text-blue-500 mb-4 dark:text-white" />
-          <span className="text-3xl font-extrabold dark:text-orange-600">
-            Database Management
-          </span>
-          <ul className="space-y-1 text-gray-700 dark:text-gray-300">
-            <li>
-              <strong>MongoDB & Mongoose</strong> <br /> Handle flexible NoSQL
-              data models with schema validation.
+        <div className="Roboto flex flex-col justify-between gap-4 md:gap-5 border-2 py-5 md:py-6 px-4 rounded-3xl shadow-lg h-full dark:border-gray-600 dark:shadow-orange-600/20 w-full cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-white dark:bg-gray-800 group">
+          <div className="flex items-center gap-3 md:gap-4">
+            <FaDatabase className="text-3xl md:text-4xl text-blue-500 dark:text-blue-400 group-hover:scale-110 transition-transform duration-300" />
+            <span className="text-xl md:text-2xl font-extrabold dark:text-orange-400">
+              Database Management
+            </span>
+          </div>
+          <ul className="space-y-2 md:space-y-3 text-gray-700 dark:text-gray-300">
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  MongoDB & PostgreSQL
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Handle both NoSQL and relational databases.
+                </p>
+              </div>
             </li>
-            <li>
-              <strong>PostgreSQL</strong> <br /> Design and query relational
-              databases using SQL.
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  Database Design
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Design efficient data models and schemas.
+                </p>
+              </div>
             </li>
-            <li>
-              <strong>CRUD Operations</strong> <br /> Efficiently manage data
-              with robust query handling.
-            </li>
-            <li>
-              <strong>Database Optimization</strong> <br /> Performance tuning
-              and query optimization techniques.
-            </li>
-          </ul>
-        </div>
-
-        {/* Cloud & Real-Time Services */}
-        <div className="Roboto flex flex-col justify-between gap-5 border py-5 px-3 rounded-2xl shadow-lg h-full dark:border-white dark:shadow-orange-600 w-full cursor-pointer transition-transform duration-1000 hover:scale-105 hover:shadow-2xl">
-          <FaCloud className="text-4xl text-sky-500 mb-4 dark:text-white" />
-          <span className="text-3xl font-extrabold dark:text-orange-600">
-            Cloud & Real-Time
-          </span>
-          <ul className="space-y-1 text-gray-700 dark:text-gray-300">
-            <li>
-              <strong>Cloudinary</strong> <br /> Store and optimize
-              images/videos in the cloud.
-            </li>
-            <li>
-              <strong>WebSocket & Socket.io</strong> <br /> Enable real-time
-              communication in chat or notification systems.
-            </li>
-            <li>
-              <strong>Deployment</strong> <br /> Deploy full-stack apps using
-              Vercel, Render, or Netlify.
-            </li>
-            <li>
-              <strong>Cloud Services</strong> <br /> Integrate various cloud
-              platforms and services.
-            </li>
-          </ul>
-        </div>
-
-        {/* Programming & Problem Solving */}
-        <div className="Roboto flex flex-col justify-between gap-5 border py-5 px-3 rounded-2xl shadow-lg h-full dark:border-white dark:shadow-orange-600 w-full cursor-pointer transition-transform duration-1000 hover:scale-105 hover:shadow-2xl">
-          <FaCode className="text-green-500 text-4xl mb-4 dark:text-white" />
-          <span className="text-3xl font-extrabold dark:text-orange-600">
-            Programming & Problem Solving
-          </span>
-          <ul className="space-y-1 text-gray-700 dark:text-gray-300">
-            <li>
-              <strong>C++, Python, C</strong> <br /> Strong foundation across
-              languages.
-            </li>
-            <li>
-              <strong>OOP</strong> <br /> Modular, reusable, and scalable code
-              design.
-            </li>
-            <li>
-              <strong>DSA</strong> <br /> Efficient algorithms & data
-              structures.
-            </li>
-            <li>
-              <strong>Competitive Programming</strong> <br /> Logical and fast
-              problem-solving.
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  Performance Optimization
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Query optimization and performance tuning.
+                </p>
+              </div>
             </li>
           </ul>
         </div>
 
         {/* Tools & Other Skills */}
-        <div className="Roboto flex flex-col justify-between gap-5 border py-5 px-3 rounded-2xl shadow-lg h-full dark:border-white dark:shadow-orange-600 w-full cursor-pointer transition-transform duration-1000 hover:scale-105 hover:shadow-2xl">
-          <FaTools className="text-blue-700 text-4xl mb-4 dark:text-white" />
-          <span className="text-3xl font-extrabold dark:text-orange-600">
-            Tools & Other Skills
-          </span>
-          <ul className="space-y-1 text-gray-700 dark:text-gray-300">
-            <li>
-              <strong>Git & GitHub</strong> <br /> Version control and
-              collaborative development.
+        <div className="Roboto flex flex-col justify-between gap-4 md:gap-5 border-2 py-5 md:py-6 px-4 rounded-3xl shadow-lg h-full dark:border-gray-600 dark:shadow-orange-600/20 w-full cursor-pointer transition-all duration-300 hover:scale-105 hover:shadow-2xl bg-white dark:bg-gray-800 group">
+          <div className="flex items-center gap-3 md:gap-4">
+            <FaTools className="text-blue-600 text-3xl md:text-4xl dark:text-blue-400 group-hover:scale-110 transition-transform duration-300" />
+            <span className="text-xl md:text-2xl font-extrabold dark:text-orange-400">
+              Tools & Other Skills
+            </span>
+          </div>
+          <ul className="space-y-2 md:space-y-3 text-gray-700 dark:text-gray-300">
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  Git & GitHub
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Version control and collaborative development.
+                </p>
+              </div>
             </li>
-            <li>
-              <strong>REST API Integration</strong> <br /> Fetching and handling
-              external data in apps.
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  REST API Integration
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Fetching and handling external data in apps.
+                </p>
+              </div>
             </li>
-            <li>
-              <strong>Wireshark</strong> <br /> Network packet analysis and
-              troubleshooting.
-            </li>
-            <li>
-              <strong>Development Tools</strong> <br /> Proficiency with modern
-              development workflows and tools.
+            <li className="flex items-start gap-2">
+              <span className="text-green-500 mt-1 flex-shrink-0">•</span>
+              <div>
+                <strong className="text-gray-800 dark:text-white text-sm md:text-base">
+                  Development Tools
+                </strong>
+                <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mt-1">
+                  Modern development workflows and tools.
+                </p>
+              </div>
             </li>
           </ul>
         </div>
       </div>
+
+      {/* Add custom CSS for the marquee animation */}
+      <style jsx>{`
+        @keyframes marquee {
+          0% {
+            transform: translateX(0);
+          }
+          100% {
+            transform: translateX(-50%);
+          }
+        }
+        .animate-marquee {
+          animation: marquee 40s linear infinite;
+          display: flex;
+          width: max-content;
+        }
+        .animate-marquee:hover {
+          animation-play-state: paused;
+        }
+
+        /* Prevent horizontal scroll */
+        body {
+          overflow-x: hidden;
+        }
+      `}</style>
     </div>
   );
 };

@@ -4,7 +4,7 @@ import leet from '../assets/Pictures/leetcode.png';
 const About = () => {
   return (
     <div className="flex flex-col w-full px-6 md:px-20 lg:px-40 gap-y-15 md:pt-25 pt-8 pb-10">
-      <h1 className="text-4xl font-bold dark:text-white caprasimo text-center mb-5">
+       <h1 className="text-5xl md:text-6xl font-bold dark:text-white py-6 caprasimo bg-gradient-to-r from-gray-800 to-orange-600 dark:from-white dark:to-orange-400 bg-clip-text text-transparent">
         About
       </h1>
 
