@@ -43,6 +43,39 @@ import PC1 from '../assets/Pictures/PC1.png';
 
 export const Web = [
   {
+    id: 6,
+    title: 'PDF to Chat Converter',
+    image: [PS1, PS2, PS3, PS4, PS5],
+    summary:
+      'A full-stack MERN application that allows users to upload PDF files and interact with their content using an AI-powered chat interface. The system integrates Google Generative AI (LLM) and Pinecone vector database to implement Retrieval-Augmented Generation (RAG). When users ask questions, the app retrieves relevant context from the uploaded PDF using vector similarity search and provides accurate, contextual answers through the AI model.',
+    techStack: [
+      'React',
+      'Node.js',
+      'Express.js',
+      'MongoDB',
+      'Google Generative AI',
+      'Pinecone',
+      'Tailwind CSS',
+    ],
+    tags: [
+      'FullStack',
+      'AIIntegration',
+      'RAG',
+      'React',
+      'NodeJS',
+      'Express',
+      'MongoDB',
+      'TailwindCSS',
+      'GoogleAI',
+      'Pinecone',
+      'PDFChat',
+    ],
+    link: 'https://internship-projects-b72u-2jphum29l.vercel.app/', // you can add your live project link here
+    github:
+      'https://github.com/AliHaider332/Internship-Projects/tree/main/PDF-Summerizer', // you can add your GitHub repo link here
+  },
+  ,
+  {
     id: 5,
     title: 'AI-Powered Portfolio Builder',
     image: [PB1, PB2, PB3, PB4, PB5, PB6],

@@ -20,7 +20,7 @@ export const loadPDF = async (file) => {
 
     const response = await createVector(chunks);
 
-    console.log(response.status);
+    // console.log(response.status);
 
     return {
       success: true,

@@ -81,29 +81,27 @@ const PDFUploader = ({ handleGoToChat }) => {
       toast.error(errorMsg);
       return;
     }
-  
+
     // Reset previous errors and show loading state
     setIsLoading(true);
     setError('');
     const loadingToast = toast.loading('Processing PDF...');
-  
+
     try {
       // Call the function that processes or loads the PDF
       const result = await loadPDF(selectedFile);
-  
-      // Optional: Log result for debugging
-      console.log('PDF load result:', result);
-  
+
       // Check if the PDF was processed successfully
       if (result?.status === 200) {
         toast.success('PDF successfully processed! Ready for chat.', {
           id: loadingToast,
         });
-  
+
         // Navigate or open chat interface
         handleGoToChat();
       } else {
-        const msg = result?.message || 'Something went wrong while processing the PDF';
+        const msg =
+          result?.message || 'Something went wrong while processing the PDF';
         toast.error(msg, { id: loadingToast });
         setError(msg);
       }
@@ -118,7 +116,6 @@ const PDFUploader = ({ handleGoToChat }) => {
       setIsLoading(false);
     }
   };
-  
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4">
