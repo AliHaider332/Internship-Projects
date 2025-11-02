@@ -20,6 +20,19 @@ import P36 from '../assets/Pictures/P36.png';
 import P37 from '../assets/Pictures/P37.png';
 import P38 from '../assets/Pictures/P38.png';
 
+import PS1 from '../assets/Pictures/PS1.png';
+import PS2 from '../assets/Pictures/PS2.png';
+import PS3 from '../assets/Pictures/PS3.png';
+import PS4 from '../assets/Pictures/PS4.png';
+import PS5 from '../assets/Pictures/PS5.png';
+
+import PB1 from '../assets/Pictures/PB1.png';
+import PB2 from '../assets/Pictures/PB2.png';
+import PB3 from '../assets/Pictures/PB3.png';
+import PB4 from '../assets/Pictures/PB4.png';
+import PB5 from '../assets/Pictures/PB5.png';
+import PB6 from '../assets/Pictures/PB6.png';
+
 import P22 from '../assets/Pictures/P22.png';
 
 import P23 from '../assets/Pictures/P23.png';
@@ -29,6 +42,37 @@ import PD1 from '../assets/Pictures/PD1.png';
 import PC1 from '../assets/Pictures/PC1.png';
 
 export const Web = [
+  {
+    id: 5,
+    title: 'AI-Powered Portfolio Builder',
+    image: [PB1, PB2, PB3, PB4, PB5, PB6],
+    summary:
+      'A full-stack AI-driven web application that allows users to generate personalized portfolio websites using Google Generative AI. Users input their personal information, professional details, and preferred design choices such as colors, layout, and style. The system automatically generates complete HTML, CSS, and JavaScript files, provides a live preview, and allows customization of the UI/UX before download.',
+    techStack: [
+      'React',
+      'Node.js',
+      'Express.js',
+      'MongoDB',
+      'Google Generative AI',
+      'Tailwind CSS',
+    ],
+    tags: [
+      'FullStack',
+      'AIIntegration',
+      'React',
+      'NodeJS',
+      'Express',
+      'MongoDB',
+      'TailwindCSS',
+      'PortfolioGenerator',
+      'GoogleAI',
+      'Automation',
+    ],
+    link: 'https://internship-projects-portfolio-build.vercel.app/', // you can add your live project link here
+    github:
+      'https://github.com/AliHaider332/Internship-Projects/tree/main/Portfolio-Creator', // you can add your GitHub repo link here
+  },
+
   {
     id: 4,
     title: 'MERN Social Media Application',

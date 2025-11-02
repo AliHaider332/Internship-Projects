@@ -1,4 +1,4 @@
-const server = 'http://localhost:5000/';
+const server = import.meta.env.VITE_SERVER;
 export const createVector = async (data) => {
   try {
     const res = await fetch(`${server}api/create-vectors`, {

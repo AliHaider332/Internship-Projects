@@ -27,9 +27,9 @@ const MobileMenu = () => {
   const MobileOptions = () => (
     <div
       ref={menuRef}
-      className="absolute mt-2 bg-orange-400 dark:bg-orange-600 shadow-lg rounded-lg md:hidden"
+      className="absolute mt-2 bg-orange-400 dark:bg-orange-600 shadow-lg rounded-lg md:hidden w-full text-center"
     >
-      <div className="absolute -top-2 left-3 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-orange-400 dark:border-b-orange-600"></div>
+      <div className="absolute -top-2 left-3 w-0 h-0 border-l-8 border-r-8 border-b-8 border-transparent border-b-orange-400 dark:border-b-orange-600 "></div>
 
       <ul className="p-2 text-white font-serif space-y-1">
         {[

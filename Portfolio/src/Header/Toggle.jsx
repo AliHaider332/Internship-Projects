@@ -1,28 +1,41 @@
 import React, { useEffect, useState } from 'react';
-
 import { FiSun, FiMoon } from 'react-icons/fi';
-const Toggle = () => {
-  const [theme, updateTheme] = useState('light');
 
+const Toggle = () => {
+  const [theme, setTheme] = useState(() => {
+    // Load saved theme or default to 'light'
+    return localStorage.getItem('theme') || 'light';
+  });
+
+  // Apply theme to <html> tag
   useEffect(() => {
-    theme === 'dark'
-      ? window.document.documentElement.classList.add('dark')
-      : window.document.documentElement.classList.remove('dark');
+    const root = window.document.documentElement;
+
+    if (theme === 'dark') {
+      root.classList.add('dark');
+    } else {
+      root.classList.remove('dark');
+    }
+
+    // Save theme preference
+    localStorage.setItem('theme', theme);
   }, [theme]);
+
+  // Toggle between light and dark
+  const toggleTheme = () => {
+    setTheme((prev) => (prev === 'light' ? 'dark' : 'light'));
+  };
 
   return (
     <div
-      className="text-xl sm:text-2xl md:text-3xl xl:text-4xl cursor-pointer 
-              xl:p-2 rounded-full 
-             transition-colors duration-300 ease-in-out"
-      onClick={() => {
-        theme === 'light' ? updateTheme('dark') : updateTheme('light');
-      }}
+      onClick={toggleTheme}
+      className="text-2xl md:text-3xl xl:text-4xl cursor-pointer p-2 rounded-full transition-all duration-300 ease-in-out"
+      aria-label="Toggle Theme"
     >
       {theme === 'dark' ? (
-        <FiSun className="text-yellow-500 transition-all duration-300 ease-in-out transform rotate-0 hover:rotate-90 " />
+        <FiSun className="text-yellow-500 transition-transform duration-500 transform hover:rotate-90" />
       ) : (
-        <FiMoon className="text-black  hover:rounded-full hover:shadow-lg hover:shadow-gray-400" />
+        <FiMoon className="text-gray-800 dark:text-gray-200 hover:scale-110 transition-transform duration-300" />
       )}
     </div>
   );

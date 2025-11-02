@@ -1,6 +1,13 @@
 import React from 'react';
-import { FaCode, FaLaptopCode, FaTools,FaServer, FaDatabase, FaCloud } from 'react-icons/fa';
-// import { FaLaptopCode,  } from 'react-icons/fa';
+import {
+  FaCode,
+  FaLaptopCode,
+  FaTools,
+  FaServer,
+  FaDatabase,
+  FaCloud,
+  FaRobot,
+} from 'react-icons/fa';
 import { MdOutlineLibraryBooks } from 'react-icons/md';
 
 const Skills = () => {
@@ -31,6 +38,10 @@ const Skills = () => {
               <strong>Responsive Design</strong> <br /> Cross-device and
               mobile-first development.
             </li>
+            <li>
+              <strong>Performance Optimization</strong> <br /> Optimize loading
+              times and user experience.
+            </li>
           </ul>
         </div>
 
@@ -52,6 +63,10 @@ const Skills = () => {
             <li>
               <strong>Redux & Redux Toolkit</strong> <br /> Manage state
               efficiently with predictable patterns.
+            </li>
+            <li>
+              <strong>State Management</strong> <br /> Advanced state handling
+              with Context API and hooks.
             </li>
           </ul>
         </div>
@@ -75,6 +90,35 @@ const Skills = () => {
               <strong>Middleware</strong> <br /> Manage routes, errors, and
               requests efficiently.
             </li>
+            <li>
+              <strong>API Security</strong> <br /> Implement security best
+              practices and protection.
+            </li>
+          </ul>
+        </div>
+
+        <div className="Roboto flex flex-col justify-between gap-5 border py-5 px-3 rounded-2xl shadow-lg h-full dark:border-white dark:shadow-orange-600 w-full cursor-pointer transition-transform duration-1000 hover:scale-105 hover:shadow-2xl">
+          <FaRobot className="text-4xl text-red-500 mb-4 dark:text-white" />
+          <span className="text-3xl font-extrabold dark:text-orange-600">
+            Generative AI
+          </span>
+          <ul className="space-y-1 text-gray-700 dark:text-gray-300">
+            <li>
+              <strong>LLM Integration</strong> <br /> Integrate with OpenAI GPT,
+              Claude, and other large language models
+            </li>
+            <li>
+              <strong>AI Agent Development</strong> <br /> Create intelligent
+              agents with reasoning capabilities
+            </li>
+            <li>
+              <strong>Vector Databases</strong> <br /> Work with Pinecone for
+              efficient similarity search
+            </li>
+            <li>
+              <strong>RAG (Retrieval-Augmented Generation)</strong> <br /> Build
+              AI systems with contextual knowledge retrieval
+            </li>
           </ul>
         </div>
 
@@ -97,6 +141,10 @@ const Skills = () => {
               <strong>CRUD Operations</strong> <br /> Efficiently manage data
               with robust query handling.
             </li>
+            <li>
+              <strong>Database Optimization</strong> <br /> Performance tuning
+              and query optimization techniques.
+            </li>
           </ul>
         </div>
 
@@ -118,6 +166,10 @@ const Skills = () => {
             <li>
               <strong>Deployment</strong> <br /> Deploy full-stack apps using
               Vercel, Render, or Netlify.
+            </li>
+            <li>
+              <strong>Cloud Services</strong> <br /> Integrate various cloud
+              platforms and services.
             </li>
           </ul>
         </div>
@@ -166,6 +218,10 @@ const Skills = () => {
             <li>
               <strong>Wireshark</strong> <br /> Network packet analysis and
               troubleshooting.
+            </li>
+            <li>
+              <strong>Development Tools</strong> <br /> Proficiency with modern
+              development workflows and tools.
             </li>
           </ul>
         </div>
