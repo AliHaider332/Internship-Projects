@@ -9,8 +9,10 @@ dotenv.config();
 const app = express();
 
 // ✅ Simple CORS setup for your exact frontend
+const frontendUrl = (process.env.FRONTEND_URL || '').replace(/\/$/, ''); // removes trailing "/"
+
 app.use(cors({
-  origin: process.env.FRONTEND_URL,
+  origin: frontendUrl,
   methods: ['GET', 'POST', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
