@@ -45,18 +45,19 @@ function LeftDiscription() {
     { Icon: SiLinkedin, href: 'https://www.linkedin.com/in/alihaider332/' },
     { Icon: SiGithub, href: 'https://github.com/AliHaider332' },
     { Icon: SiLeetcode, href: 'https://leetcode.com/u/alihaider332gb/' },
-    { Icon: SiInstagram, href: 'https://www.instagram.com/ch_ali_haider_332?igsh=NnY2a2JjZmlhamlu' },
+    {
+      Icon: SiInstagram,
+      href: 'https://www.instagram.com/ch_ali_haider_332?igsh=NnY2a2JjZmlhamlu',
+    },
     { Icon: SiWhatsapp, href: 'https://wa.me/+923193238467' },
   ];
 
   return (
     <div className="flex flex-col items-center justify-center md:items-baseline gap-7 lg:gap-9">
       {/* Name Section */}
-      <div 
+      <div
         className={`flex flex-col justify-between gap-3 md:w-full items-center md:items-baseline transition-all duration-700 ease-out ${
-          isVisible 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}
         style={{ transitionDelay: '100ms' }}
       >
@@ -69,11 +70,9 @@ function LeftDiscription() {
       </div>
 
       {/* Typed Animation Section */}
-      <div 
+      <div
         className={`transition-all duration-700 ease-out ${
-          isVisible 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}
         style={{ transitionDelay: '300ms' }}
       >
@@ -83,11 +82,9 @@ function LeftDiscription() {
       </div>
 
       {/* Social Links */}
-      <div 
+      <div
         className={`flex gap-4 transition-all duration-700 ease-out ${
-          isVisible 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}
         style={{ transitionDelay: '500ms' }}
       >
@@ -108,20 +105,18 @@ function LeftDiscription() {
                        active:scale-95
                        group"
           >
-            <Icon 
-              size={24} 
-              className="transition-transform duration-300 group-hover:scale-110" 
+            <Icon
+              size={24}
+              className="transition-transform duration-300 group-hover:scale-110"
             />
           </a>
         ))}
       </div>
 
       {/* Action Buttons */}
-      <div 
+      <div
         className={`flex flex-col sm:flex-row gap-3 text-[14px] lg:text-[16px] transition-all duration-700 ease-out ${
-          isVisible 
-            ? 'opacity-100 translate-y-0' 
-            : 'opacity-0 translate-y-8'
+          isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
         }`}
         style={{ transitionDelay: '700ms' }}
       >

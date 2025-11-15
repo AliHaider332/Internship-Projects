@@ -34,38 +34,38 @@ const RightPicture = () => {
   }, []);
 
   return (
-    <div className="relative group" ref={imageRef}>
-      {/* Enhanced Background Glow Effect */}
-      <div
-        ref={glowRef}
-        className="absolute -inset-4 bg-gradient-to-tr from-purple-500 via-pink-500 to-orange-500 
+    <div className="flex justify-center w-full">
+      <div className="relative group" ref={imageRef}>
+        {/* Enhanced Background Glow Effect */}
+        <div
+          ref={glowRef}
+          className="absolute -inset-4 bg-gradient-to-tr from-purple-500 via-pink-500 to-orange-500 
                      dark:from-amber-500 dark:via-orange-500 dark:to-red-500 
                      rounded-full blur-xl opacity-60 group-hover:opacity-90 
                      transition-all duration-1000 ease-out
                      animate-pulse-slow"
-        style={{
-          transition: 'all 1s ease-out',
-        }}
-      ></div>
+          style={{
+            transition: 'all 1s ease-out',
+          }}
+        ></div>
 
-      {/* Floating Elements with Enhanced Animation */}
-      <div className="absolute -top-3 -right-3 w-6 h-6 bg-green-500 rounded-full animate-float">
-        <div className="absolute inset-0 bg-green-400 rounded-full animate-ping"></div>
-      </div>
-      
-      <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-blue-500 rounded-full animate-float-delayed">
-        <div className="absolute inset-0 bg-blue-400 rounded-full animate-ping"></div>
-      </div>
+        {/* Floating Elements */}
+        <div className="absolute -top-3 -right-3 w-6 h-6 bg-green-500 rounded-full animate-float">
+          <div className="absolute inset-0 bg-green-400 rounded-full animate-ping"></div>
+        </div>
+        
+        <div className="absolute -bottom-4 -left-4 w-8 h-8 bg-blue-500 rounded-full animate-float-delayed">
+          <div className="absolute inset-0 bg-blue-400 rounded-full animate-ping"></div>
+        </div>
 
-      {/* New Floating Element */}
-      <div className="absolute -top-6 -left-6 w-4 h-4 bg-yellow-500 rounded-full animate-float-slow">
-        <div className="absolute inset-0 bg-yellow-400 rounded-full animate-pulse"></div>
-      </div>
+        <div className="absolute -top-6 -left-6 w-4 h-4 bg-yellow-500 rounded-full animate-float-slow">
+          <div className="absolute inset-0 bg-yellow-400 rounded-full animate-pulse"></div>
+        </div>
 
-      {/* Main Image Container */}
-      <div
-        className="relative h-[280px] w-[280px] sm:h-[320px] sm:w-[320px] 
-                     md:h-[360px] md:w-[360px] lg:h-[400px] lg:w-[400px]
+        {/* Main Image Container */}
+        <div
+          className="relative h-[280px] w-[280px] sm:h-[320px] sm:w-[320px] 
+                     md:h-[350px] md:w-[350px] lg:h-[380px] lg:w-[380px]
                      rounded-full p-2 
                      bg-gradient-to-tr from-purple-500 via-pink-500 to-orange-500 
                      dark:from-amber-500 dark:via-orange-500 dark:to-red-500
@@ -73,22 +73,23 @@ const RightPicture = () => {
                      transition-all duration-500 ease-in-out
                      group-hover:scale-105
                      border-2 border-transparent group-hover:border-white/30
-                     cursor-pointer"
-        style={{
-          animation: 'float 6s ease-in-out infinite',
-        }}
-      >
-        {/* Image with Enhanced Effects */}
-        <img
-          src={Picture}
-          alt="Ali Haider - Full Stack Developer"
-          className="h-full w-full rounded-full object-cover 
+                     cursor-pointer mx-auto"
+          style={{
+            animation: 'float 6s ease-in-out infinite',
+          }}
+        >
+          {/* Image with Enhanced Effects */}
+          <img
+            src={Picture}
+            alt="Ali Haider - Full Stack Developer"
+            className="h-full w-full rounded-full object-cover 
                      border-4 border-white dark:border-gray-800
                      shadow-inner group-hover:shadow-xl
                      transition-all duration-500 ease-in-out
                      group-hover:border-white/80
                      group-hover:scale-102"
-        />
+          />
+        </div>
       </div>
     </div>
   );
