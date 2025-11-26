@@ -4,6 +4,45 @@
   50% { background-position: 100% 50%; }
   100% { background-position: 0% 50%; }
 }
+/* Custom animations */
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+@keyframes float-delayed {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-6px); }
+}
+
+.animate-float {
+  animation: float 3s ease-in-out infinite;
+}
+
+.animate-float-delayed {
+  animation: float-delayed 4s ease-in-out infinite;
+  animation-delay: 1s;
+}
+
+.animate-float-slow {
+  animation: float-slow 5s ease-in-out infinite;
+  animation-delay: 2s;
+}
+
+/* Ensure no overflow */
+.overflow-hidden {
+  overflow: hidden;
+}
+
+/* Responsive border widths */
+.border-3 {
+  border-width: 3px;
+}
 
 .animate-gradient {
   background-size: 200% 200%;

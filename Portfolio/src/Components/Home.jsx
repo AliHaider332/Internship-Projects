@@ -6,31 +6,36 @@ import logo_L from '../assets/Pictures/logo_L.png';
 
 const Home = () => {
   return (
-    <div className="relative w-full flex flex-col md:flex-row flex-wrap md:flex-nowrap md:justify-between items-center gap-10 justify-around mb-10 md:mb-0 pt-8 md:pt-2 lg:pt-0 min-h-[80vh]">
+    <div className="relative w-full flex flex-col lg:flex-row items-center justify-between lg:justify-between gap-8 md:gap-10 lg:gap-8 py-8 md:py-12 lg:py-4 min-h-[80vh]">
       
       {/* Background logo that moves with page scroll */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0">
+      <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-0 overflow-hidden">
         {/* Dark mode logo */}
         <img 
           src={logo_D} 
           alt="Background Logo Dark" 
-          className="dark:block hidden opacity-10 max-w-[200px] md:max-w-[300px] lg:max-w-[400px] transition-opacity duration-300"
+          className="dark:block hidden opacity-10 max-w-[150px] md:max-w-[200px] lg:max-w-[250px] xl:max-w-[300px] transition-opacity duration-300"
         />
         {/* Light mode logo */}
         <img 
           src={logo_L} 
           alt="Background Logo Light" 
-          className="dark:hidden block opacity-10 max-w-[200px] md:max-w-[300px] lg:max-w-[400px] transition-opacity duration-300"
+          className="dark:hidden block opacity-10 max-w-[150px] md:max-w-[200px] lg:max-w-[250px] xl:max-w-[300px] transition-opacity duration-300"
         />
       </div>
       
-      {/* Content sections with higher z-index */}
-      <div className="relative z-10 w-full">
-        <LeftDiscription />
+      {/* Left Content - FIRST on small screens (top), left on large screens */}
+      <div className="relative z-10 w-full lg:w-1/2 flex justify-center lg:justify-start order-1 lg:order-1">
+        <div className="w-full max-w-md lg:max-w-full">
+          <LeftDiscription />
+        </div>
       </div>
       
-      <div className="relative z-10">
-        <RightPicture />
+      {/* Right Picture - SECOND on small screens (bottom), right on large screens */}
+      <div className="relative z-10 w-full lg:w-1/2 flex justify-center lg:justify-end order-2 lg:order-2">
+        <div className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg flex justify-center">
+          <RightPicture />
+        </div>
       </div>
     </div>
   );
