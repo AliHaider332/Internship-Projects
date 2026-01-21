@@ -10,7 +10,7 @@ import { checkUserAuthentication } from '../middleware/authentication.js';
 const route = express.Router();
 
 route.get('/signup', (req, res) => {
-  res.render('Signup', {
+  res.render('signup', {
     error: false,
     title: 'Signup',
     currentPage: 'signup',
@@ -18,7 +18,7 @@ route.get('/signup', (req, res) => {
   });
 });
 route.get('/login', (req, res) => {
-  res.render('Login', {
+  res.render('login', {
     error: false,
     title: 'Login',
     currentPage: 'login',
