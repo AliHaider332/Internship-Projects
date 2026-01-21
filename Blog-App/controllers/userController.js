@@ -17,7 +17,7 @@ export const userSignup = async (req, res) => {
     });
 
     if (existingUser) {
-      return res.render('Signup', {
+      return res.render('signup', {
         error: 'User already exists',
         title: 'Signup',
         currentPage: 'signup',
@@ -48,7 +48,7 @@ export const userSignup = async (req, res) => {
     await newUser.save();
 
     // Redirect to login page
-    return res.render('Login', {
+    return res.render('login', {
       error: false,
       title: 'Login',
       currentPage: 'login',
@@ -56,7 +56,7 @@ export const userSignup = async (req, res) => {
     });
   } catch (error) {
     console.error('Signup Error:', error);
-    return res.status(500).render('Signup', {
+    return res.status(500).render('signup', {
       error: 'Server error. Please try again.',
       title: 'Signup',
       currentPage: 'signup',
@@ -75,7 +75,7 @@ export const userLogin = async (req, res) => {
     });
 
     if (!existingUser) {
-      return res.render('Login', {
+      return res.render('login', {
         error: 'You are not registered',
         title: 'Login',
         currentPage: 'login',
@@ -87,7 +87,7 @@ export const userLogin = async (req, res) => {
     const passwordMatch = await bcrypt.compare(password, existingUser.password);
 
     if (!passwordMatch) {
-      return res.render('Login', {
+      return res.render('login', {
         error: 'Invalid password',
         title: 'Login',
         currentPage: 'login',
@@ -106,7 +106,7 @@ export const userLogin = async (req, res) => {
     return res.redirect('/my-blog');
   } catch (error) {
     console.error('Login Error:', error);
-    return res.status(500).render('Login', {
+    return res.status(500).render('login', {
       error: 'Server error. Please try again.',
       title: 'Login',
       currentPage: 'login',
@@ -148,7 +148,7 @@ export const userRender = async (req, res) => {
       totalLikes += blog.like ? blog.like.length : 0;
     });
 
-    res.render('user-profile', {
+    res.render('userProfile', {
       title: `${userData.name}'s Profile`,
       user: userData,
       currentPage: 'profile',

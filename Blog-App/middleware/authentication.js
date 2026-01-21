@@ -6,7 +6,7 @@ export const checkUserAuthentication = async (req, res, next) => {
     const token = req.cookies?.s_id;
 
     if (!token) {
-      return res.render('Login', {
+      return res.render('login', {
         error: false,
         title: 'Login',
         currentPage: 'login',
@@ -16,7 +16,7 @@ export const checkUserAuthentication = async (req, res, next) => {
 
     const decoded = getTokenData(token);
     if (!decoded) {
-      return res.render('Login', {
+      return res.render('login', {
         error: true,
         title: 'Login',
         currentPage: 'login',
@@ -33,7 +33,7 @@ export const checkUserAuthentication = async (req, res, next) => {
 export const checkAuthorize = async (req, res, next) => {
   try {
     if (!req.user || !req.user.email) {
-      return res.render('Signup', {
+      return res.render('signup', {
         error: false,
         title: 'Signup',
         currentPage: 'signup',
@@ -44,7 +44,7 @@ export const checkAuthorize = async (req, res, next) => {
     const dbUser = await User.findOne({ email: req.user.email });
 
     if (!dbUser) {
-      return res.render('Signup', {
+      return res.render('signup', {
         error: false,
         title: 'Signup',
         currentPage: 'signup',

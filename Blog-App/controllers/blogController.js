@@ -10,7 +10,7 @@ export const getAllBlogs = async (req, res) => {
       .sort({ createdAt: -1 }); // optional: newest first
     // console.log(req.user);
 
-    res.render('Home', {
+    res.render('home', {
       blogs: allBlogs,
       title: 'Home',
       currentPage: 'home',
@@ -161,7 +161,7 @@ export const getSingle = async (req, res) => {
     // console.log(r_blog);
     // return res.redirect('/')
 
-    res.render('SingleBlog', {
+    res.render('singleBlog', {
       blog: r_blog,
       liked,
       title: r_blog.title,
