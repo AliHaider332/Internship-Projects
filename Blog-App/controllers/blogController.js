@@ -1,6 +1,6 @@
 import blog from '../modules/blog_DB.js';
 import comment from '../modules/comment_DB.js';
-import { uploadToCloudinary } from '../services/File_upload.js';
+import { uploadToCloudinary } from '../services/fileUpload.js';
 // import user from '../modules/user_DB.js';
 export const getAllBlogs = async (req, res) => {
   try {

@@ -2,7 +2,7 @@ import user from '../modules/user_DB.js';
 import blog from '../modules/blog_DB.js';
 import bcrypt from 'bcrypt';
 import { createToken } from '../services/JWT.js';
-import { uploadToCloudinary } from '../services/File_upload.js';
+import { uploadToCloudinary } from '../services/fileUpload.js';
 
 import dotenv from 'dotenv';
 dotenv.config();
