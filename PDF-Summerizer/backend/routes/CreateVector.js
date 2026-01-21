@@ -14,7 +14,7 @@ createVector.post('/create-vectors', async (req, res) => {
     // Step 1: Initialize Embeddings model
     const embeddings = new GoogleGenerativeAIEmbeddings({
       apiKey: process.env.GEMINI_API_KEY,
-      model: 'text-embedding-004',
+      model: 'text-embedding-003',
     });
 
     // Step 2: Connect to Pinecone

@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Something Went Wrong</title>
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, Helvetica, sans-serif;
+    }
+
+    body {
+      height: 100vh;
+      background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .error-container {
+      background: #fff;
+      padding: 40px 35px;
+      border-radius: 10px;
+      text-align: center;
+      width: 100%;
+      max-width: 420px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+    }
+
+    .error-container h1 {
+      font-size: 48px;
+      color: #dc3545;
+      margin-bottom: 10px;
+    }
+
+    .error-container h2 {
+      font-size: 22px;
+      margin-bottom: 15px;
+      color: #333;
+    }
+
+    .error-container p {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 25px;
+      line-height: 1.6;
+    }
+
+    .error-container a {
+      display: inline-block;
+      text-decoration: none;
+      padding: 10px 22px;
+      background: #dc3545;
+      color: #fff;
+      border-radius: 5px;
+      font-size: 14px;
+      transition: background 0.2s;
+    }
+
+    .error-container a:hover {
+      background: #b02a37;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="error-container">
+    <h1>⚠</h1>
+    <h2>Something Went Wrong</h2>
+    <p>
+      Oops! An unexpected error occurred.  
+      Please try again later or go back to the homepage.
+    </p>
+    <a href="/">Go to Home</a>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,974 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blog Posts | BlogSpace</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #4361ee;
+        --primary-dark: #3a56d4;
+        --secondary: #7209b7;
+        --accent: #f72585;
+        --success: #4cc9f0;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --gray: #6c757d;
+        --light-gray: #e9ecef;
+        --shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Main Content Container */
+      .main-content {
+        flex: 1;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1400px;
+        margin: 0 auto;
+      }
+
+      .page-header {
+        text-align: center;
+        margin-bottom: 40px;
+        padding: 30px 20px;
+        background: rgba(255, 255, 255, 0.95);
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+        position: relative;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      .page-header::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 5px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+      }
+
+      .page-header h1 {
+        font-size: 2.8rem;
+        color: var(--dark);
+        margin-bottom: 10px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 15px;
+      }
+
+      .page-header h1 i {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      .page-header p {
+        font-size: 1.2rem;
+        color: var(--gray);
+        max-width: 600px;
+        margin: 0 auto;
+        line-height: 1.6;
+      }
+
+      /* Create Blog Button */
+      .create-blog-btn {
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        padding: 12px 24px;
+        border-radius: 12px;
+        text-decoration: none;
+        font-weight: 600;
+        margin-top: 20px;
+        transition: var(--transition);
+        border: none;
+        cursor: pointer;
+        font-size: 1rem;
+      }
+
+      .create-blog-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(67, 97, 238, 0.3);
+      }
+
+      /* Blog Cards Grid */
+      .blog-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
+        gap: 30px;
+        padding: 20px 0;
+      }
+
+      /* Individual Blog Card */
+      .blog-card {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        position: relative;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+        text-decoration: none;
+        color: inherit;
+      }
+
+      .blog-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
+      }
+
+      .blog-card::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        opacity: 0;
+        transition: var(--transition);
+      }
+
+      .blog-card:hover::before {
+        opacity: 1;
+      }
+
+      /* Image Slider Container */
+      .image-slider {
+        position: relative;
+        width: 100%;
+        height: 250px;
+        overflow: hidden;
+      }
+
+      .slider-container {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+      }
+
+      .slider-image {
+        min-width: 100%;
+        height: 100%;
+        object-fit: cover;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+      }
+
+      /* Slider Navigation */
+      .slider-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        transform: translateY(-50%);
+        padding: 0 15px;
+        z-index: 10;
+        opacity: 0;
+        transition: var(--transition);
+      }
+
+      .blog-card:hover .slider-nav {
+        opacity: 1;
+      }
+
+      .slider-nav button {
+        background: rgba(255, 255, 255, 0.95);
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 50%;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: var(--primary);
+        transition: var(--transition);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      }
+
+      .slider-nav button:hover {
+        background: var(--primary);
+        color: white;
+        transform: scale(1.1);
+      }
+
+      /* Image Dots Indicator */
+      .image-dots {
+        position: absolute;
+        bottom: 15px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 8px;
+        z-index: 10;
+        opacity: 0;
+        transition: var(--transition);
+      }
+
+      .blog-card:hover .image-dots {
+        opacity: 1;
+      }
+
+      .dot {
+        width: 10px;
+        height: 10px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .dot.active {
+        background: white;
+        transform: scale(1.3);
+      }
+
+      .dot:hover {
+        background: white;
+        transform: scale(1.2);
+      }
+
+      /* Blog Content */
+      .blog-content {
+        padding: 25px;
+        flex-grow: 1;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .blog-header {
+        margin-bottom: 15px;
+      }
+
+      .blog-title {
+        font-size: 1.5rem;
+        color: var(--dark);
+        margin-bottom: 10px;
+        line-height: 1.4;
+        font-weight: 700;
+        transition: var(--transition);
+      }
+
+      .blog-card:hover .blog-title {
+        color: var(--primary);
+      }
+
+      .blog-description {
+        color: var(--gray);
+        line-height: 1.6;
+        margin-bottom: 20px;
+        flex-grow: 1;
+        display: -webkit-box;
+        -webkit-line-clamp: 3;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+      }
+
+      /* Category Badge */
+      .category-badge {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 6px 15px;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        color: white;
+        border-radius: 20px;
+        font-size: 0.85rem;
+        font-weight: 600;
+        margin-bottom: 15px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+        width: fit-content;
+      }
+
+      .category-tech {
+        background: linear-gradient(45deg, var(--accent), #ff4081);
+      }
+
+      .category-travel {
+        background: linear-gradient(45deg, var(--success), #00bcd4);
+      }
+
+      .category-lifestyle {
+        background: linear-gradient(45deg, #ff9800, #ff5722);
+      }
+
+      .category-food {
+        background: linear-gradient(45deg, #4caf50, #8bc34a);
+      }
+
+      /* Stats Bar */
+      .blog-stats {
+        display: flex;
+        gap: 20px;
+        margin: 15px 0;
+        padding: 15px 0;
+        border-top: 1px solid var(--light-gray);
+        border-bottom: 1px solid var(--light-gray);
+      }
+
+      .stat {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--gray);
+        font-size: 0.9rem;
+      }
+
+      .stat i {
+        color: var(--primary);
+        font-size: 1rem;
+      }
+
+      /* Author Info */
+      .author-info {
+        display: flex;
+        align-items: center;
+        padding-top: 20px;
+        margin-top: auto;
+      }
+
+      .author-avatar {
+        width: 45px;
+        height: 45px;
+        border-radius: 50%;
+        object-fit: cover;
+        margin-right: 15px;
+        border: 3px solid var(--primary);
+        transition: var(--transition);
+      }
+
+      .blog-card:hover .author-avatar {
+        border-color: var(--secondary);
+      }
+
+      .author-details {
+        flex-grow: 1;
+      }
+
+      .author-name {
+        font-weight: 600;
+        color: var(--dark);
+        margin-bottom: 3px;
+      }
+
+      .author-username {
+        font-size: 0.9rem;
+        color: var(--gray);
+      }
+
+      /* Read More Button */
+      .read-more {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--primary);
+        font-weight: 600;
+        font-size: 0.95rem;
+        margin-top: 15px;
+        transition: var(--transition);
+      }
+
+      .blog-card:hover .read-more {
+        color: var(--secondary);
+        transform: translateX(5px);
+      }
+
+      /* No Blogs Message */
+      .no-blogs {
+        text-align: center;
+        padding: 60px 20px;
+        grid-column: 1 / -1;
+        background: white;
+        border-radius: 20px;
+        box-shadow: var(--shadow);
+      }
+
+      .no-blogs i {
+        font-size: 4rem;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+        margin-bottom: 20px;
+      }
+
+      .no-blogs h3 {
+        color: var(--dark);
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      .no-blogs p {
+        color: var(--gray);
+        margin-bottom: 30px;
+      }
+
+      /* Filters */
+      .blog-filters {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 30px;
+        flex-wrap: wrap;
+        gap: 15px;
+        padding: 20px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+      }
+
+      .filter-group {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .filter-label {
+        font-weight: 600;
+        color: var(--dark);
+      }
+
+      .filter-select {
+        padding: 10px 15px;
+        border: 2px solid var(--light-gray);
+        border-radius: 10px;
+        background: white;
+        color: var(--dark);
+        font-size: 0.95rem;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .filter-select:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+      }
+
+      .search-box {
+        position: relative;
+        min-width: 250px;
+      }
+
+      .search-input {
+        width: 100%;
+        padding: 12px 20px 12px 45px;
+        border: 2px solid var(--light-gray);
+        border-radius: 10px;
+        font-size: 0.95rem;
+        transition: var(--transition);
+        background: white;
+      }
+
+      .search-input:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+      }
+
+      .search-icon {
+        position: absolute;
+        left: 15px;
+        top: 50%;
+        transform: translateY(-50%);
+        color: var(--gray);
+      }
+
+      /* Responsive Design */
+      @media (max-width: 1200px) {
+        .blog-grid {
+          grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+        }
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 15px;
+        }
+
+        .blog-grid {
+          grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+          gap: 20px;
+        }
+
+        .page-header h1 {
+          font-size: 2.2rem;
+        }
+
+        .image-slider {
+          height: 220px;
+        }
+
+        .blog-filters {
+          flex-direction: column;
+          align-items: stretch;
+        }
+
+        .search-box {
+          min-width: 100%;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .blog-grid {
+          grid-template-columns: 1fr;
+        }
+
+        .page-header {
+          padding: 20px 15px;
+        }
+
+        .page-header h1 {
+          font-size: 1.8rem;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        .blog-content {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <%- include('header', { user: user, currentPage: currentPage }); %>
+
+    <div class="main-content">
+      <div class="container">
+        <!-- Page Header -->
+        <div class="page-header">
+          <h1><i class="fas fa-blog"></i> Explore Blog Posts</h1>
+          <p>
+            Discover amazing stories, insights, and ideas from our community
+          </p>
+          <% if (user) { %>
+          <a href="/my-blog" class="create-blog-btn">
+            <i class="fas fa-plus-circle"></i>
+            Create New Blog
+          </a>
+          <% } %>
+        </div>
+
+        <!-- Blog Grid -->
+        <% if (blogs && blogs.length > 0) { %>
+        <div class="blog-grid">
+          <% blogs.forEach(blog => { %>
+          <a
+            href="/blogs/<%= blog._id %>"
+            class="blog-card"
+            data-blog-id="<%= blog._id %>"
+          >
+            <!-- Image Slider Section -->
+            <div class="image-slider">
+              <div class="slider-container" id="slider-<%= blog._id %>">
+                <% if (blog.image && blog.image.length > 0) { %> <%
+                blog.image.forEach(img => { %>
+                <img
+                  src="<%= typeof img === 'string' && img.includes('cloudinary') ? img : (img.url || img) %>"
+                  alt="<%= blog.title %>"
+                  class="slider-image"
+                  onerror="this.src='https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80'"
+                />
+                <% }) %> <% } else { %>
+                <img
+                  src="https://images.unsplash.com/photo-1499750310107-5fef28a66643?ixlib=rb-1.2.1&auto=format&fit=crop&w=800&q=80"
+                  alt="<%= blog.title %>"
+                  class="slider-image"
+                />
+                <% } %>
+              </div>
+
+              <!-- Slider Navigation -->
+              <% if (blog.image && blog.image.length > 1) { %>
+              <div class="slider-nav">
+                <button
+                  class="prev-btn"
+                  onclick="slideImage(event, '<%= blog._id %>', -1)"
+                >
+                  <i class="fas fa-chevron-left"></i>
+                </button>
+                <button
+                  class="next-btn"
+                  onclick="slideImage(event, '<%= blog._id %>', 1)"
+                >
+                  <i class="fas fa-chevron-right"></i>
+                </button>
+              </div>
+
+              <!-- Dots Indicator -->
+              <div class="image-dots" id="dots-<%= blog._id %>">
+                <% blog.image.forEach((img, index) => { %>
+                <span
+                  class="dot <%= index === 0 ? 'active' : '' %>"
+                  onclick="goToSlide(event, '<%= blog._id %>',  index )"
+                  data-index="<%= index %>"
+                ></span>
+                <% }) %>
+              </div>
+              <% } %>
+            </div>
+
+            <!-- Blog Content -->
+            <div class="blog-content">
+              <!-- Category Badge -->
+              <span
+                class="category-badge <%= blog.category === 'Technology' ? 'category-tech' : blog.category === 'Travel' ? 'category-travel' : blog.category === 'Lifestyle' ? 'category-lifestyle' : 'category-food' %>"
+              >
+                <i
+                  class="fas fa-<%= blog.category === 'Technology' ? 'laptop-code' : blog.category === 'Travel' ? 'plane' : blog.category === 'Lifestyle' ? 'heart' : 'utensils' %>"
+                ></i>
+                <%= blog.category %>
+              </span>
+
+              <!-- Title -->
+              <h2 class="blog-title"><%= blog.title %></h2>
+
+              <!-- Description -->
+              <p class="blog-description"><%= blog.description %></p>
+
+              <!-- Stats -->
+              <div class="blog-stats">
+                <div class="stat">
+                  <i class="far fa-eye"></i>
+                  <span><%= blog.view || 0 %> views</span>
+                </div>
+                <div class="stat">
+                  <i class="far fa-comment"></i>
+                  <span
+                    ><%= blog.comment ? blog.comment.length : 0 %>
+                    comments</span
+                  >
+                </div>
+                <div class="stat">
+                  <i class="far fa-heart"></i>
+                  <span><%= blog.like ? blog.like.length : 0 %> likes</span>
+                </div>
+              </div>
+
+              <!-- Author Info -->
+              <div class="author-info">
+                <img
+                  src="<%= blog.author.profile_image ? blog.author.profile_image : '/upload/default.png' %>"
+                  alt="<%= blog.author.name %>"
+                  class="author-avatar"
+                  onerror="this.src='/upload/default.png'"
+                />
+                <div class="author-details">
+                  <div class="author-name"><%= blog.author.name %></div>
+                  <div class="author-username">
+                    @<%= blog.author.username %>
+                  </div>
+                </div>
+                <span class="read-more">
+                  Read More
+                  <i class="fas fa-arrow-right"></i>
+                </span>
+              </div>
+            </div>
+          </a>
+          <% }) %>
+        </div>
+        <% } else { %>
+        <div class="no-blogs">
+          <i class="fas fa-newspaper"></i>
+          <h3>No blog posts found</h3>
+          <p>Be the first to share your thoughts and stories!</p>
+          <% if (user) { %>
+          <a href="/blogs/create" class="create-blog-btn">
+            <i class="fas fa-plus-circle"></i>
+            Create Your First Blog
+          </a>
+          <% } else { %>
+          <a href="/login" class="create-blog-btn">
+            <i class="fas fa-sign-in-alt"></i>
+            Login to Create Blog
+          </a>
+          <% } %>
+        </div>
+        <% } %>
+      </div>
+    </div>
+
+    <script>
+      // Store current slide index for each blog
+      const slideIndexes = {};
+      const autoSlideIntervals = {};
+
+      // Initialize slide indexes
+      document.addEventListener('DOMContentLoaded', function () {
+        const blogCards = document.querySelectorAll('.blog-card');
+        blogCards.forEach((card) => {
+          const blogId = card.dataset.blogId;
+          slideIndexes[blogId] = 0;
+
+          // Start auto-slide for blogs with multiple images
+          const slider = document.getElementById(`slider-${blogId}`);
+          if (slider && slider.children.length > 1) {
+            startAutoSlide(blogId);
+          }
+        });
+
+        // Initialize filters
+        initializeFilters();
+      });
+
+      // Slide image function with event propagation prevention
+      function slideImage(event, blogId, direction) {
+        if (event) {
+          event.stopPropagation();
+          event.preventDefault();
+        }
+
+        const slider = document.getElementById(`slider-${blogId}`);
+        if (!slider) return;
+
+        const totalSlides = slider.children.length;
+
+        // Update slide index
+        slideIndexes[blogId] =
+          (slideIndexes[blogId] + direction + totalSlides) % totalSlides;
+
+        // Move slider
+        slider.style.transform = `translateX(-${slideIndexes[blogId] * 100}%)`;
+
+        // Update dots
+        updateDots(blogId);
+
+        // Reset auto-slide timer
+        resetAutoSlide(blogId);
+      }
+
+      // Go to specific slide
+      function goToSlide(event, blogId, index) {
+        if (event) {
+          event.stopPropagation();
+          event.preventDefault();
+        }
+
+        const slider = document.getElementById(`slider-${blogId}`);
+        if (!slider) return;
+
+        slideIndexes[blogId] = index;
+        slider.style.transform = `translateX(-${index * 100}%)`;
+        updateDots(blogId);
+
+        // Reset auto-slide timer
+        resetAutoSlide(blogId);
+      }
+
+      // Update dots indicator
+      function updateDots(blogId) {
+        const dots = document.getElementById(`dots-${blogId}`);
+        if (!dots) return;
+
+        const dotElements = dots.querySelectorAll('.dot');
+        dotElements.forEach((dot, index) => {
+          dot.classList.toggle('active', index === slideIndexes[blogId]);
+        });
+      }
+
+      // Auto-slide functionality
+      function startAutoSlide(blogId, interval = 5000) {
+        autoSlideIntervals[blogId] = setInterval(() => {
+          slideImage(null, blogId, 1);
+        }, interval);
+      }
+
+      // Reset auto-slide timer
+      function resetAutoSlide(blogId) {
+        if (autoSlideIntervals[blogId]) {
+          clearInterval(autoSlideIntervals[blogId]);
+          startAutoSlide(blogId);
+        }
+      }
+
+      // Stop auto-slide when hovering over slider
+      document.querySelectorAll('.image-slider').forEach((slider) => {
+        const blogId = slider.closest('.blog-card').dataset.blogId;
+
+        slider.addEventListener('mouseenter', () => {
+          if (autoSlideIntervals[blogId]) {
+            clearInterval(autoSlideIntervals[blogId]);
+          }
+        });
+
+        slider.addEventListener('mouseleave', () => {
+          const sliderContainer = document.getElementById(`slider-${blogId}`);
+          if (sliderContainer && sliderContainer.children.length > 1) {
+            startAutoSlide(blogId);
+          }
+        });
+      });
+
+      // Filter functionality
+      function initializeFilters() {
+        const categoryFilter = document.getElementById('categoryFilter');
+        const sortFilter = document.getElementById('sortFilter');
+        const searchInput = document.getElementById('searchInput');
+        const blogCards = document.querySelectorAll('.blog-card');
+
+        // Apply filters
+        function applyFilters() {
+          const category = categoryFilter ? categoryFilter.value : 'all';
+          const sortBy = sortFilter ? sortFilter.value : 'newest';
+          const searchTerm = searchInput ? searchInput.value.toLowerCase() : '';
+
+          blogCards.forEach((card) => {
+            const blogCategory = card
+              .querySelector('.category-badge')
+              .textContent.trim();
+            const blogTitle = card
+              .querySelector('.blog-title')
+              .textContent.toLowerCase();
+            const blogDesc = card
+              .querySelector('.blog-description')
+              .textContent.toLowerCase();
+
+            // Category filter
+            const categoryMatch =
+              category === 'all' || blogCategory === category;
+
+            // Search filter
+            const searchMatch =
+              !searchTerm ||
+              blogTitle.includes(searchTerm) ||
+              blogDesc.includes(searchTerm);
+
+            // Show/hide based on filters
+            if (categoryMatch && searchMatch) {
+              card.style.display = 'flex';
+            } else {
+              card.style.display = 'none';
+            }
+          });
+
+          // Apply sorting
+          const visibleCards = Array.from(blogCards).filter(
+            (card) => card.style.display !== 'none'
+          );
+          const grid = document.querySelector('.blog-grid');
+
+          visibleCards.sort((a, b) => {
+            const dateA = new Date(
+              a.querySelector('.blog-stats')?.dataset.date || 0
+            );
+            const dateB = new Date(
+              b.querySelector('.blog-stats')?.dataset.date || 0
+            );
+
+            switch (sortBy) {
+              case 'newest':
+                return dateB - dateA;
+              case 'oldest':
+                return dateA - dateB;
+              case 'popular':
+                const viewsA =
+                  parseInt(
+                    a.querySelector('.stat:nth-child(1) span').textContent
+                  ) || 0;
+                const viewsB =
+                  parseInt(
+                    b.querySelector('.stat:nth-child(1) span').textContent
+                  ) || 0;
+                return viewsB - viewsA;
+              default:
+                return 0;
+            }
+          });
+
+          // Reorder grid
+          visibleCards.forEach((card) => grid.appendChild(card));
+        }
+
+        // Add event listeners if filters exist
+        if (categoryFilter) {
+          categoryFilter.addEventListener('change', applyFilters);
+        }
+        if (sortFilter) {
+          sortFilter.addEventListener('change', applyFilters);
+        }
+        if (searchInput) {
+          searchInput.addEventListener('input', applyFilters);
+        }
+
+        // Store dates on cards for sorting
+        blogCards.forEach((card) => {
+          const stats = card.querySelector('.blog-stats');
+          if (stats) {
+            // You might want to add actual date data to your cards
+            // For now, we'll use a random date
+            stats.dataset.date = new Date().toISOString();
+          }
+        });
+      }
+
+      // Add click effect to cards
+      document.querySelectorAll('.blog-card').forEach((card) => {
+        card.addEventListener('click', function (e) {
+          // Don't redirect if clicking on slider controls or dots
+          if (
+            e.target.closest('.slider-nav') ||
+            e.target.closest('.image-dots')
+          ) {
+            return;
+          }
+
+          // Add click animation
+          this.style.transform = 'translateY(-5px) scale(0.98)';
+          setTimeout(() => {
+            this.style.transform = '';
+          }, 200);
+        });
+      });
+
+      // Debounce function for search
+      function debounce(func, wait) {
+        let timeout;
+        return function executedFunction(...args) {
+          const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+          };
+          clearTimeout(timeout);
+          timeout = setTimeout(later, wait);
+        };
+      }
+    </script>
+  </body>
+</html>

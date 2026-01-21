@@ -14,7 +14,7 @@ chatting.post('/chatting', async (req, res) => {
     const question = req.body.message;
     const embeddings = new GoogleGenerativeAIEmbeddings({
       apiKey: process.env.GEMINI_API_KEY,
-      model: 'text-embedding-004',
+      model: 'text-embedding-003',
     });
 
     const queryVector = await embeddings.embedQuery(question);
@@ -37,7 +37,7 @@ chatting.post('/chatting', async (req, res) => {
     });
 
     const response = await ai.models.generateContent({
-      model: 'gemini-2.0-flash',
+      model: 'gemini-2.0-flash-lite',
       contents: History,
       config: {
         systemInstruction: `You have to behave like an instucture.

@@ -1,0 +1,442 @@
+<header>
+  <nav class="navbar">
+    <div class="nav-container">
+      <!-- Logo/Brand -->
+      <div class="nav-brand">
+        <a href="/" class="logo">
+          <i class="fas fa-blog"></i>
+          <span>BlogSpace</span>
+        </a>
+      </div>
+
+      <!-- Navigation Links -->
+      <div class="nav-links">
+        <a
+          href="/"
+          class="nav-link <%= currentPage === 'home' ? 'active' : '' %>"
+        >
+          <i class="fas fa-home"></i> Home
+        </a>
+
+        <% if (user) { %>
+        <a
+          href="/my-blog"
+          class="nav-link <%= currentPage === 'Dashboard' ? 'active' : '' %>"
+        >
+          <i class="fas fa-user"></i> Dashboard
+        </a>
+        <% } %>
+      </div>
+
+      <!-- User Section -->
+      <div class="user-section">
+        <% if (user) { %>
+        <div class="user-dropdown">
+          <button class="user-toggle">
+            <% if (user.image || user.profile_image) { %>
+            <img
+              src="<%= user.image || user.profile_image %>"
+              alt="<%= user.name %>"
+              class="user-avatar"
+              onerror="this.onerror=null; this.src='/upload/default.png';"
+            />
+            <% } else { %>
+            <img
+              src="/upload/default.png"
+              alt="<%= user.name %>"
+              class="user-avatar"
+            />
+            <% } %>
+            <span class="user-name"><%= user.name %></span>
+            <i class="fas fa-chevron-down"></i>
+          </button>
+
+          <div class="dropdown-menu">
+            <div class="dropdown-header">
+              <% if (user.image || user.profile_image) { %>
+              <img
+                src="<%= user.image || user.profile_image %>"
+                alt="<%= user.name %>"
+                onerror="this.onerror=null; this.src='/upload/default.png';"
+              />
+              <% } else { %>
+              <img src="/upload/default.png" alt="<%= user.name %>" />
+              <% } %>
+              <div>
+                <strong><%= user.name %></strong>
+                <small>@<%= user.username %></small>
+              </div>
+            </div>
+
+            <div class="dropdown-divider"></div>
+
+            <a href="/profile" class="dropdown-item">
+              <i class="fas fa-user-circle"></i> My Profile
+            </a>
+            <a href="/my-blog" class="dropdown-item">
+              <i class="fas fa-book"></i> My Blogs
+            </a>
+            <div class="dropdown-divider"></div>
+
+            <form action="/logout" method="POST" class="logout-form">
+              <button type="submit" class="dropdown-item logout-btn">
+                <i class="fas fa-sign-out-alt"></i> Logout
+              </button>
+            </form>
+          </div>
+        </div>
+        <% } else { %>
+        <div class="auth-buttons">
+          <a href="/login" class="btn btn-login">
+            <i class="fas fa-sign-in-alt"></i> Login
+          </a>
+          <a href="/signup" class="btn btn-signup">
+            <i class="fas fa-user-plus"></i> Sign Up
+          </a>
+        </div>
+        <% } %>
+
+        <!-- Mobile Menu Toggle -->
+        <button class="menu-toggle" id="mobileMenuToggle">
+          <i class="fas fa-bars"></i>
+        </button>
+      </div>
+    </div>
+  </nav>
+</header>
+
+<style>
+  /* Navbar Styles */
+  .navbar {
+    background: white;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    padding: 0 20px;
+  }
+
+  .nav-container {
+    max-width: 1400px;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 15px 0;
+  }
+
+  /* Brand Logo */
+  .nav-brand .logo {
+    display: flex;
+    align-items: center;
+    text-decoration: none;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: #2c3e50;
+    gap: 10px;
+  }
+
+  .nav-brand .logo i {
+    color: #3498db;
+    font-size: 2rem;
+  }
+
+  /* Navigation Links */
+  .nav-links {
+    display: flex;
+    gap: 25px;
+    align-items: center;
+  }
+
+  .nav-link {
+    text-decoration: none;
+    color: #555;
+    font-weight: 500;
+    padding: 8px 15px;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-link:hover {
+    background: #f8f9fa;
+    color: #3498db;
+  }
+
+  .nav-link.active {
+    background: #3498db;
+    color: white;
+  }
+
+  /* User Section */
+  .user-section {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+  }
+
+  /* User Dropdown */
+  .user-dropdown {
+    position: relative;
+  }
+
+  .user-toggle {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: none;
+    border: none;
+    padding: 8px 15px;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    background: #f8f9fa;
+  }
+
+  .user-toggle:hover {
+    background: #e9ecef;
+  }
+
+  .user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #3498db;
+  }
+
+  .user-name {
+    font-weight: 600;
+    color: #2c3e50;
+  }
+
+  /* Dropdown Menu */
+  .dropdown-menu {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    background: white;
+    border-radius: 10px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    min-width: 250px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 1001;
+  }
+
+  .user-dropdown:hover .dropdown-menu {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+  }
+
+  .dropdown-header {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    gap: 15px;
+    border-bottom: 1px solid #eee;
+  }
+
+  .dropdown-header img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    object-fit: cover;
+  }
+
+  .dropdown-header div {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .dropdown-header strong {
+    color: #2c3e50;
+  }
+
+  .dropdown-header small {
+    color: #7f8c8d;
+    font-size: 0.9rem;
+  }
+
+  .dropdown-divider {
+    height: 1px;
+    background: #eee;
+    margin: 5px 0;
+  }
+
+  .dropdown-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 12px 20px;
+    text-decoration: none;
+    color: #555;
+    transition: all 0.3s ease;
+  }
+
+  .dropdown-item:hover {
+    background: #f8f9fa;
+    color: #3498db;
+  }
+
+  .dropdown-item i {
+    width: 20px;
+    text-align: center;
+  }
+
+  /* Logout Form */
+  .logout-form {
+    width: 100%;
+  }
+
+  .logout-btn {
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    cursor: pointer;
+    font-family: inherit;
+    font-size: 1rem;
+  }
+
+  /* Auth Buttons */
+  .auth-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+  }
+
+  .btn {
+    padding: 10px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+  }
+
+  .btn-login {
+    background: #f8f9fa;
+    color: #3498db;
+    border: 2px solid #3498db;
+  }
+
+  .btn-login:hover {
+    background: #3498db;
+    color: white;
+  }
+
+  .btn-signup {
+    background: #3498db;
+    color: white;
+    border: 2px solid #3498db;
+  }
+
+  .btn-signup:hover {
+    background: #2980b9;
+    border-color: #2980b9;
+  }
+
+  /* Mobile Menu Toggle */
+  .menu-toggle {
+    display: none;
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    color: #2c3e50;
+    cursor: pointer;
+    padding: 5px;
+  }
+
+  /* Responsive Design */
+  @media (max-width: 992px) {
+    .nav-links {
+      display: none;
+    }
+
+    .menu-toggle {
+      display: block;
+    }
+
+    .nav-container {
+      flex-wrap: wrap;
+    }
+
+    .mobile-menu {
+      display: flex;
+      flex-direction: column;
+      width: 100%;
+      margin-top: 15px;
+      padding: 15px;
+      background: #f8f9fa;
+      border-radius: 10px;
+    }
+
+    .mobile-menu.active {
+      display: flex;
+    }
+  }
+
+  @media (max-width: 576px) {
+    .auth-buttons {
+      display: none;
+    }
+
+    .user-section {
+      gap: 10px;
+    }
+
+    .user-name {
+      display: none;
+    }
+
+    .user-toggle {
+      padding: 5px;
+    }
+  }
+</style>
+
+<script>
+  // Mobile menu toggle
+  document.addEventListener('DOMContentLoaded', function () {
+    const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+    const navLinks = document.querySelector('.nav-links');
+
+    if (mobileMenuToggle && navLinks) {
+      mobileMenuToggle.addEventListener('click', function () {
+        navLinks.classList.toggle('mobile-menu');
+        navLinks.classList.toggle('active');
+
+        // Change icon
+        const icon = this.querySelector('i');
+        if (navLinks.classList.contains('active')) {
+          icon.classList.remove('fa-bars');
+          icon.classList.add('fa-times');
+        } else {
+          icon.classList.remove('fa-times');
+          icon.classList.add('fa-bars');
+        }
+      });
+
+      // Close menu when clicking outside
+      document.addEventListener('click', function (event) {
+        if (
+          !navLinks.contains(event.target) &&
+          !mobileMenuToggle.contains(event.target)
+        ) {
+          navLinks.classList.remove('mobile-menu');
+          navLinks.classList.remove('active');
+          mobileMenuToggle.querySelector('i').classList.remove('fa-times');
+          mobileMenuToggle.querySelector('i').classList.add('fa-bars');
+        }
+      });
+    }
+  });
+</script>

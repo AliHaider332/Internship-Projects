@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title><%= blog.title %> | BlogSpace</title>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+    />
+    <style>
+      :root {
+        --primary: #4361ee;
+        --primary-dark: #3a56d4;
+        --secondary: #7209b7;
+        --accent: #f72585;
+        --success: #4cc9f0;
+        --light: #f8f9fa;
+        --dark: #212529;
+        --gray: #6c757d;
+        --light-gray: #e9ecef;
+        --shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
+        --transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+      }
+
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+        font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      }
+
+      body {
+        background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+      }
+
+      /* Main Content Container */
+      .main-content {
+        flex: 1;
+        padding: 20px;
+      }
+
+      .container {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      /* Back Button */
+      .back-button {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        margin-bottom: 20px;
+        padding: 10px 20px;
+        border-radius: 10px;
+        background: white;
+        box-shadow: var(--shadow);
+        transition: var(--transition);
+      }
+
+      .back-button:hover {
+        background: var(--primary);
+        color: white;
+        transform: translateX(-5px);
+      }
+
+      /* Blog Post Container */
+      .blog-post {
+        background: white;
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: var(--shadow);
+        margin-bottom: 30px;
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+
+      /* Blog Image */
+      .blog-image {
+        width: 100%;
+        height: 500px;
+        overflow: hidden;
+        position: relative;
+      }
+
+      .blog-image img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+
+      .blog-image:hover img {
+        transform: scale(1.05);
+      }
+
+      /* Image Gallery */
+      .image-gallery {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        gap: 10px;
+        margin-top: 10px;
+      }
+
+      .gallery-thumbnail {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .gallery-thumbnail:hover {
+        transform: scale(1.05);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      }
+
+      /* Blog Content */
+      .blog-content-wrapper {
+        padding: 40px;
+      }
+
+      /* Category Badge */
+      .blog-category {
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 8px 20px;
+        background: linear-gradient(45deg, var(--primary), var(--secondary));
+        color: white;
+        border-radius: 25px;
+        font-size: 0.9rem;
+        font-weight: 600;
+        margin-bottom: 20px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      .blog-category.travel {
+        background: linear-gradient(45deg, #00b894, #00cec9);
+      }
+
+      .blog-category.tech {
+        background: linear-gradient(45deg, var(--accent), #ff4081);
+      }
+
+      .blog-category.design {
+        background: linear-gradient(45deg, #ff9800, #ff5722);
+      }
+
+      .blog-category.lifestyle {
+        background: linear-gradient(45deg, #9c27b0, #673ab7);
+      }
+
+      .blog-category.other {
+        background: linear-gradient(45deg, #4caf50, #8bc34a);
+      }
+
+      /* Blog Title */
+      .blog-title {
+        font-size: 2.8rem;
+        color: var(--dark);
+        margin-bottom: 20px;
+        line-height: 1.3;
+        font-weight: 800;
+        background: linear-gradient(135deg, var(--dark), var(--primary));
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+
+      /* Blog Meta */
+      .blog-meta {
+        display: flex;
+        align-items: center;
+        gap: 30px;
+        margin-bottom: 30px;
+        padding-bottom: 20px;
+        border-bottom: 2px solid var(--light-gray);
+        flex-wrap: wrap;
+      }
+
+      .meta-item {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        color: var(--gray);
+        font-size: 0.95rem;
+      }
+
+      .meta-item i {
+        color: var(--primary);
+        font-size: 1.1rem;
+      }
+
+      /* Stats Cards */
+      .stats-cards {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+        gap: 15px;
+        margin: 30px 0;
+      }
+
+      .stat-card-small {
+        background: white;
+        padding: 20px;
+        border-radius: 12px;
+        text-align: center;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        transition: var(--transition);
+      }
+
+      .stat-card-small:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+      }
+
+      .stat-card-small i {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+        color: var(--primary);
+      }
+
+      .stat-card-small .number {
+        font-size: 1.5rem;
+        font-weight: 700;
+        color: var(--dark);
+        margin-bottom: 5px;
+      }
+
+      .stat-card-small .label {
+        color: var(--gray);
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+      }
+
+      /* Author Info */
+      .author-section {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 30px;
+        padding: 20px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        border-left: 5px solid var(--primary);
+      }
+
+      .author-avatar {
+        width: 70px;
+        height: 70px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid white;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      .author-info {
+        flex: 1;
+      }
+
+      .author-name {
+        font-weight: 700;
+        color: var(--dark);
+        font-size: 1.3rem;
+        margin-bottom: 5px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .author-username {
+        color: var(--gray);
+        font-size: 0.9rem;
+        background: var(--light-gray);
+        padding: 2px 10px;
+        border-radius: 10px;
+      }
+
+      .author-bio {
+        color: var(--gray);
+        font-size: 0.95rem;
+        line-height: 1.5;
+        margin-top: 5px;
+      }
+
+      /* Blog Body */
+      .blog-body {
+        font-size: 1.1rem;
+        line-height: 1.8;
+        color: var(--dark);
+        margin-bottom: 40px;
+      }
+
+      .blog-body p {
+        margin-bottom: 20px;
+        padding: 15px;
+        background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+        border-radius: 10px;
+        border-left: 4px solid var(--primary);
+      }
+
+      /* Action Buttons */
+      .blog-actions {
+        display: flex;
+        gap: 15px;
+        margin: 30px 0;
+        flex-wrap: wrap;
+      }
+
+      .action-btn {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 12px 25px;
+        border: 2px solid var(--light-gray);
+        border-radius: 12px;
+        background: white;
+        color: var(--dark);
+        font-weight: 600;
+        cursor: pointer;
+        transition: var(--transition);
+        text-decoration: none;
+        border: none;
+        font-size: 1rem;
+      }
+
+      .action-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .like-btn {
+        color: #636e72;
+        border: 2px solid #ddd;
+      }
+
+      .like-btn:hover {
+        background: #ffeaea;
+        border-color: #e74c3c;
+      }
+
+      .like-btn.liked {
+        color: #e74c3c;
+        border-color: #e74c3c;
+        background: #ffeaea;
+      }
+
+      .like-btn.liked:hover {
+        background: #ffd1d1;
+      }
+
+      .share-btn {
+        color: var(--primary);
+        border: 2px solid var(--primary);
+      }
+
+      .share-btn:hover {
+        background: var(--primary);
+        color: white;
+      }
+
+      .save-btn {
+        color: var(--success);
+        border: 2px solid var(--success);
+      }
+
+      .save-btn:hover {
+        background: var(--success);
+        color: white;
+      }
+
+      /* Comment Section */
+      .comment-section {
+        margin-top: 40px;
+        padding: 30px;
+        background: white;
+        border-radius: 15px;
+        box-shadow: var(--shadow);
+        margin-bottom: 30px;
+      }
+
+      .comment-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 25px;
+        padding-bottom: 15px;
+        border-bottom: 2px solid #f0f0f0;
+      }
+
+      .comment-header h2 {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: #2c3e50;
+        margin: 0;
+      }
+
+      .comment-header i {
+        color: #3498db;
+        font-size: 1.5rem;
+      }
+
+      .comment-count {
+        color: #7f8c8d;
+        font-size: 1rem;
+        font-weight: normal;
+      }
+
+      /* Comment Form */
+      .comment-form-container {
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        padding: 25px;
+        border-radius: 15px;
+        margin-bottom: 30px;
+        border: 1px solid #dee2e6;
+      }
+
+      .form-group {
+        margin-bottom: 20px;
+      }
+
+      .form-control {
+        width: 100%;
+        padding: 15px;
+        border: 2px solid #ddd;
+        border-radius: 10px;
+        font-size: 1rem;
+        resize: vertical;
+        transition: all 0.3s ease;
+        background: white;
+      }
+
+      .form-control:focus {
+        outline: none;
+        border-color: var(--primary);
+        box-shadow: 0 0 0 3px rgba(67, 97, 238, 0.1);
+      }
+
+      .char-count {
+        text-align: right;
+        font-size: 0.9rem;
+        color: #7f8c8d;
+        margin-top: 5px;
+      }
+
+      .form-actions {
+        display: flex;
+        justify-content: flex-end;
+        gap: 10px;
+        margin-top: 20px;
+      }
+
+      /* Comments List */
+      .comments-list {
+        margin-top: 20px;
+      }
+
+      .comment-item {
+        padding: 25px;
+        border: 1px solid #eee;
+        border-radius: 15px;
+        margin-bottom: 20px;
+        background: white;
+        transition: transform 0.2s ease;
+        border-left: 4px solid var(--primary);
+      }
+
+      .comment-item:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 25px rgba(0, 0, 0, 0.05);
+      }
+
+      .comment-user {
+        display: flex;
+        align-items: center;
+        gap: 15px;
+        margin-bottom: 15px;
+      }
+
+      .comment-avatar {
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid white;
+        box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .comment-user-info {
+        flex: 1;
+      }
+
+      .comment-user-info strong {
+        color: var(--dark);
+        font-size: 1.1rem;
+        margin-bottom: 5px;
+        display: block;
+      }
+
+      .comment-time {
+        color: #95a5a6;
+        font-size: 0.85rem;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+      }
+
+      .comment-content {
+        color: #34495e;
+        line-height: 1.6;
+        margin-bottom: 15px;
+        padding: 15px;
+        background: #f8f9fa;
+        border-radius: 10px;
+        white-space: pre-wrap;
+      }
+
+      /* No Comments */
+      .no-comments {
+        text-align: center;
+        padding: 60px;
+        color: #95a5a6;
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+      }
+
+      .no-comments i {
+        font-size: 3.5rem;
+        margin-bottom: 20px;
+        color: var(--light-gray);
+      }
+
+      .no-comments p {
+        font-size: 1.2rem;
+        margin-bottom: 10px;
+      }
+
+      .no-comments .subtext {
+        font-size: 0.95rem;
+        color: #bdc3c7;
+      }
+
+      /* Login Prompt */
+      .login-prompt {
+        text-align: center;
+        padding: 30px;
+        background: linear-gradient(135deg, #fff3cd 0%, #ffeaa7 100%);
+        border: 2px solid #ffeaa7;
+        border-radius: 15px;
+        margin-bottom: 20px;
+      }
+
+      .login-prompt i {
+        font-size: 2rem;
+        color: #f39c12;
+        margin-bottom: 15px;
+      }
+
+      .login-prompt a {
+        color: var(--primary);
+        text-decoration: none;
+        font-weight: 600;
+        display: inline-flex;
+        align-items: center;
+        gap: 8px;
+        padding: 10px 20px;
+        background: white;
+        border-radius: 25px;
+        margin-top: 10px;
+        transition: var(--transition);
+      }
+
+      .login-prompt a:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      }
+
+      /* Button styles */
+      .btn {
+        padding: 12px 25px;
+        border: none;
+        border-radius: 10px;
+        cursor: pointer;
+        font-size: 1rem;
+        font-weight: 600;
+        transition: all 0.3s ease;
+        display: inline-flex;
+        align-items: center;
+        gap: 10px;
+      }
+
+      .btn-primary {
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        border: none;
+      }
+
+      .btn-primary:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(67, 97, 238, 0.3);
+      }
+
+      .btn-secondary {
+        background: #f8f9fa;
+        color: #495057;
+        border: 2px solid #dee2e6;
+      }
+
+      .btn-secondary:hover {
+        background: #e9ecef;
+        border-color: #ced4da;
+        transform: translateY(-2px);
+      }
+
+      /* Toast Notification */
+      .toast {
+        position: fixed;
+        bottom: 20px;
+        right: 20px;
+        background: var(--primary);
+        color: white;
+        padding: 15px 25px;
+        border-radius: 10px;
+        box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+        transform: translateY(100px);
+        opacity: 0;
+        transition: all 0.3s ease;
+        z-index: 1001;
+      }
+
+      .toast.show {
+        transform: translateY(0);
+        opacity: 1;
+      }
+
+      /* Loading spinner */
+      .spinner {
+        animation: spin 1s linear infinite;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* Responsive Design */
+      @media (max-width: 992px) {
+        .blog-image {
+          height: 400px;
+        }
+
+        .blog-title {
+          font-size: 2.2rem;
+        }
+
+        .blog-content-wrapper {
+          padding: 30px;
+        }
+      }
+
+      @media (max-width: 768px) {
+        .main-content {
+          padding: 15px;
+        }
+
+        .blog-image {
+          height: 300px;
+        }
+
+        .blog-title {
+          font-size: 1.8rem;
+        }
+
+        .blog-content-wrapper {
+          padding: 20px;
+        }
+
+        .blog-meta {
+          flex-direction: column;
+          gap: 15px;
+          align-items: flex-start;
+        }
+
+        .blog-actions {
+          flex-direction: column;
+        }
+
+        .author-section {
+          flex-direction: column;
+          text-align: center;
+          align-items: center;
+        }
+
+        .form-actions {
+          flex-direction: column;
+        }
+      }
+
+      @media (max-width: 480px) {
+        .blog-image {
+          height: 250px;
+        }
+
+        .blog-title {
+          font-size: 1.5rem;
+        }
+
+        .comment-section {
+          padding: 20px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <%- include('header', { user: user, currentPage: 'Blog' }); %>
+
+    <div class="main-content">
+      <div class="container">
+        <!-- Back Button -->
+        <a href="/" class="back-button">
+          <i class="fas fa-arrow-left"></i>
+          Back to Blogs
+        </a>
+
+        <!-- Blog Post -->
+        <article class="blog-post">
+          <!-- Blog Image -->
+          <div class="blog-image">
+            <% if (blog.image && blog.image.length> 0) { %>
+            <img
+              src="<%= typeof blog.image[0] === 'string' && blog.image[0].includes('cloudinary') ? blog.image[0] : (blog.image[0].url || blog.image[0]) %>"
+              alt="<%= blog.title %>"
+              onerror="this.src='https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80'"
+            />
+            <% } else { %>
+            <img
+              src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
+              alt="<%= blog.title %>"
+            />
+            <% } %>
+          </div>
+
+          <!-- Image Gallery (if multiple images) -->
+          <% if (blog.image && blog.image.length> 1) { %>
+          <div class="blog-content-wrapper">
+            <h3 style="margin-bottom: 15px; color: var(--dark)">
+              <i class="fas fa-images"></i> More Images
+            </h3>
+            <div class="image-gallery">
+              <% blog.image.forEach((img, index) => { if (index > 0) { %>
+              <img
+                src="<%= typeof blog.image[0] === 'string' && (blog.image[0].includes('cloudinary') || blog.image[0].includes('http')) ? blog.image[0] : (typeof blog.image[0] === 'object' && blog.image[0].url ? blog.image[0].url : blog.image[0]) %>"
+                alt="<%= blog.title %>"
+                onerror="this.src='https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80'"
+              />
+              <% } }); %>
+            </div>
+          </div>
+          <% } %>
+
+          <!-- Blog Content -->
+          <div class="blog-content-wrapper">
+            <!-- Category -->
+            <% if (blog.category) { %>
+            <span class="blog-category <%= blog.category.toLowerCase() %>">
+              <i
+                class="fas fa-<%= blog.category === 'Technology' ? 'laptop-code' : blog.category === 'Travel' ? 'plane' : blog.category === 'Lifestyle' ? 'heart' : blog.category === 'Food' ? 'utensils' : 'tag' %>"
+              ></i>
+              <%= blog.category %>
+            </span>
+            <% } %>
+
+            <!-- Title -->
+            <h1 class="blog-title"><%= blog.title %></h1>
+
+            <!-- Stats Cards -->
+            <div class="stats-cards">
+              <div class="stat-card-small">
+                <i class="fas fa-eye"></i>
+                <div class="number"><%= blog.view || 1 %></div>
+                <div class="label">Views</div>
+              </div>
+              <div class="stat-card-small">
+                <i class="fas fa-heart"></i>
+                <div class="number">
+                  <%= blog.like ? blog.like.length : 0 %>
+                </div>
+                <div class="label">Likes</div>
+              </div>
+              <div class="stat-card-small">
+                <i class="fas fa-comment"></i>
+                <div class="number">
+                  <%= blog.comment ? blog.comment.length : 0 %>
+                </div>
+                <div class="label">Comments</div>
+              </div>
+              <div class="stat-card-small">
+                <i class="fas fa-calendar-alt"></i>
+                <div class="number">
+                  <%= new Date(blog.createdAt).getDate() %>
+                </div>
+                <div class="label">
+                  <%= new Date(blog.createdAt).toLocaleString('default', {
+                  month: 'short' }) %>
+                </div>
+              </div>
+            </div>
+
+            <!-- Meta Information -->
+            <div class="blog-meta">
+              <div class="meta-item">
+                <i class="far fa-calendar-alt"></i>
+                <span>
+                  <% if (blog.createdAt) { %> <%= new
+                  Date(blog.createdAt).toLocaleDateString('en-US', { weekday:
+                  'long', year: 'numeric', month: 'long', day: 'numeric' }) %>
+                  <% } else { %> Unknown date <% } %>
+                </span>
+              </div>
+              <div class="meta-item">
+                <i class="far fa-clock"></i>
+                <span>
+                  <%= new Date(blog.createdAt).toLocaleTimeString('en-US', {
+                  hour: '2-digit', minute: '2-digit' }) %>
+                </span>
+              </div>
+              <div class="meta-item">
+                <i class="fas fa-pen-alt"></i>
+                <span>
+                  <%= blog.author ? blog.author.name : 'Anonymous' %>
+                </span>
+              </div>
+            </div>
+
+            <!-- Author Section -->
+            <% if (blog.author) { %>
+            <div class="author-section">
+              <img
+                src="<%= blog.author.profile_image || blog.author.image || '/upload/default.png' %>"
+                alt="<%= blog.author.name %>"
+                class="author-avatar"
+                onerror="this.src='/upload/default.png'"
+              />
+              <div class="author-info">
+                <div class="author-name">
+                  <%= blog.author.name %>
+                  <span class="author-username">
+                    @<%= blog.author.username || 'user' %>
+                  </span>
+                </div>
+                <div class="author-bio">
+                  Passionate traveler sharing experiences and adventures from
+                  around the world.
+                </div>
+              </div>
+            </div>
+            <% } %>
+
+            <!-- Blog Body -->
+            <div class="blog-body">
+              <% if (blog.description) { %>
+              <p><%= blog.description %></p>
+              <% } else { %>
+              <div class="no-content">
+                <i class="fas fa-file-alt"></i>
+                <p>
+                  No detailed content available. This is a short post by the
+                  author.
+                </p>
+              </div>
+              <% } %>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="blog-actions">
+              <% if (user) { %>
+              <a
+                href="/blog/like/<%= blog._id %>"
+                class="action-btn like-btn <%= liked ? 'liked' : '' %>"
+                id="likeButton"
+              >
+                <i class="<%= liked ? 'fas' : 'far' %> fa-heart"></i>
+                <span id="likeText"> <%= liked ? 'Liked' : 'Like' %> </span>
+                <span class="like-count" id="likeCount">
+                  (<%= blog.like ? blog.like.length : 0 %>)
+                </span>
+              </a>
+              <% } else { %>
+              <a href="/login" class="action-btn like-btn">
+                <i class="far fa-heart"></i>
+                <span>Like</span>
+                <span class="like-count">
+                  (<%= blog.like ? blog.like.length : 0 %>)
+                </span>
+              </a>
+              <% } %>
+            </div>
+          </div>
+        </article>
+
+        <!-- Comment Section -->
+        <section class="comment-section" id="commentSection">
+          <div class="comment-header">
+            <h2>
+              <i class="far fa-comments"></i>
+              Discussion
+              <span class="comment-count" id="commentCount">
+                (<%= blog.comments ? blog.comments.length : blog.comment ?
+                blog.comment.length : 0 %>)
+              </span>
+            </h2>
+            <% if (user) { %>
+            <button class="btn btn-primary" id="showCommentForm">
+              <i class="fas fa-plus"></i> Add Comment
+            </button>
+            <% } %>
+          </div>
+
+          <!-- Comment Form (Initially Hidden) -->
+          <% if (user) { %>
+          <div
+            class="comment-form-container"
+            id="commentForm"
+            style="display: none"
+          >
+            <form
+              id="commentFormElement"
+              method="POST"
+              action="/blogs/<%= blog._id %>/comment"
+            >
+              <div class="form-group">
+                <textarea
+                  id="commentContent"
+                  name="content"
+                  class="form-control"
+                  placeholder="Share your thoughts about this travel experience..."
+                  rows="4"
+                  required
+                  maxlength="1000"
+                ></textarea>
+                <div class="char-count"><span id="charCount">0</span>/1000</div>
+              </div>
+              <div class="form-actions">
+                <button
+                  type="button"
+                  class="btn btn-secondary"
+                  id="cancelComment"
+                >
+                  Cancel
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-primary"
+                  id="submitComment"
+                >
+                  <i class="fas fa-paper-plane"></i> Post Comment
+                </button>
+              </div>
+            </form>
+          </div>
+          <% } else { %>
+          <div class="login-prompt">
+            <i class="fas fa-comment-slash"></i>
+            <h3>Join the Discussion</h3>
+            <p>Login to share your thoughts and interact with the community</p>
+            <a href="/login">
+              <i class="fas fa-sign-in-alt"></i>
+              Login to Comment
+            </a>
+          </div>
+          <% } %>
+
+          <!-- Comments List -->
+          <div class="comments-list" id="commentsList">
+            <% if (blog.comments && blog.comments.length> 0) { %> <%
+            blog.comments.forEach(comment => { %>
+            <div class="comment-item" data-comment-id="<%= comment._id %>">
+              <div class="comment-user">
+                <img
+                  src="<%= comment.user && (comment.user.image || comment.user.profile_image) ? (comment.user.image || comment.user.profile_image) : '/upload/default.png' %>"
+                  alt="<%= comment.user ? comment.user.name : 'Anonymous' %>"
+                  class="comment-avatar"
+                  onerror="this.src='/upload/default.png'"
+                />
+                <div class="comment-user-info">
+                  <strong>
+                    <%= comment.user ? comment.user.name : 'Anonymous' %>
+                  </strong>
+                  <span class="comment-time">
+                    <i class="far fa-clock"></i>
+                    <%= new Date(comment.createdAt || comment.created_at ||
+                    Date.now()).toLocaleDateString('en-US', { year: 'numeric',
+                    month: 'short', day: 'numeric', hour: '2-digit', minute:
+                    '2-digit' }) %>
+                  </span>
+                </div>
+              </div>
+              <div class="comment-content"><%= comment.content %></div>
+            </div>
+            <% }) %> <% } else if (blog.comment && blog.comment.length> 0) { %>
+            <% blog.comment.forEach(comment => { %>
+            <div class="comment-item" data-comment-id="<%= comment._id %>">
+              <div class="comment-user">
+                <img
+                  src="<%= comment.user && (comment.user.image || comment.user.profile_image) ? (comment.user.image || comment.user.profile_image) : '/upload/default.png' %>"
+                  alt="<%= comment.user ? comment.user.name : 'Anonymous' %>"
+                  class="comment-avatar"
+                  onerror="this.src='/upload/default.png'"
+                />
+                <div class="comment-user-info">
+                  <strong>
+                    <%= comment.user ? comment.user.name : 'Anonymous' %>
+                  </strong>
+                  <span class="comment-time">
+                    <i class="far fa-clock"></i>
+                    <%= new Date(comment.createdAt || comment.created_at ||
+                    Date.now()).toLocaleDateString('en-US', { year: 'numeric',
+                    month: 'short', day: 'numeric', hour: '2-digit', minute:
+                    '2-digit' }) %>
+                  </span>
+                </div>
+              </div>
+              <div class="comment-content"><%= comment.content %></div>
+            </div>
+            <% }) %> <% } else { %>
+            <div class="no-comments">
+              <i class="far fa-comment-dots"></i>
+              <p>No comments yet</p>
+              <p class="subtext">
+                Be the first to share your thoughts about this travel post!
+              </p>
+            </div>
+            <% } %>
+          </div>
+        </section>
+
+        <!-- Toast Notification -->
+        <div class="toast" id="toast"></div>
+      </div>
+    </div>
+
+    <script>
+      // Toast Notification
+      function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 3000);
+      }
+
+      // Show image in full screen
+      function showImage(src) {
+        const modal = document.createElement('div');
+        modal.style.position = 'fixed';
+        modal.style.top = '0';
+        modal.style.left = '0';
+        modal.style.width = '100%';
+        modal.style.height = '100%';
+        modal.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
+        modal.style.display = 'flex';
+        modal.style.alignItems = 'center';
+        modal.style.justifyContent = 'center';
+        modal.style.zIndex = '9999';
+        modal.style.cursor = 'pointer';
+
+        const img = document.createElement('img');
+        img.src = src;
+        img.style.maxWidth = '90%';
+        img.style.maxHeight = '90%';
+        img.style.objectFit = 'contain';
+        img.style.borderRadius = '10px';
+
+        modal.appendChild(img);
+        document.body.appendChild(modal);
+
+        modal.addEventListener('click', () => {
+          document.body.removeChild(modal);
+        });
+      }
+
+      // Comment Form Toggle
+      const showCommentFormBtn = document.getElementById('showCommentForm');
+      const commentForm = document.getElementById('commentForm');
+      const cancelCommentBtn = document.getElementById('cancelComment');
+      const commentContent = document.getElementById('commentContent');
+      const charCount = document.getElementById('charCount');
+
+      if (showCommentFormBtn && commentForm) {
+        showCommentFormBtn.addEventListener('click', () => {
+          commentForm.style.display = 'block';
+          showCommentFormBtn.style.display = 'none';
+          if (commentContent) {
+            commentContent.focus();
+          }
+        });
+      }
+
+      if (cancelCommentBtn && commentForm) {
+        cancelCommentBtn.addEventListener('click', () => {
+          commentForm.style.display = 'none';
+          if (showCommentFormBtn) {
+            showCommentFormBtn.style.display = 'inline-flex';
+          }
+          if (commentContent) {
+            commentContent.value = '';
+            if (charCount) {
+              charCount.textContent = '0';
+            }
+          }
+        });
+      }
+
+      // Character count for comment textarea
+      if (commentContent && charCount) {
+        commentContent.addEventListener('input', () => {
+          charCount.textContent = commentContent.value.length;
+        });
+
+        // Initialize character count
+        charCount.textContent = commentContent.value.length;
+      }
+
+      // Form submission handling
+      const commentFormElement = document.getElementById('commentFormElement');
+      if (commentFormElement) {
+        commentFormElement.addEventListener('submit', function (e) {
+          const content = commentContent.value.trim();
+          if (!content) {
+            e.preventDefault();
+            showToast('Please enter a comment');
+            commentContent.focus();
+            return false;
+          }
+
+          if (content.length > 1000) {
+            e.preventDefault();
+            showToast('Comment must be less than 1000 characters');
+            return false;
+          }
+
+          // Show loading state
+          const submitBtn = document.getElementById('submitComment');
+          const originalText = submitBtn.innerHTML;
+          submitBtn.innerHTML =
+            '<i class="fas fa-spinner fa-spin"></i> Posting...';
+          submitBtn.disabled = true;
+
+          // Allow form to submit normally
+          return true;
+        });
+      }
+
+      // Auto-hide toast on page load
+      document.addEventListener('DOMContentLoaded', function () {
+        // Check if there's a success message in URL
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.get('comment') === 'success') {
+          showToast('Comment posted successfully!');
+        }
+
+        // Check for error messages
+        if (urlParams.get('error')) {
+          showToast('Error: ' + urlParams.get('error'));
+        }
+      });
+
+      // Like button animation
+      const likeButton = document.getElementById('likeButton');
+      if (likeButton) {
+        likeButton.addEventListener('click', function (e) {
+          // If not logged in, let it redirect to login
+          if (user ? 'true' : 'false') {
+            return;
+          }
+
+          // Prevent default and handle with fetch for better UX
+          e.preventDefault();
+
+          const isLiked = this.classList.contains('liked');
+          const likeText = document.getElementById('likeText');
+          const likeCount = document.getElementById('likeCount');
+          const heartIcon = this.querySelector('i');
+
+          // Update UI immediately (optimistic update)
+          if (isLiked) {
+            this.classList.remove('liked');
+            likeText.textContent = 'Like';
+            heartIcon.classList.remove('fas');
+            heartIcon.classList.add('far');
+
+            // Update count
+            const currentCount = parseInt(
+              likeCount.textContent.match(/\d+/)[0]
+            );
+            likeCount.textContent = `(${currentCount - 1})`;
+          } else {
+            this.classList.add('liked');
+            likeText.textContent = 'Liked';
+            heartIcon.classList.remove('far');
+            heartIcon.classList.add('fas');
+
+            // Update count
+            const currentCount = parseInt(
+              likeCount.textContent.match(/\d+/)[0]
+            );
+            likeCount.textContent = `(${currentCount + 1})`;
+          }
+
+          // Send request to server
+          fetch(this.href, {
+            method: 'GET',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          })
+            .then((response) => {
+              if (!response.ok) {
+                // Revert if there's an error
+                if (isLiked) {
+                  this.classList.add('liked');
+                  likeText.textContent = 'Liked';
+                  heartIcon.classList.remove('far');
+                  heartIcon.classList.add('fas');
+                  const currentCount = parseInt(
+                    likeCount.textContent.match(/\d+/)[0]
+                  );
+                  likeCount.textContent = `(${currentCount + 1})`;
+                } else {
+                  this.classList.remove('liked');
+                  likeText.textContent = 'Like';
+                  heartIcon.classList.remove('fas');
+                  heartIcon.classList.add('far');
+                  const currentCount = parseInt(
+                    likeCount.textContent.match(/\d+/)[0]
+                  );
+                  likeCount.textContent = `(${currentCount - 1})`;
+                }
+                showToast('Failed to update like. Please try again.');
+              }
+            })
+            .catch((error) => {
+              console.error('Error:', error);
+              showToast('Network error. Please try again.');
+            });
+        });
+      }
+    </script>
+  </body>
+</html>
