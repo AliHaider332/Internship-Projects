@@ -46,7 +46,7 @@ bloger.post(
   updateBlog
 );
 
-bloger.get('/blogs/:id', checkUserAuthentication, getSingle);
+bloger.get('/blogs/:id', checkUserAuthenticationFirst, getSingle);
 bloger.get('/blog/like/:id', checkUserAuthentication, toggleLikeController);
 bloger.post('/blogs/:id/comment', checkUserAuthentication, addComment);
 

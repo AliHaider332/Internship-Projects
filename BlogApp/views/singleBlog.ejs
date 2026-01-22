@@ -80,45 +80,193 @@
         border: 1px solid rgba(255, 255, 255, 0.2);
       }
 
-      /* Blog Image */
-      .blog-image {
+      /* Image Slider Container */
+      .image-slider-container {
+        position: relative;
         width: 100%;
         height: 500px;
         overflow: hidden;
+        border-radius: 0 0 20px 20px;
+      }
+
+      .image-slider {
+        display: flex;
+        width: 100%;
+        height: 100%;
+        transition: transform 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      }
+
+      .slide {
+        flex: 0 0 100%;
+        height: 100%;
         position: relative;
       }
 
-      .blog-image img {
+      .slide img {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        transition: transform 0.5s ease;
       }
 
-      .blog-image:hover img {
-        transform: scale(1.05);
+      /* Slider Navigation */
+      .slider-nav {
+        position: absolute;
+        top: 50%;
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        padding: 0 20px;
+        transform: translateY(-50%);
+        z-index: 10;
+      }
+
+      .slider-btn {
+        background: rgba(255, 255, 255, 0.9);
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        color: var(--dark);
+        font-size: 1.2rem;
+      }
+
+      .slider-btn:hover {
+        background: white;
+        transform: scale(1.1);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+      }
+
+      .slider-btn:disabled {
+        opacity: 0.5;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Slider Dots */
+      .slider-dots {
+        position: absolute;
+        bottom: 20px;
+        left: 0;
+        right: 0;
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        z-index: 10;
+      }
+
+      .dot {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background: rgba(255, 255, 255, 0.5);
+        border: 2px solid rgba(255, 255, 255, 0.8);
+        cursor: pointer;
+        transition: var(--transition);
+      }
+
+      .dot.active {
+        background: white;
+        transform: scale(1.2);
+      }
+
+      .dot:hover {
+        background: white;
+      }
+
+      /* Slider Counter */
+      .slider-counter {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        padding: 8px 15px;
+        border-radius: 20px;
+        font-size: 0.9rem;
+        z-index: 10;
+        display: flex;
+        align-items: center;
+        gap: 8px;
+      }
+
+      /* Fullscreen Button */
+      .fullscreen-btn {
+        position: absolute;
+        top: 20px;
+        right: 70px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        border: none;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        transition: var(--transition);
+        z-index: 10;
+      }
+
+      .fullscreen-btn:hover {
+        background: rgba(0, 0, 0, 0.9);
+        transform: scale(1.1);
       }
 
       /* Image Gallery */
       .image-gallery {
         display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-        gap: 10px;
-        margin-top: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        gap: 12px;
+        margin-top: 20px;
+        padding: 20px;
+        background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        border-radius: 15px;
+        border: 1px solid #dee2e6;
       }
 
       .gallery-thumbnail {
         width: 100%;
-        height: 150px;
+        height: 160px;
         object-fit: cover;
-        border-radius: 8px;
+        border-radius: 10px;
         cursor: pointer;
         transition: var(--transition);
+        border: 3px solid transparent;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
       }
 
       .gallery-thumbnail:hover {
-        transform: scale(1.05);
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        border-color: var(--primary);
+      }
+
+      .gallery-thumbnail.active {
+        border-color: var(--primary);
+        transform: scale(0.95);
+      }
+
+      /* Gallery Title */
+      .gallery-title {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--dark);
+        margin: 20px 0 15px 0;
+        padding-bottom: 10px;
+        border-bottom: 2px solid var(--light-gray);
+        font-size: 1.5rem;
+      }
+
+      .gallery-title i {
+        color: var(--primary);
       }
 
       /* Blog Content */
@@ -657,9 +805,87 @@
         }
       }
 
+      /* Modal for full screen image */
+      .modal-overlay {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: rgba(0, 0, 0, 0.95);
+        display: none;
+        align-items: center;
+        justify-content: center;
+        z-index: 9999;
+      }
+
+      .modal-overlay.active {
+        display: flex;
+      }
+
+      .modal-content {
+        max-width: 90%;
+        max-height: 90%;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .modal-image {
+        max-width: 90%;
+        max-height: 90vh;
+        object-fit: contain;
+        border-radius: 10px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+      }
+
+      .modal-close {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: rgba(255, 255, 255, 0.2);
+        color: white;
+        border: none;
+        width: 50px;
+        height: 50px;
+        border-radius: 50%;
+        font-size: 1.5rem;
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: var(--transition);
+        z-index: 10000;
+      }
+
+      .modal-close:hover {
+        background: rgba(255, 255, 255, 0.3);
+        transform: rotate(90deg);
+      }
+
+      /* Modal navigation buttons */
+      .modal-prev,
+      .modal-next {
+        position: fixed;
+        top: 50%;
+        transform: translateY(-50%);
+        z-index: 10000;
+      }
+
+      .modal-prev {
+        left: 20px;
+      }
+
+      .modal-next {
+        right: 20px;
+      }
+
       /* Responsive Design */
       @media (max-width: 992px) {
-        .blog-image {
+        .image-slider-container {
           height: 400px;
         }
 
@@ -670,6 +896,14 @@
         .blog-content-wrapper {
           padding: 30px;
         }
+
+        .image-gallery {
+          grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+        }
+
+        .gallery-thumbnail {
+          height: 140px;
+        }
       }
 
       @media (max-width: 768px) {
@@ -677,8 +911,14 @@
           padding: 15px;
         }
 
-        .blog-image {
-          height: 300px;
+        .image-slider-container {
+          height: 350px;
+        }
+
+        .slider-btn {
+          width: 40px;
+          height: 40px;
+          font-size: 1rem;
         }
 
         .blog-title {
@@ -708,11 +948,39 @@
         .form-actions {
           flex-direction: column;
         }
+
+        .image-gallery {
+          grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        }
+
+        .gallery-thumbnail {
+          height: 120px;
+        }
       }
 
       @media (max-width: 480px) {
-        .blog-image {
-          height: 250px;
+        .image-slider-container {
+          height: 300px;
+        }
+
+        .slider-btn {
+          width: 35px;
+          height: 35px;
+          padding: 0 10px;
+        }
+
+        .slider-counter {
+          top: 15px;
+          right: 15px;
+          font-size: 0.8rem;
+          padding: 6px 12px;
+        }
+
+        .fullscreen-btn {
+          top: 15px;
+          right: 60px;
+          width: 32px;
+          height: 32px;
         }
 
         .blog-title {
@@ -721,6 +989,14 @@
 
         .comment-section {
           padding: 20px;
+        }
+
+        .image-gallery {
+          grid-template-columns: repeat(2, 1fr);
+        }
+
+        .gallery-thumbnail {
+          height: 100px;
         }
       }
     </style>
@@ -739,39 +1015,62 @@
 
         <!-- Blog Post -->
         <article class="blog-post">
-          <!-- Blog Image -->
-          <div class="blog-image">
-            <% if (blog.image && blog.image.length> 0) { %>
-            <img
-              src="<%= typeof blog.image[0] === 'string' && blog.image[0].includes('cloudinary') ? blog.image[0] : (blog.image[0].url || blog.image[0]) %>"
-              alt="<%= blog.title %>"
-              onerror="this.src='https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80'"
-            />
-            <% } else { %>
-            <img
-              src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
-              alt="<%= blog.title %>"
-            />
+          <!-- Image Slider -->
+          <div class="image-slider-container" id="imageSlider">
+            <div class="image-slider" id="slider">
+              <% if (blog.image && blog.image.length> 0) { %> <%
+              blog.image.forEach((img, index) => { %> <% let imgSrc; if (typeof
+              img === 'string') { imgSrc = img.includes('http') ? img :
+              '/uploads/' + img; } else if (typeof img === 'object' && img.url)
+              { imgSrc = img.url; } else { imgSrc =
+              'https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80';
+              } %>
+              <div class="slide" data-index="<%= index %>">
+                <img
+                  src="<%= imgSrc %>"
+                  alt="<%= blog.title %> - Image <%= index + 1 %>"
+                  onerror="this.src='https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80'"
+                />
+              </div>
+              <% }); %> <% } else { %>
+              <div class="slide" data-index="0">
+                <img
+                  src="https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80"
+                  alt="<%= blog.title %>"
+                />
+              </div>
+              <% } %>
+            </div>
+
+            <!-- Slider Navigation -->
+            <% if (blog.image && blog.image.length> 1) { %>
+            <div class="slider-nav">
+              <button class="slider-btn prev-btn" id="prevBtn">
+                <i class="fas fa-chevron-left"></i>
+              </button>
+              <button class="slider-btn next-btn" id="nextBtn">
+                <i class="fas fa-chevron-right"></i>
+              </button>
+            </div>
+
+            <!-- Slider Dots -->
+            <div class="slider-dots" id="sliderDots"></div>
+
+            <!-- Slider Counter -->
+            <div class="slider-counter" id="sliderCounter">
+              <i class="fas fa-image"></i>
+              <span id="currentSlide">1</span> /
+              <span id="totalSlides"
+                ><%= blog.image ? blog.image.length : 1 %></span
+              >
+            </div>
+
+            <!-- Fullscreen Button -->
+            <button class="fullscreen-btn" id="fullscreenBtn">
+              <i class="fas fa-expand"></i>
+            </button>
             <% } %>
           </div>
-
-          <!-- Image Gallery (if multiple images) -->
-          <% if (blog.image && blog.image.length> 1) { %>
-          <div class="blog-content-wrapper">
-            <h3 style="margin-bottom: 15px; color: var(--dark)">
-              <i class="fas fa-images"></i> More Images
-            </h3>
-            <div class="image-gallery">
-              <% blog.image.forEach((img, index) => { if (index > 0) { %>
-              <img
-                src="<%= typeof blog.image[0] === 'string' && (blog.image[0].includes('cloudinary') || blog.image[0].includes('http')) ? blog.image[0] : (typeof blog.image[0] === 'object' && blog.image[0].url ? blog.image[0].url : blog.image[0]) %>"
-                alt="<%= blog.title %>"
-                onerror="this.src='https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80'"
-              />
-              <% } }); %>
-            </div>
-          </div>
-          <% } %>
 
           <!-- Blog Content -->
           <div class="blog-content-wrapper">
@@ -886,13 +1185,44 @@
               <% } %>
             </div>
 
+            <!-- Image Gallery (if multiple images) -->
+            <% if (blog.image && blog.image.length> 1) { %>
+            <div class="gallery-section">
+              <h3 class="gallery-title">
+                <i class="fas fa-images"></i> Browse All Images
+              </h3>
+              <div class="image-gallery" id="imageGallery">
+                <% blog.image.forEach((img, index) => { %> <% let imgSrc; if
+                (typeof img === 'string') { imgSrc = img.includes('http') ? img
+                : '/uploads/' + img; } else if (typeof img === 'object' &&
+                img.url) { imgSrc = img.url; } else { imgSrc =
+                'https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80';
+                } %>
+                <img
+                  src="<%= imgSrc %>"
+                  alt="<%= blog.title %> - Image <%= index + 1 %>"
+                  class="gallery-thumbnail <%= index === 0 ? 'active' : '' %>"
+                  data-index="<%= index %>"
+                  data-src="<%= imgSrc %>"
+                  onerror="this.src='https://images.unsplash.com/photo-1439066615861-d1af74d74000?ixlib=rb-1.2.1&auto=format&fit=crop&w=1200&q=80'"
+                />
+                <% }); %>
+              </div>
+            </div>
+            <% } %>
+
             <!-- Action Buttons -->
             <div class="blog-actions">
+              <!-- DEBUG: Checking user status -->
+              <!-- User status: <%= user ? 'Logged in' : 'Logged out' %> -->
+
               <% if (user) { %>
+              <!-- Logged in user button -->
               <a
                 href="/blog/like/<%= blog._id %>"
                 class="action-btn like-btn <%= liked ? 'liked' : '' %>"
                 id="likeButton"
+                data-user-id="<%= user._id || user.id %>"
               >
                 <i class="<%= liked ? 'fas' : 'far' %> fa-heart"></i>
                 <span id="likeText"> <%= liked ? 'Liked' : 'Like' %> </span>
@@ -901,7 +1231,8 @@
                 </span>
               </a>
               <% } else { %>
-              <a href="/login" class="action-btn like-btn">
+              <!-- Logged out user button -->
+              <a href="/login" class="action-btn like-btn" id="loginLikeButton">
                 <i class="far fa-heart"></i>
                 <span>Like</span>
                 <span class="like-count">
@@ -920,8 +1251,8 @@
               <i class="far fa-comments"></i>
               Discussion
               <span class="comment-count" id="commentCount">
-                (<%= blog.comments ? blog.comments.length : blog.comment ?
-                blog.comment.length : 0 %>)
+                (<%= blog.comments ? blog.comments.length : (blog.comment ?
+                blog.comment.length : 0) %>)
               </span>
             </h2>
             <% if (user) { %>
@@ -1048,13 +1379,287 @@
             <% } %>
           </div>
         </section>
-
-        <!-- Toast Notification -->
-        <div class="toast" id="toast"></div>
       </div>
     </div>
 
+    <!-- Image Modal for Fullscreen Slider -->
+    <div class="modal-overlay" id="imageModal">
+      <div class="modal-content">
+        <div class="modal-slider" id="modalSlider"></div>
+        <button class="modal-close" id="modalClose">
+          <i class="fas fa-times"></i>
+        </button>
+
+        <!-- Modal Navigation -->
+        <button class="slider-btn modal-prev" id="modalPrevBtn">
+          <i class="fas fa-chevron-left"></i>
+        </button>
+        <button class="slider-btn modal-next" id="modalNextBtn">
+          <i class="fas fa-chevron-right"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div class="toast" id="toast"></div>
+
     <script>
+      // Simple Slider Implementation
+      document.addEventListener('DOMContentLoaded', function () {
+        const slider = document.getElementById('slider');
+        const slides = document.querySelectorAll('.slide');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const sliderDots = document.getElementById('sliderDots');
+        const currentSlideEl = document.getElementById('currentSlide');
+        const totalSlidesEl = document.getElementById('totalSlides');
+        const galleryThumbnails =
+          document.querySelectorAll('.gallery-thumbnail');
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
+        if (!slider || slides.length <= 1) return;
+
+        let currentIndex = 0;
+        const totalSlides = slides.length;
+
+        // Initialize counter
+        if (currentSlideEl) currentSlideEl.textContent = currentIndex + 1;
+        if (totalSlidesEl) totalSlidesEl.textContent = totalSlides;
+
+        // Create dots
+        if (sliderDots) {
+          for (let i = 0; i < totalSlides; i++) {
+            const dot = document.createElement('div');
+            dot.className = 'dot' + (i === 0 ? ' active' : '');
+            dot.dataset.index = i;
+            dot.addEventListener('click', () => goToSlide(i));
+            sliderDots.appendChild(dot);
+          }
+        }
+
+        // Update slider position
+        function updateSlider() {
+          slider.style.transform = `translateX(-${currentIndex * 100}%)`;
+
+          // Update counter
+          if (currentSlideEl) {
+            currentSlideEl.textContent = currentIndex + 1;
+          }
+
+          // Update dots
+          const dots = document.querySelectorAll('.dot');
+          dots.forEach((dot, index) => {
+            dot.classList.toggle('active', index === currentIndex);
+          });
+
+          // Update thumbnails
+          galleryThumbnails.forEach((thumb, index) => {
+            thumb.classList.toggle('active', index === currentIndex);
+          });
+        }
+
+        function goToSlide(index) {
+          if (index < 0 || index >= totalSlides) return;
+          currentIndex = index;
+          updateSlider();
+        }
+
+        function nextSlide() {
+          currentIndex = (currentIndex + 1) % totalSlides;
+          updateSlider();
+        }
+
+        function prevSlide() {
+          currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+          updateSlider();
+        }
+
+        // Event listeners for navigation buttons
+        if (prevBtn) {
+          prevBtn.addEventListener('click', prevSlide);
+        }
+
+        if (nextBtn) {
+          nextBtn.addEventListener('click', nextSlide);
+        }
+
+        // Event listeners for thumbnails
+        galleryThumbnails.forEach((thumb) => {
+          thumb.addEventListener('click', function () {
+            const index = parseInt(this.dataset.index);
+            goToSlide(index);
+          });
+        });
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+          if (e.key === 'ArrowLeft') {
+            prevSlide();
+          } else if (e.key === 'ArrowRight') {
+            nextSlide();
+          }
+        });
+
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+
+        slider.parentElement.addEventListener('touchstart', (e) => {
+          touchStartX = e.changedTouches[0].screenX;
+        });
+
+        slider.parentElement.addEventListener('touchend', (e) => {
+          touchEndX = e.changedTouches[0].screenX;
+          handleSwipe();
+        });
+
+        function handleSwipe() {
+          const swipeThreshold = 50;
+          const swipeDistance = touchEndX - touchStartX;
+
+          if (Math.abs(swipeDistance) > swipeThreshold) {
+            if (swipeDistance > 0) {
+              prevSlide();
+            } else {
+              nextSlide();
+            }
+          }
+        }
+
+        // Auto-play (optional)
+        let autoPlayInterval = null;
+
+        function startAutoPlay() {
+          stopAutoPlay();
+          autoPlayInterval = setInterval(nextSlide, 5000);
+        }
+
+        function stopAutoPlay() {
+          if (autoPlayInterval) {
+            clearInterval(autoPlayInterval);
+            autoPlayInterval = null;
+          }
+        }
+
+        // Start auto-play
+        startAutoPlay();
+
+        // Pause on hover
+        slider.parentElement.addEventListener('mouseenter', stopAutoPlay);
+        slider.parentElement.addEventListener('mouseleave', startAutoPlay);
+
+        // Fullscreen functionality
+        if (fullscreenBtn) {
+          fullscreenBtn.addEventListener('click', openFullscreen);
+        }
+
+        function openFullscreen() {
+          const modal = document.getElementById('imageModal');
+          const modalSlider = document.getElementById('modalSlider');
+
+          if (!modal || !modalSlider) return;
+
+          // Clear existing slides
+          modalSlider.innerHTML = '';
+
+          // Add current slide to modal
+          slides.forEach((slide, index) => {
+            const img = slide.querySelector('img');
+            if (img) {
+              const modalSlide = document.createElement('div');
+              modalSlide.className = 'modal-slide';
+              modalSlide.style.flex = '0 0 100%';
+              modalSlide.style.height = '100%';
+              modalSlide.style.display = 'flex';
+              modalSlide.style.alignItems = 'center';
+              modalSlide.style.justifyContent = 'center';
+
+              const modalImg = document.createElement('img');
+              modalImg.src = img.src;
+              modalImg.alt = img.alt;
+              modalImg.className = 'modal-image';
+
+              modalSlide.appendChild(modalImg);
+              modalSlider.appendChild(modalSlide);
+            }
+          });
+
+          // Set initial position
+          modalSlider.style.transform = `translateX(-${currentIndex * 100}%)`;
+          modalSlider.style.display = 'flex';
+          modalSlider.style.transition = 'transform 0.5s ease';
+          modalSlider.style.width = `${totalSlides * 100}%`;
+          modalSlider.style.height = '100%';
+
+          // Show modal
+          modal.classList.add('active');
+          document.body.style.overflow = 'hidden';
+
+          // Modal navigation
+          const modalPrevBtn = document.getElementById('modalPrevBtn');
+          const modalNextBtn = document.getElementById('modalNextBtn');
+          const modalClose = document.getElementById('modalClose');
+          let modalCurrentIndex = currentIndex;
+
+          function updateModalSlider() {
+            modalSlider.style.transform = `translateX(-${
+              modalCurrentIndex * 100
+            }%)`;
+          }
+
+          function modalNextSlide() {
+            modalCurrentIndex = (modalCurrentIndex + 1) % totalSlides;
+            updateModalSlider();
+          }
+
+          function modalPrevSlide() {
+            modalCurrentIndex =
+              (modalCurrentIndex - 1 + totalSlides) % totalSlides;
+            updateModalSlider();
+          }
+
+          // Remove existing event listeners and add new ones
+          if (modalPrevBtn) {
+            modalPrevBtn.onclick = modalPrevSlide;
+          }
+
+          if (modalNextBtn) {
+            modalNextBtn.onclick = modalNextSlide;
+          }
+
+          // Keyboard navigation in modal
+          function handleModalKeydown(e) {
+            if (e.key === 'Escape') {
+              closeModal();
+            } else if (e.key === 'ArrowLeft') {
+              modalPrevSlide();
+            } else if (e.key === 'ArrowRight') {
+              modalNextSlide();
+            }
+          }
+
+          function closeModal() {
+            modal.classList.remove('active');
+            document.body.style.overflow = 'auto';
+            document.removeEventListener('keydown', handleModalKeydown);
+          }
+
+          if (modalClose) {
+            modalClose.onclick = closeModal;
+          }
+
+          // Close modal on outside click
+          modal.onclick = function (e) {
+            if (e.target === modal) {
+              closeModal();
+            }
+          };
+
+          // Add keyboard listener
+          document.addEventListener('keydown', handleModalKeydown);
+        }
+      });
+
       // Toast Notification
       function showToast(message) {
         const toast = document.getElementById('toast');
@@ -1064,36 +1669,6 @@
         setTimeout(() => {
           toast.classList.remove('show');
         }, 3000);
-      }
-
-      // Show image in full screen
-      function showImage(src) {
-        const modal = document.createElement('div');
-        modal.style.position = 'fixed';
-        modal.style.top = '0';
-        modal.style.left = '0';
-        modal.style.width = '100%';
-        modal.style.height = '100%';
-        modal.style.backgroundColor = 'rgba(0, 0, 0, 0.9)';
-        modal.style.display = 'flex';
-        modal.style.alignItems = 'center';
-        modal.style.justifyContent = 'center';
-        modal.style.zIndex = '9999';
-        modal.style.cursor = 'pointer';
-
-        const img = document.createElement('img');
-        img.src = src;
-        img.style.maxWidth = '90%';
-        img.style.maxHeight = '90%';
-        img.style.objectFit = 'contain';
-        img.style.borderRadius = '10px';
-
-        modal.appendChild(img);
-        document.body.appendChild(modal);
-
-        modal.addEventListener('click', () => {
-          document.body.removeChild(modal);
-        });
       }
 
       // Comment Form Toggle
@@ -1168,7 +1743,7 @@
         });
       }
 
-      // Auto-hide toast on page load
+      // Like button animation - SIMPLIFIED VERSION
       document.addEventListener('DOMContentLoaded', function () {
         // Check if there's a success message in URL
         const urlParams = new URLSearchParams(window.location.search);
@@ -1180,60 +1755,83 @@
         if (urlParams.get('error')) {
           showToast('Error: ' + urlParams.get('error'));
         }
-      });
 
-      // Like button animation
-      const likeButton = document.getElementById('likeButton');
-      if (likeButton) {
-        likeButton.addEventListener('click', function (e) {
-          // If not logged in, let it redirect to login
-          if (user ? 'true' : 'false') {
-            return;
-          }
+        // Handle like button click
+        const likeButton = document.getElementById('likeButton');
+        const loginLikeButton = document.getElementById('loginLikeButton');
 
-          // Prevent default and handle with fetch for better UX
-          e.preventDefault();
+        // For logged-in users
+        if (likeButton) {
+          likeButton.addEventListener('click', function (e) {
+            e.preventDefault(); // Always prevent default for logged-in users
 
-          const isLiked = this.classList.contains('liked');
-          const likeText = document.getElementById('likeText');
-          const likeCount = document.getElementById('likeCount');
-          const heartIcon = this.querySelector('i');
+            const isLiked = this.classList.contains('liked');
+            const likeText = document.getElementById('likeText');
+            const likeCount = document.getElementById('likeCount');
+            const heartIcon = this.querySelector('i');
 
-          // Update UI immediately (optimistic update)
-          if (isLiked) {
-            this.classList.remove('liked');
-            likeText.textContent = 'Like';
-            heartIcon.classList.remove('fas');
-            heartIcon.classList.add('far');
+            // Update UI immediately (optimistic update)
+            if (isLiked) {
+              this.classList.remove('liked');
+              likeText.textContent = 'Like';
+              heartIcon.classList.remove('fas');
+              heartIcon.classList.add('far');
 
-            // Update count
-            const currentCount = parseInt(
-              likeCount.textContent.match(/\d+/)[0]
-            );
-            likeCount.textContent = `(${currentCount - 1})`;
-          } else {
-            this.classList.add('liked');
-            likeText.textContent = 'Liked';
-            heartIcon.classList.remove('far');
-            heartIcon.classList.add('fas');
+              // Update count
+              const currentCount = parseInt(
+                likeCount.textContent.match(/\d+/)[0]
+              );
+              likeCount.textContent = `(${currentCount - 1})`;
+            } else {
+              this.classList.add('liked');
+              likeText.textContent = 'Liked';
+              heartIcon.classList.remove('far');
+              heartIcon.classList.add('fas');
 
-            // Update count
-            const currentCount = parseInt(
-              likeCount.textContent.match(/\d+/)[0]
-            );
-            likeCount.textContent = `(${currentCount + 1})`;
-          }
+              // Update count
+              const currentCount = parseInt(
+                likeCount.textContent.match(/\d+/)[0]
+              );
+              likeCount.textContent = `(${currentCount + 1})`;
+            }
 
-          // Send request to server
-          fetch(this.href, {
-            method: 'GET',
-            headers: {
-              'Content-Type': 'application/json',
-            },
-          })
-            .then((response) => {
-              if (!response.ok) {
-                // Revert if there's an error
+            // Send request to server
+            fetch(this.href, {
+              method: 'GET',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+            })
+              .then((response) => {
+                if (!response.ok) {
+                  throw new Error('Network response was not ok');
+                }
+                return response.json();
+              })
+              .then((data) => {
+                // Update with server response
+                if (data.liked) {
+                  this.classList.add('liked');
+                  likeText.textContent = 'Liked';
+                  heartIcon.classList.remove('far');
+                  heartIcon.classList.add('fas');
+                } else {
+                  this.classList.remove('liked');
+                  likeText.textContent = 'Like';
+                  heartIcon.classList.remove('fas');
+                  heartIcon.classList.add('far');
+                }
+
+                // Update count from server
+                if (data.likeCount !== undefined) {
+                  likeCount.textContent = `(${data.likeCount})`;
+                }
+
+                showToast(data.message || 'Like updated!');
+              })
+              .catch((error) => {
+                console.error('Error:', error);
+                // Revert changes on error
                 if (isLiked) {
                   this.classList.add('liked');
                   likeText.textContent = 'Liked';
@@ -1254,14 +1852,18 @@
                   likeCount.textContent = `(${currentCount - 1})`;
                 }
                 showToast('Failed to update like. Please try again.');
-              }
-            })
-            .catch((error) => {
-              console.error('Error:', error);
-              showToast('Network error. Please try again.');
-            });
-        });
-      }
+              });
+          });
+        }
+
+        // For logged-out users - let it redirect normally
+        if (loginLikeButton) {
+          loginLikeButton.addEventListener('click', function (e) {
+            // Let it redirect to login page - no prevention
+            return true;
+          });
+        }
+      });
     </script>
   </body>
 </html>
