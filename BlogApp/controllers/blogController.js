@@ -180,28 +180,44 @@ export const getSingle = async (req, res) => {
 export const toggleLikeController = async (req, res) => {
   try {
     const blogId = req.params.id;
-   
-
     const userId = req.user.id;
 
-    const b = await blog.findById(blogId);
-    if (!b) return res.redirect(`/blogs/${blogId}`);
-    const alreadyLiked = b.like.includes(userId);
-
-    if (alreadyLiked) {
-      // unlike
-      b.like.pull(userId);
-    } else {
-      // like
-      b.like.push(userId);
+    // Find the blog
+    const rblog = await blog.findById(blogId);
+    if (!rblog) {
+      return res.status(404).json({
+        success: false,
+        message: 'Blog not found',
+      });
     }
 
-    await b.save();
-    res.redirect(`/blogs/${blogId}`);
+    // Check if user already liked the blog
+    const alreadyLiked = rblog.like.includes(userId);
+
+    if (alreadyLiked) {
+      // Unlike
+      rblog.like.pull(userId);
+    } else {
+      // Like
+      rblog.like.push(userId);
+    }
+
+    await rblog.save();
+
+    // Return JSON response for AJAX request
+    return res.json({
+      success: true,
+      liked: !alreadyLiked,
+      likeCount: rblog.like.length,
+      message: alreadyLiked ? 'Post unliked' : 'Post liked!',
+    });
   } catch (error) {
-    console.error('Error fetching blog:', error);
-    res.render('wrong', {
-      message: 'Error loading blog post',
+    console.error('Error toggling like:', error);
+
+    // Return JSON error
+    return res.status(500).json({
+      success: false,
+      message: 'Error updating like',
       error: process.env.NODE_ENV === 'development' ? error.message : null,
     });
   }
@@ -217,7 +233,6 @@ export const addComment = async (req, res) => {
     }
 
     // 1️⃣ Create comment
-   
 
     const newComment = await comment.create({
       blog: id,
