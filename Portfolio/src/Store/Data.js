@@ -41,7 +41,46 @@ import PD1 from '../assets/Pictures/PD1.png';
 //Console App Pics
 import PC1 from '../assets/Pictures/PC1.png';
 
+import BS1 from '../assets/Pictures/BS1.png';
+import BS2 from '../assets/Pictures/BS2.png';
+import BS3 from '../assets/Pictures/BS3.png';
+import BS4 from '../assets/Pictures/BS4.png';
+import BS5 from '../assets/Pictures/BS5.png';
+import BS6 from '../assets/Pictures/BS6.png';
+import BS7 from '../assets/Pictures/BS7.png';
+
 export const Web = [
+  {
+    id: 7,
+    title: 'BlogSpace - SSR Blogging Platform',
+    image: [BS1, BS2, BS3, BS4, BS5, BS6, BS7], // add your project screenshots here
+    summary:
+      'A server-side rendered MERN blogging platform that allows users to sign up, log in, and manage their blogs with full CRUD functionality. Users can create, update, and delete blogs, like and comment on posts, and interact with other users. The application focuses on performance and SEO using server-side rendering while maintaining secure authentication and a smooth user experience.',
+    techStack: [
+      'Node.js',
+      'Express.js',
+      'MongoDB',
+      'Server-Side Rendering (SSR)',
+      'JWT Authentication',
+      'Tailwind CSS',
+    ],
+    tags: [
+      'FullStack',
+      'MERN',
+      'SSR',
+      'BlogPlatform',
+      'Authentication',
+      'CRUD',
+
+      'NodeJS',
+      'Express',
+      'MongoDB',
+      'TailwindCSS',
+    ],
+    link: 'https://internship-projects-blog-app.vercel.app/', // add your live project link later
+    github:
+      'https://github.com/AliHaider332/Internship-Projects/tree/main/Portfolio', // add your GitHub repo link later
+  },
   {
     id: 6,
     title: 'PDF to Chat Converter',
