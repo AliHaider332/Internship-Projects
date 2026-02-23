@@ -49,7 +49,45 @@ import BS5 from '../assets/Pictures/BS5.png';
 import BS6 from '../assets/Pictures/BS6.png';
 import BS7 from '../assets/Pictures/BS7.png';
 
+import CP1 from '../assets/Pictures/CP-1.png';
+import CP2 from '../assets/Pictures/CP-2.png';
+import CP3 from '../assets/Pictures/CP-3.png';
+import CP4 from '../assets/Pictures/CP-4.png';
+import CP5 from '../assets/Pictures/CP-5.png';
+import CP6 from '../assets/Pictures/CP-6.png';
+import CP7 from '../assets/Pictures/CP-6.png';
+
 export const Web = [
+  {
+    id: 8,
+    title: 'Talkify - Real-Time Chat Application',
+    image: [CP1, CP2, CP3, CP4, CP5, CP6, CP7],
+    summary:
+      'A real-time chatting application with full authentication, protected routes, and WebSocket-based messaging using MongoDB. Users can create accounts, join chats, and send/receive messages instantly. The app is fully deployment-ready, though free Vercel runtime does not support WebSockets, so it may require a suitable server environment for real-time features.',
+    techStack: [
+      'Node.js',
+      'Express.js',
+      'MongoDB',
+      'WebSocket (Socket.IO)',
+      'JWT Authentication',
+      'React.js',
+      'Tailwind CSS',
+    ],
+    tags: [
+      'FullStack',
+      'MERN',
+      'RealTime',
+      'ChatApp',
+      'Authentication',
+      'ProtectedRoutes',
+      'WebSocket',
+      'NodeJS',
+      'MongoDB',
+      'TailwindCSS',
+    ],
+    // link: 'https://your-chatify-live-link.com/', // add your live project link
+    github: 'https://github.com/AliHaider332/Talkify-Chatting-App', // add your GitHub repo link
+  },
   {
     id: 7,
     title: 'BlogSpace - SSR Blogging Platform',
