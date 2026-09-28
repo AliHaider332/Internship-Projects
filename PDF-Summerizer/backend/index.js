@@ -17,11 +17,30 @@ app.use(cors({
   allowedHeaders: ['Content-Type', 'Authorization'],
 }));
 
-app.use(express.json());
+app.use(express.json({ limit: '50mb' }));
 
 // ✅ Routes
 app.use('/api', createVector);
 app.use('/api', chatting);
+
+
+import { GoogleGenAI } from '@google/genai';
+
+const ai = new GoogleGenAI({
+  apiKey: process.env.GEMINI_API_KEY,
+});
+
+const response = await ai.models.embedContent({
+  model: 'gemini-embedding-001',
+  contents: 'Hello world',
+  config: {
+    outputDimensionality: 1024,
+  },
+});
+
+const vector = response.embeddings[0].values;
+
+console.log('VECTOR LENGTH:', vector.length);
 
 app.get('/', (req, res) => {
   res.send('🚀 Backend is running successfully!');

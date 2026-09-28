@@ -1,79 +1,344 @@
-/* App.css */
-/* @import 'tailwindcss/base';
-@import 'tailwindcss/components';
-@import 'tailwindcss/utilities'; */
+/* ============================================================
+   Design System — Monochrome + Red
+   ============================================================ */
 
-/* Custom scrollbar */
-.scrollbar-thin {
-  scrollbar-width: thin;
-  scrollbar-color: rgb(147 197 253) rgb(239 246 255);
+:root {
+  --bg: 250 250 250;
+  --surface: 255 255 255;
+  --surface-raised: 255 255 255;   /* cards */
+  --surface-invert: 10 10 10;      /* user bubbles, CTA */
+
+  --text-primary: 10 10 10;
+  --text-secondary: 82 82 82;
+  --text-tertiary: 128 128 128;
+
+  --text-on-invert: 250 250 250;   /* text on black surfaces */
+
+  --border: 10 10 10;
+  --border-soft: 200 200 200;      /* visible but subtle */
+  --border-muted: 235 235 235;     /* bubble borders */
+
+  --accent: 220 38 38;
+  --accent-hover: 185 28 28;
+  --accent-soft: 254 226 226;
 }
 
-.scrollbar-thin::-webkit-scrollbar {
-  width: 6px;
+.dark {
+  --bg: 10 10 10;
+  --surface: 18 18 18;
+  --surface-raised: 24 24 24;
+  --surface-invert: 245 245 245;   /* inverted in dark mode */
+
+  --text-primary: 200 200 200;
+  --text-secondary: 176 176 176;
+  --text-tertiary: 140 140 140;
+
+  --text-on-invert: 10 10 10;      /* text on light surfaces in dark mode */
+
+  --border: 245 245 245;
+  --border-soft: 60 60 60;
+  --border-muted: 42 42 42;        /* subtle but visible bubble border */
+
+  --accent: 239 68 68;
+  --accent-hover: 248 113 113;
+  --accent-soft: 60 10 10;
 }
 
-.scrollbar-thin::-webkit-scrollbar-track {
-  background: rgb(239 246 255);
-  border-radius: 10px;
+html, body, #root { height: 100%; }
+
+body {
+  font-family: 'Inter', ui-sans-serif, system-ui, -apple-system,
+    'Segoe UI', Roboto, sans-serif;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  background: rgb(var(--bg));
+  color: rgb(var(--text-primary));
 }
 
-.scrollbar-thin::-webkit-scrollbar-thumb {
-  background: rgb(147 197 253);
-  border-radius: 10px;
+/* ---------- Decorative blobs → flat subtle shapes ---------- */
+.bg-blob {
+  position: absolute;
+  border-radius: 9999px;
+  filter: blur(70px);
+  opacity: 0.06;
+  pointer-events: none;
+  animation: blobFloat 22s ease-in-out infinite;
+  background: rgb(var(--text-primary));
+}
+.dark .bg-blob { opacity: 0.12; }
+
+.bg-blob:nth-of-type(2) { animation-delay: -7s; }
+.bg-blob:nth-of-type(3) { animation-delay: -14s; }
+
+@keyframes blobFloat {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  33%      { transform: translate(30px, -40px) scale(1.08); }
+  66%      { transform: translate(-25px, 25px) scale(0.95); }
 }
 
-.scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  background: rgb(96 165 250);
+/* ---------- Entry animations ---------- */
+@keyframes fadeInUp {
+  0%   { opacity: 0; transform: translateY(12px); }
+  100% { opacity: 1; transform: translateY(0); }
 }
+.animate-fade-in-up { animation: fadeInUp 0.5s cubic-bezier(0.22, 1, 0.36, 1) both; }
 
-/* Custom animations */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+.animate-fade-in { animation: fadeIn 0.35s ease-out both; }
+
+/* ---------- Floating logo ---------- */
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-6px); }
 }
+.animate-float { animation: float 4s ease-in-out infinite; }
 
+/* ---------- Shake (invalid file) ---------- */
 @keyframes shake {
   0%, 100% { transform: translateX(0); }
-  25% { transform: translateX(-5px); }
-  75% { transform: translateX(5px); }
+  20%, 60% { transform: translateX(-6px); }
+  40%, 80% { transform: translateX(6px); }
+}
+.animate-shake { animation: shake 0.4s ease-in-out; }
+
+/* ---------- Chat bubbles ---------- */
+@keyframes botBubbleIn {
+  0%   { opacity: 0; transform: translateY(10px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+@keyframes userBubbleIn {
+  0%   { opacity: 0; transform: translateY(10px) translateX(10px) scale(0.96); }
+  100% { opacity: 1; transform: translateY(0) translateX(0) scale(1); }
+}
+.bubble-in-bot  { animation: botBubbleIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+.bubble-in-user { animation: userBubbleIn 0.35s cubic-bezier(0.22, 1, 0.36, 1) both; }
+
+/* ---------- Typing dots ---------- */
+@keyframes dotBounce {
+  0%, 80%, 100% { transform: translateY(0);    opacity: 0.5; }
+  40%           { transform: translateY(-6px); opacity: 1; }
+}
+.dot-bounce { animation: dotBounce 1.4s infinite ease-in-out both; }
+
+/* ---------- Blinking caret ---------- */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50%      { opacity: 0; }
+}
+.caret-blink {
+  display: inline-block;
+  width: 2px;
+  height: 1em;
+  vertical-align: -0.15em;
+  background: currentColor;
+  margin-left: 2px;
+  animation: blink 1s step-end infinite;
 }
 
-@keyframes bounce-in {
-  0% { transform: scale(0.3); opacity: 0; }
-  50% { transform: scale(1.05); }
-  70% { transform: scale(0.9); }
-  100% { transform: scale(1); opacity: 1; }
+/* ---------- Shimmer sweep (loading) ---------- */
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+.animate-shimmer {
+  background: linear-gradient(90deg,
+    rgba(255,255,255,0) 0%,
+    rgba(255,255,255,0.35) 50%,
+    rgba(255,255,255,0) 100%);
+  background-size: 200% 100%;
+  animation: shimmer 2s infinite;
 }
 
-.animate-fade-in-up {
-  animation: fade-in-up 0.5s ease-out;
+/* ---------- Accessibility ---------- */
+.focus-ring:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 2px rgb(var(--surface)),
+              0 0 0 4px rgb(var(--accent));
+  border-radius: 0.75rem;
 }
 
-.animate-shake {
-  animation: shake 0.5s ease-in-out;
-}
-
-.animate-bounce-in {
-  animation: bounce-in 0.6s ease-out;
-}
-
-.animate-fade-in {
-  animation: fade-in-up 0.3s ease-out;
-}
-
-/* Backdrop blur support */
-@supports not (backdrop-filter: blur(10px)) {
-  .backdrop-blur-lg {
-    background-color: rgba(255, 255, 255, 0.9);
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
   }
 }
 
+/* ---------- Custom scrollbar ---------- */
+.scroll-slim::-webkit-scrollbar          { width: 10px; height: 10px; }
+.scroll-slim::-webkit-scrollbar-track    { background: transparent; }
+.scroll-slim::-webkit-scrollbar-thumb {
+  background: rgba(140, 140, 140, 0.35);
+  border-radius: 9999px;
+  border: 3px solid transparent;
+  background-clip: padding-box;
+}
+.scroll-slim::-webkit-scrollbar-thumb:hover {
+  background: rgba(140, 140, 140, 0.55);
+  background-clip: padding-box;
+  border: 3px solid transparent;
+}
+
+/* ---------- Markdown prose tweaks ---------- */
+.prose-chat { line-height: 1.65; }
+.prose-chat :where(p):first-child { margin-top: 0; }
+.prose-chat :where(p):last-child  { margin-bottom: 0; }
+.prose-chat :where(pre) {
+  background: rgb(10 10 10) !important;
+  color: rgb(245 245 245);
+  border-radius: 0.75rem;
+  padding: 0.85rem 1rem;
+  overflow-x: auto;
+  font-size: 0.8rem;
+}
+.prose-chat :where(code):not(pre code) {
+  font-weight: 500;
+  font-size: 0.82em;
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.375rem;
+  background: rgb(var(--accent-soft));
+  color: rgb(var(--accent));
+}
+.dark .prose-chat :where(code):not(pre code) {
+  background: rgba(239, 68, 68, 0.15);
+  color: rgb(252 165 165);
+}
 
 
+
+
+
+
+/* ============================================================
+   Chat markdown — DeepSeek-style restrained typography
+   ============================================================ */
+.prose-chat {
+  font-size: 14px;
+  line-height: 1.7;
+  word-break: break-word;
+  overflow-wrap: anywhere;
+}
+
+.prose-chat :where(p) { margin: 0.55rem 0; }
+.prose-chat :where(p):first-child { margin-top: 0; }
+.prose-chat :where(p):last-child  { margin-bottom: 0; }
+
+.prose-chat :where(h1, h2, h3, h4) {
+  font-weight: 700;
+  line-height: 1.3;
+  margin: 1rem 0 0.4rem;
+  font-size: 1em;
+  color: rgb(var(--text-primary));
+}
+.prose-chat :where(h1):first-child,
+.prose-chat :where(h2):first-child,
+.prose-chat :where(h3):first-child { margin-top: 0; }
+
+.prose-chat :where(ul, ol) {
+  margin: 0.55rem 0;
+  padding-left: 1.25rem;
+}
+.prose-chat :where(li) {
+  margin: 0.2rem 0;
+  line-height: 1.65;
+}
+.prose-chat :where(li)::marker {
+  color: rgb(var(--accent));
+  font-weight: 700;
+}
+
+/* Inline code */
+.prose-chat :where(code):not(pre code) {
+  font-weight: 600;
+  font-size: 0.85em;
+  padding: 0.14em 0.42em;
+  border-radius: 0.35rem;
+  background: rgb(var(--surface-muted));
+  color: rgb(var(--accent));
+  border: 1px solid rgb(var(--border-soft));
+  word-break: break-word;
+}
+
+/* Code block */
+.prose-chat :where(pre) {
+  background: rgb(var(--surface-muted)) !important;
+  color: rgb(var(--text-primary)) !important;
+  border-radius: 0.75rem;
+  padding: 0.9rem 1rem;
+  margin: 0.85rem 0;
+  overflow-x: auto;
+  font-size: 12px;
+  line-height: 1.6;
+  border: 1px solid rgb(var(--border-soft));
+  max-width: 100%;
+  scrollbar-width: thin;
+}
+.prose-chat :where(pre) code {
+  background: transparent !important;
+  color: inherit !important;
+  padding: 0 !important;
+  border: none !important;
+  font-size: inherit;
+}
+
+/* Links */
+.prose-chat :where(a) {
+  color: rgb(var(--accent));
+  font-weight: 600;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  word-break: break-all;
+}
+
+.prose-chat :where(strong) { font-weight: 700; }
+.prose-chat :where(em)     { font-style: italic; }
+
+.prose-chat :where(blockquote) {
+  border-left: 3px solid rgb(var(--accent));
+  padding-left: 0.85rem;
+  margin: 0.6rem 0;
+  color: rgb(var(--text-secondary));
+  font-style: normal;
+}
+
+.prose-chat :where(table) {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.9em;
+  margin: 0.65rem 0;
+  display: block;
+  overflow-x: auto;
+}
+.prose-chat :where(th, td) {
+  border: 1px solid rgb(var(--border-soft));
+  padding: 0.45rem 0.7rem;
+  text-align: left;
+}
+.prose-chat :where(th) {
+  background: rgb(var(--surface-muted));
+  font-weight: 700;
+}
+
+.prose-chat :where(hr) {
+  border: none;
+  border-top: 1px solid rgb(var(--border-soft));
+  margin: 0.85rem 0;
+}
+
+/* Dark mode inline code */
+.dark .prose-chat :where(code):not(pre code) {
+  background: rgba(239, 68, 68, 0.14);
+  color: rgb(252 165 165);
+  border-color: rgba(239, 68, 68, 0.28);
+}
+
+/* ============================================================
+   DeepSeek-style composer textarea
+   ============================================================ */
+textarea.scroll-slim::-webkit-scrollbar          { width: 6px; }
+textarea.scroll-slim::-webkit-scrollbar-thumb {
+  background: rgba(140, 140, 140, 0.35);
+  border-radius: 9999px;
+}

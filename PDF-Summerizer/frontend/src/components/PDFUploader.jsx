@@ -1,8 +1,68 @@
-// components/PDFUploader.js
-import React, { useState, useRef } from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import { toast } from 'react-hot-toast';
 import { loadPDF } from '../utils/pdfLoader';
 
+/* ---------- Inline SVG icons ---------- */
+const Icon = {
+  File: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+    </svg>
+  ),
+  Check: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={3} strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M5 13l4 4L19 7" />
+    </svg>
+  ),
+  Upload: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
+    </svg>
+  ),
+  Close: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M6 18L18 6M6 6l12 12" />
+    </svg>
+  ),
+  Alert: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+    </svg>
+  ),
+  Chat: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z" />
+    </svg>
+  ),
+  ArrowRight: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={2.5} strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M13 7l5 5m0 0l-5 5m5-5H6" />
+    </svg>
+  ),
+  Lock: (p) => (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor"
+      strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" {...p}>
+      <path d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z" />
+    </svg>
+  ),
+};
+
+const formatFileSize = (bytes) => {
+  if (bytes < 1024) return `${bytes} B`;
+  if (bytes < 1024 * 1024) return `${(bytes / 1024).toFixed(1)} KB`;
+  return `${(bytes / 1024 / 1024).toFixed(2)} MB`;
+};
+
+const MAX_SIZE = 10 * 1024 * 1024;
+
+/* ========================================================= */
 const PDFUploader = ({ handleGoToChat }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -10,153 +70,122 @@ const PDFUploader = ({ handleGoToChat }) => {
   const [isDragging, setIsDragging] = useState(false);
   const fileInputRef = useRef();
 
-  const handleFileSelect = (file) => {
+  const handleFileSelect = useCallback((file) => {
     if (!file) return;
-
     if (file.type !== 'application/pdf') {
-      const errorMsg = 'Please select a valid PDF file';
-      setError(errorMsg);
-      toast.error(errorMsg);
+      const msg = 'Please select a valid PDF file';
+      setError(msg);
+      toast.error(msg);
       return;
     }
-
-    if (file.size > 10 * 1024 * 1024) {
-      const errorMsg = 'File size must be less than 10MB';
-      setError(errorMsg);
-      toast.error(errorMsg);
+    if (file.size > MAX_SIZE) {
+      const msg = 'File size must be less than 10MB';
+      setError(msg);
+      toast.error(msg);
       return;
     }
-
     setSelectedFile(file);
     setError('');
-    toast.success('PDF selected successfully!');
-  };
+    toast.success('PDF selected');
+  }, []);
 
   const handleFileInput = (e) => {
-    const file = e.target.files[0];
-    handleFileSelect(file);
-
-    // Reset the input value to allow selecting the same file again
+    handleFileSelect(e.target.files?.[0]);
     e.target.value = '';
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    setIsDragging(true);
-  };
-
-  const handleDragLeave = (e) => {
-    e.preventDefault();
-    setIsDragging(false);
-  };
-
+  const handleDragOver = (e) => { e.preventDefault(); if (!isLoading) setIsDragging(true); };
+  const handleDragLeave = (e) => { e.preventDefault(); setIsDragging(false); };
   const handleDrop = (e) => {
     e.preventDefault();
     setIsDragging(false);
-    handleFileSelect(e.dataTransfer.files[0]);
+    if (isLoading) return;
+    handleFileSelect(e.dataTransfer.files?.[0]);
   };
 
-  const handleUploadClick = () => {
-    fileInputRef.current?.click();
-  };
+  const handleUploadClick = () => { if (!isLoading) fileInputRef.current?.click(); };
 
   const removeFile = (e) => {
     e.stopPropagation();
     setSelectedFile(null);
     setError('');
-
-    // Reset the file input when removing file
-    if (fileInputRef.current) {
-      fileInputRef.current.value = '';
-    }
-
+    if (fileInputRef.current) fileInputRef.current.value = '';
     toast('File removed');
   };
 
   const processPDF = async () => {
-    // Check if a file is selected
     if (!selectedFile) {
-      const errorMsg = 'Please select a PDF file';
-      setError(errorMsg);
-      toast.error(errorMsg);
+      const msg = 'Please select a PDF file';
+      setError(msg);
+      toast.error(msg);
       return;
     }
-
-    // Reset previous errors and show loading state
     setIsLoading(true);
     setError('');
-    const loadingToast = toast.loading('Processing PDF...');
+    const loadingToast = toast.loading('Processing PDF…');
 
     try {
-      // Call the function that processes or loads the PDF
       const result = await loadPDF(selectedFile);
-
-      // Check if the PDF was processed successfully
-      if (result?.status === 200) {
-        toast.success('PDF successfully processed! Ready for chat.', {
-          id: loadingToast,
-        });
-
-        // Navigate or open chat interface
-        handleGoToChat();
-      } else {
-        const msg =
-          result?.message || 'Something went wrong while processing the PDF';
-        toast.error(msg, { id: loadingToast });
+     if (result?.success) {
+  toast.success('Ready! Starting chat…', { id: loadingToast });
+  handleGoToChat();
+}  else {
+        const msg = result?.message || 'Something went wrong processing the PDF';
+        toast.error("Server Issue");
         setError(msg);
       }
     } catch (err) {
-      // Handle unexpected errors
-      const errorMsg = err?.message || 'Error processing PDF';
-      console.error('PDF processing error:', err);
-      setError(errorMsg);
-      toast.error(errorMsg, { id: loadingToast });
+      const msg = err?.message || 'Error processing PDF';
+      setError(msg);
+      toast.error("Server Issue");
     } finally {
-      // Hide loading state no matter what
       setIsLoading(false);
     }
   };
 
+  const disabled = !selectedFile || isLoading;
+
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="w-full max-w-md">
-        <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-8 transform transition-all duration-500 hover:scale-105">
-          {/* Animated Header */}
-          <div className="text-center mb-8 animate-fade-in-up">
-            <div className="relative inline-block mb-4">
-              <div className="w-20 h-20 bg-linear-to-br from-blue-500 to-purple-600 rounded-2xl flex items-center justify-center shadow-lg transform transition-transform duration-300 hover:scale-110 hover:rotate-3">
-                <svg
-                  className="w-10 h-10 text-white"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"
-                  />
-                </svg>
-              </div>
+    <div className="min-h-screen flex items-center justify-center p-4 pt-20">
+      <div className="w-full max-w-lg">
+        {/* Card — sharp borders, hard shadow */}
+        <div className="relative bg-[rgb(var(--surface))] border-2 border-[rgb(var(--text-primary))] rounded-2xl p-7 sm:p-9 shadow-[8px_8px_0_0_rgb(10_10_10)] dark:shadow-[8px_8px_0_0_rgb(245_245_245)] transition-all animate-fade-in-up">
+
+          {/* ---------- Header ---------- */}
+          <div className="text-center mb-8">
+            <div className="inline-flex w-16 h-16 bg-[rgb(var(--accent))] rounded-2xl items-center justify-center mb-5 shadow-[4px_4px_0_0_rgb(10_10_10)] dark:shadow-[4px_4px_0_0_rgb(245_245_245)]">
+              <Icon.File className="w-8 h-8 text-white" />
             </div>
-            <h1 className="text-3xl font-bold bg-linear-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
-              PDF AI Assistant
+            <h1 className="text-3xl sm:text-4xl font-black tracking-tight text-[rgb(var(--text-primary))] mb-2">
+              PDF Assistant
             </h1>
-            <p className="text-gray-600 text-sm">
-              Upload your PDF and chat with AI about its content
+            <p className="text-sm text-[rgb(var(--text-secondary))]">
+              Upload a PDF and chat with AI about its contents
             </p>
           </div>
 
-          {/* Upload Area */}
+          {/* ---------- Dropzone ---------- */}
           <div
-            className={`relative border-2 border-dashed rounded-2xl p-6 mb-6 transition-all duration-300 cursor-pointer group ${
+            role="button"
+            tabIndex={0}
+            aria-label="Upload PDF"
+            onKeyDown={(e) => {
+              if (e.key === 'Enter' || e.key === ' ') {
+                e.preventDefault();
+                handleUploadClick();
+              }
+            }}
+            className={[
+              'relative border-2 border-dashed rounded-xl p-6 mb-6 transition-all cursor-pointer group outline-none',
               isDragging
-                ? 'border-blue-500 bg-blue-50 scale-105 shadow-lg'
+                ? 'border-[rgb(var(--accent))] bg-red-50 dark:bg-red-950/20 scale-[1.02]'
                 : selectedFile
-                ? 'border-green-500 bg-green-50'
-                : 'border-gray-300 bg-gray-50/50 hover:border-blue-400 hover:bg-blue-50/30'
-            } ${error ? 'border-red-500 bg-red-50 animate-shake' : ''}`}
+                  ? 'border-[rgb(var(--text-primary))] bg-neutral-50 dark:bg-neutral-900/50'
+                  : 'border-neutral-300 dark:border-neutral-700 bg-white dark:bg-neutral-900/30 hover:border-[rgb(var(--text-primary))]',
+              error ? 'border-[rgb(var(--accent))] bg-red-50 dark:bg-red-950/20 animate-shake' : '',
+              isLoading ? 'pointer-events-none opacity-70' : '',
+              'focus-visible:ring-2 focus-visible:ring-[rgb(var(--accent))]',
+            ].join(' ')}
             onClick={handleUploadClick}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
@@ -165,117 +194,98 @@ const PDFUploader = ({ handleGoToChat }) => {
             <input
               ref={fileInputRef}
               type="file"
-              accept=".pdf"
+              accept="application/pdf,.pdf"
               onChange={handleFileInput}
               className="hidden"
             />
 
             {selectedFile ? (
               <div className="text-center animate-fade-in">
-                <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-3 group-hover:scale-110 transition-transform duration-300">
-                  <svg
-                    className="w-8 h-8 text-green-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M5 13l4 4L19 7"
-                    />
-                  </svg>
+                <div className="inline-flex w-14 h-14 bg-[rgb(var(--accent))] rounded-full items-center justify-center mb-3">
+                  <Icon.Check className="w-7 h-7 text-white" />
                 </div>
-                <div className="space-y-2">
-                  <p className="font-semibold text-gray-800 truncate">
+                <div className="space-y-1">
+                  <p className="font-bold text-black truncate px-4">
                     {selectedFile.name}
                   </p>
-                  <p className="text-sm text-gray-600">
-                    {(selectedFile.size / 1024 / 1024).toFixed(2)} MB
+                  <p className="text-xs text-[rgb(var(--text-secondary))] font-medium">
+                    {formatFileSize(selectedFile.size)}
                   </p>
+                  <span className="inline-block mt-2 px-3 py-1 text-[10px] font-bold uppercase tracking-wider text-white bg-[rgb(var(--accent))] rounded">
+                    Ready
+                  </span>
                 </div>
                 <button
                   onClick={removeFile}
-                  className="absolute top-3 right-3 p-1.5 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-full transition-all duration-200"
+                  aria-label="Remove file"
+                  className="absolute top-3 right-3 p-1.5 text-[rgb(var(--text-secondary))] hover:text-white hover:bg-[rgb(var(--accent))] rounded-lg transition-all focus-ring"
                 >
-                  <svg
-                    className="w-4 h-4"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
+                  <Icon.Close className="w-4 h-4" />
                 </button>
               </div>
             ) : (
-              <div className="text-center group-hover:scale-105 transition-transform duration-300">
-                <div className="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:bg-blue-200 transition-colors duration-300">
-                  <svg
-                    className="w-8 h-8 text-blue-600"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12"
-                    />
-                  </svg>
+              <div className="text-center">
+                <div className="w-14 h-14 border-2 border-dashed border-neutral-400 dark:border-neutral-600 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:border-[rgb(var(--text-primary))] transition-colors">
+                  <Icon.Upload className="w-6 h-6 text-[rgb(var(--text-primary))]" />
                 </div>
                 <div className="space-y-1">
-                  <p className="font-semibold text-gray-700">
-                    Click to upload PDF
+                  <p className="font-semibold text-[rgb(var(--text-primary))]">
+                    Click to upload or drag &amp; drop
                   </p>
-                  <p className="text-sm text-gray-500">or drag and drop</p>
-                  <p className="text-xs text-gray-400 mt-2">Max 10MB</p>
+                  <p className="text-sm text-[rgb(var(--text-secondary))]">
+                    PDF up to 10 MB
+                  </p>
                 </div>
               </div>
             )}
           </div>
 
-          {/* Process Button */}
+          {/* ---------- Error ---------- */}
+          {error && !isLoading && (
+            <div role="alert" className="mb-4 flex items-start gap-2 p-3 bg-red-50 dark:bg-red-950/30 border-2 border-[rgb(var(--accent))] rounded-lg animate-fade-in">
+              <Icon.Alert className="w-5 h-5 text-[rgb(var(--accent))] shrink-0 mt-0.5" />
+              <p className="text-sm text-[rgb(var(--accent))] font-semibold">{error}</p>
+            </div>
+          )}
+
+          {/* ---------- CTA ---------- */}
           <button
             onClick={processPDF}
-            disabled={!selectedFile || isLoading}
-            className={`w-full py-4 px-6 rounded-2xl font-semibold transition-all duration-300 transform ${
-              !selectedFile || isLoading
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed scale-95'
-                : 'bg-linear-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white shadow-lg hover:shadow-xl hover:scale-105 active:scale-95'
-            }`}
+            disabled={disabled}
+            className={[
+              'group w-full py-4 px-6 rounded-xl font-bold text-base transition-all relative overflow-hidden focus-ring',
+              disabled
+                ? 'bg-neutral-200 dark:bg-neutral-800 text-neutral-400 dark:text-neutral-600 cursor-not-allowed border-2 border-transparent'
+                : 'bg-[rgb(var(--text-primary))] text-[rgb(var(--bg))] border-2 border-[rgb(var(--text-primary))] hover:bg-[rgb(var(--accent))] hover:border-[rgb(var(--accent))] shadow-[4px_4px_0_0_rgb(10_10_10)] dark:shadow-[4px_4px_0_0_rgb(245_245_245)] hover:shadow-none hover:translate-x-[4px] hover:translate-y-[4px] active:translate-x-[4px] active:translate-y-[4px] active:shadow-none',
+            ].join(' ')}
           >
+            {!disabled && (
+              <span className="pointer-events-none absolute inset-0 animate-shimmer opacity-20" />
+            )}
+
             {isLoading ? (
-              <div className="flex items-center justify-center space-x-2">
-                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin"></div>
-                <span>Processing...</span>
-              </div>
-            ) : (
-              <div className="flex items-center justify-center space-x-2">
-                <span>Start Chatting</span>
-                <svg
-                  className="w-4 h-4 transform group-hover:translate-x-1 transition-transform"
-                  fill="none"
-                  stroke="currentColor"
-                  viewBox="0 0 24 24"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M13 7l5 5m0 0l-5 5m5-5H6"
-                  />
+              <span className="flex items-center justify-center gap-2">
+                <svg className="w-5 h-5 animate-spin" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4" className="opacity-25" />
+                  <path fill="currentColor" className="opacity-75"
+                    d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z" />
                 </svg>
-              </div>
+                <span>Processing…</span>
+              </span>
+            ) : (
+              <span className="relative flex items-center justify-center gap-2">
+                <Icon.Chat className="w-5 h-5" />
+                <span>Start Chatting</span>
+                <Icon.ArrowRight className="w-4 h-4 transform group-hover:translate-x-1 transition-transform" />
+              </span>
             )}
           </button>
+
+          {/* ---------- Footer ---------- */}
+          <p className="text-center text-xs text-[rgb(var(--text-secondary))] mt-4 flex items-center justify-center gap-1.5">
+            <Icon.Lock className="w-3.5 h-3.5" />
+            Processed locally and securely
+          </p>
         </div>
       </div>
     </div>

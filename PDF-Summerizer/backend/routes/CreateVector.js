@@ -1,47 +1,87 @@
+
 import express from 'express';
 import dotenv from 'dotenv';
-import { GoogleGenerativeAIEmbeddings } from '@langchain/google-genai';
+import { GoogleGenAI } from '@google/genai';
 import { Pinecone } from '@pinecone-database/pinecone';
-import { PineconeStore } from '@langchain/pinecone';
 
 dotenv.config();
+
 const createVector = express.Router();
 
 createVector.post('/create-vectors', async (req, res) => {
-  const chunkedDocs = req.body.data;
-
   try {
-    // Step 1: Initialize Embeddings model
-    const embeddings = new GoogleGenerativeAIEmbeddings({
+    const chunkedDocs = req.body.data;
+
+    if (!Array.isArray(chunkedDocs) || chunkedDocs.length === 0) {
+      return res.status(400).json({
+        success: false,
+        error: 'No chunks provided',
+      });
+    }
+
+    const ai = new GoogleGenAI({
       apiKey: process.env.GEMINI_API_KEY,
-      model: 'text-embedding-003',
     });
 
-    // Step 2: Connect to Pinecone
     const pinecone = new Pinecone({
       apiKey: process.env.PINECONE_API_KEY,
     });
 
-    const pineconeIndex = pinecone.Index(process.env.PINECONE_INDEX_NAME);
+    const index = pinecone.Index(
+      process.env.PINECONE_INDEX_NAME
+    );
 
-    await pineconeIndex.deleteAll();
+    // Remove vectors from the previous conversation
+    await index.deleteAll();
 
-    // Step 3: Convert your string chunks into LangChain Documents
-    const documents = chunkedDocs.map((chunk, i) => ({
-      pageContent: chunk,
-      metadata: { id: i },
-    }));
+    const records = [];
 
-    // Step 4: Upload to Pinecone
-    await PineconeStore.fromDocuments(documents, embeddings, {
-      pineconeIndex,
-      maxConcurrency: 5,
+    for (let i = 0; i < chunkedDocs.length; i++) {
+      const chunk = chunkedDocs[i];
+
+      const response = await ai.models.embedContent({
+        model: 'gemini-embedding-001',
+        contents: chunk,
+        config: {
+          outputDimensionality: 1024,
+        },
+      });
+
+      const vector = response.embeddings?.[0]?.values;
+
+      if (!vector || vector.length !== 1024) {
+        throw new Error(
+          `Invalid vector dimension. Expected 1024, received ${
+            vector?.length || 0
+          }.`
+        );
+      }
+
+      records.push({
+        id: `chunk-${i}`,
+        values: vector,
+        metadata: {
+          chunkIndex: i,
+          text: chunk,
+        },
+      });
+    }
+
+    await index.upsert(records);
+
+    return res.status(200).json({
+      success: true,
+      message: 'Embeddings stored successfully',
+      vectorsStored: records.length,
+      dimension: 1024,
     });
-
-    res.json({ message: '✅ Embeddings stored successfully!', status: 200 });
   } catch (error) {
-    console.error('❌ Error in /setup route:', error);
-    res.status(500).json({ error: error.message });
+    console.error('Error in /create-vectors:', error);
+
+    return res.status(500).json({
+      success: false,
+      error: error.message,
+    });
   }
 });
 

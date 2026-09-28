@@ -16,7 +16,7 @@ export default function AIGirlfriendUI() {
   );
   const chatEndRef = useRef(null);
 
-  // ✅ Send message
+  // ✅ Send message (UNCHANGED)
   const handleSend = async () => {
     if (!input.trim()) return;
 
@@ -63,7 +63,7 @@ export default function AIGirlfriendUI() {
     }
   };
 
-  // ✅ Handle viewport resize
+  // ✅ Handle viewport resize (UNCHANGED)
   useEffect(() => {
     const updateHeight = () => {
       setViewportHeight(
@@ -88,58 +88,95 @@ export default function AIGirlfriendUI() {
     };
   }, []);
 
-  // ✅ Auto-scroll
+  // ✅ Auto-scroll (UNCHANGED)
   useEffect(() => {
     chatEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, loading]);
 
   return (
     <div
-      className="flex flex-col items-center justify-center bg-gradient-to-br from-pink-100 via-pink-200 to-purple-200 w-full poppins"
+      className="flex flex-col items-center justify-center w-full poppins bg-gradient-to-br from-pink-100 via-rose-100 to-purple-200"
       style={{ height: viewportHeight, minHeight: viewportHeight }}
     >
       <motion.div
-        initial={{ opacity: 0, y: 30 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.6 }}
-        className="flex flex-col w-full sm:w-[90%] md:w-[70%] lg:w-[40%] h-full sm:h-[90%] bg-white shadow-2xl sm:rounded-3xl overflow-hidden transition-all duration-300 ease-in-out"
+        initial={{ opacity: 0, y: 24, scale: 0.98 }}
+        animate={{ opacity: 1, y: 0, scale: 1 }}
+        transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+        className="
+          flex flex-col w-full h-full
+          sm:w-[92%] sm:h-[92%] sm:max-w-md
+          md:w-[70%] md:max-w-lg
+          lg:w-[45%] lg:max-w-xl
+          bg-white/95 backdrop-blur-xl
+          shadow-[0_20px_60px_-15px_rgba(236,72,153,0.35)]
+          border border-white/60
+          sm:rounded-[28px] overflow-hidden
+        "
       >
-        {/* Header */}
-        <div className="sticky top-0 flex items-center gap-3 p-4 bg-gradient-to-r from-pink-500 to-pink-400 text-white shadow-md z-10">
-          <img
-            src="https://i.pravatar.cc/100?img=47"
-            alt="AI Girlfriend"
-            className="w-10 h-10 sm:w-12 sm:h-12 rounded-full border-2 border-white shadow-lg"
-          />
-          <h2 className="text-lg sm:text-xl font-semibold romantic text-center">
-            Artificial Girlfriend 💕
-          </h2>
+        {/* ================= Header ================= */}
+        <div className="
+          sticky top-0 z-10 flex items-center gap-3
+          px-4 py-3.5
+          bg-gradient-to-r from-pink-500 via-pink-500 to-rose-400
+          text-white
+          shadow-[0_4px_20px_-4px_rgba(236,72,153,0.5)]
+        ">
+          <div className="relative flex-none">
+            <img
+              src="https://i.pravatar.cc/100?img=47"
+              alt="AI Girlfriend"
+              className="w-11 h-11 sm:w-12 sm:h-12 rounded-full border-2 border-white/90 shadow-md object-cover"
+            />
+            <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-400 border-2 border-white rounded-full" />
+            <span className="absolute -bottom-0.5 -right-0.5 w-3.5 h-3.5 bg-emerald-400 rounded-full animate-ping opacity-75" />
+          </div>
+
+          <div className="flex-1 min-w-0 leading-tight">
+            <h2 className="text-base sm:text-lg font-semibold romantic truncate">
+              Artificial Girlfriend 💕
+            </h2>
+            <p className="text-[11px] sm:text-xs text-white/85 font-medium flex items-center gap-1.5">
+              <span className="w-1.5 h-1.5 bg-emerald-300 rounded-full" />
+              {loading ? 'Typing…' : 'Online now'}
+            </p>
+          </div>
         </div>
 
-        {/* Chat Window */}
-        <div className="flex-1 p-3 sm:p-4 overflow-y-auto bg-gradient-to-br from-pink-50 to-pink-100">
-          <AnimatePresence>
+        {/* ================= Chat Window ================= */}
+        <div className="
+          flex-1 overflow-y-auto scroll-slim
+          px-3 sm:px-4 py-4
+          bg-gradient-to-b from-pink-50/60 via-white to-purple-50/60
+        ">
+          <AnimatePresence initial={false}>
             {messages.map((msg, i) => (
               <motion.div
                 key={i}
                 initial={{
                   opacity: 0,
-                  y: msg.sender === 'user' ? 10 : -10,
-                  x: msg.sender === 'user' ? 20 : -20,
+                  y: msg.sender === 'user' ? 8 : -8,
+                  x: msg.sender === 'user' ? 16 : -16,
                 }}
                 animate={{ opacity: 1, y: 0, x: 0 }}
                 exit={{ opacity: 0 }}
-                transition={{ duration: 0.3 }}
-                className={`flex mb-2 ${
+                transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                className={`flex mb-3 ${
                   msg.sender === 'user' ? 'justify-end' : 'justify-start'
                 }`}
               >
                 <div
-                  className={`px-3 py-2 sm:px-4 sm:py-2 rounded-2xl max-w-[85%] sm:max-w-xs shadow-md text-sm sm:text-base ${
+                  className={[
+                    'px-3.5 py-2.5 sm:px-4 sm:py-3',
+                    'rounded-2xl max-w-[82%] sm:max-w-[75%]',
+                    'text-[14px] sm:text-[15px] leading-relaxed',
+                    'break-words [overflow-wrap:anywhere]',
+                    'shadow-sm',
                     msg.sender === 'user'
-                      ? 'bg-gradient-to-r from-pink-500 to-pink-400 text-white rounded-br-none'
-                      : 'bg-gradient-to-r from-purple-100 to-purple-200 text-gray-800 rounded-bl-none'
-                  }`}
+                      ? 'bg-gradient-to-br from-pink-500 to-rose-500 text-white rounded-br-md shadow-pink-500/25'
+                      : msg.type === 'error'
+                        ? 'bg-rose-50 text-rose-700 border border-rose-200 rounded-bl-md'
+                        : 'bg-white text-slate-800 border border-pink-100 rounded-bl-md shadow-purple-500/5',
+                  ].join(' ')}
                 >
                   {msg.text}
                 </div>
@@ -147,26 +184,31 @@ export default function AIGirlfriendUI() {
             ))}
           </AnimatePresence>
 
-          {/* 🌸 Modern Typing Loader */}
+          {/* 🌸 Typing Loader */}
           {loading && (
-            <div className="flex justify-start mb-2">
+            <div className="flex justify-start mb-3">
               <motion.div
-                className="px-3 py-2 rounded-2xl bg-purple-100 text-gray-800 shadow-md rounded-bl-none flex items-center gap-1.5"
-                initial={{ opacity: 0.7 }}
-                animate={{ opacity: 1 }}
+                className="
+                  px-4 py-3 rounded-2xl rounded-bl-md
+                  bg-white border border-pink-100 shadow-sm
+                  flex items-center gap-1.5
+                "
+                initial={{ opacity: 0, y: -6 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.25 }}
               >
                 {[0, 1, 2].map((dot) => (
                   <motion.span
                     key={dot}
-                    className="w-2.5 h-2.5 bg-pink-400 rounded-full"
+                    className="w-2 h-2 bg-gradient-to-br from-pink-400 to-rose-500 rounded-full"
                     animate={{
-                      y: [0, -6, 0],
+                      y: [0, -5, 0],
                       opacity: [0.5, 1, 0.5],
                     }}
                     transition={{
-                      duration: 0.6,
+                      duration: 0.7,
                       repeat: Infinity,
-                      delay: dot * 0.2,
+                      delay: dot * 0.18,
                       ease: 'easeInOut',
                     }}
                   />
@@ -174,29 +216,56 @@ export default function AIGirlfriendUI() {
               </motion.div>
             </div>
           )}
-          <div ref={chatEndRef}></div>
+          <div ref={chatEndRef} />
         </div>
 
-        {/* Input Bar */}
+        {/* ================= Input Bar ================= */}
         <div
-          className="sticky bottom-0 flex items-center border-t p-2 sm:p-3 bg-white/70 backdrop-blur-md"
-          style={{ paddingBottom: 'env(safe-area-inset-bottom)' }}
+          className="
+            sticky bottom-0 flex items-center gap-2
+            px-3 py-3
+            bg-white/85 backdrop-blur-xl
+            border-t border-pink-100
+          "
+          style={{ paddingBottom: 'max(env(safe-area-inset-bottom), 0.75rem)' }}
         >
           <input
             type="text"
-            className="flex-1 px-3 sm:px-4 py-2 rounded-full border border-pink-300 focus:outline-none focus:ring-2 focus:ring-pink-400 text-sm sm:text-base"
-            placeholder="Type a sweet message..."
+            className="
+              flex-1 min-w-0
+              px-4 py-2.5
+              rounded-full
+              border border-pink-200
+              bg-pink-50/50
+              text-[14px] sm:text-[15px] text-slate-800
+              placeholder-pink-400/70
+              focus:outline-none focus:border-pink-400 focus:bg-white
+              focus:ring-2 focus:ring-pink-300/40
+              transition-all
+            "
+            placeholder="Type a sweet message…"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             onKeyDown={(e) => e.key === 'Enter' && handleSend()}
+            disabled={loading}
           />
 
           <motion.button
             whileTap={{ scale: 0.9 }}
-            whileHover={{ scale: 1.1 }}
-            className="ml-2 sm:ml-3 p-2 sm:p-3 bg-gradient-to-r from-pink-500 to-pink-400 text-white rounded-full shadow-lg transition"
+            whileHover={{ scale: 1.06 }}
+            className="
+              flex-none ml-1
+              p-2.5 sm:p-3
+              bg-gradient-to-br from-pink-500 to-rose-500
+              text-white rounded-full
+              shadow-lg shadow-pink-500/40
+              hover:shadow-xl hover:shadow-pink-500/50
+              transition-shadow
+              disabled:opacity-60 disabled:cursor-not-allowed
+            "
             onClick={handleSend}
-            disabled={loading}
+            disabled={loading || !input.trim()}
+            aria-label="Send message"
           >
             <Send size={18} className="sm:w-5 sm:h-5" />
           </motion.button>
